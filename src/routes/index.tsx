@@ -60,7 +60,7 @@ function Index() {
         </div>
       </div>
       <div className="product-grid">
-        {visibleProducts.map((product, index) => <Link to="/product/$slug" params={{ slug: product.slug }} className="product-card" key={product.slug} style={{ animationDelay: `${index * 90}ms` }}>
+        {visibleProducts.map((product) => <Link to="/product/$slug" params={{ slug: product.slug }} className="product-card" key={product.slug}>
           <div className="product-card__image"><span>NEW IN</span><img src={product.image} alt={product.name} width={1024} height={1280} loading="lazy" /></div>
           <h3>{product.name}</h3><p>{`$${product.price}.00`}</p>
         </Link>)}
