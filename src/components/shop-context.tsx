@@ -1,54 +1,76 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import type { Product } from "@/lib/products";
+import type { ShopifyCartItem, ShopifyProduct } from "@/lib/shopify.server";
+import { addToCart, getCart, removeFromCart, updateCartLineQuantity } from "@/lib/shopify.server";
 
-type CartItem = Product & { quantity: number };
+const CART_ID_KEY = "lioness-cart-id";
+
 type ShopContextValue = {
-  items: CartItem[];
+  items: ShopifyCartItem[];
   bagOpen: boolean;
   setBagOpen: (open: boolean) => void;
-  addToBag: (product: Product, quantity?: number) => void;
-  changeQuantity: (slug: string, quantity: number) => void;
-  removeItem: (slug: string) => void;
+  addToBag: (product: ShopifyProduct, quantity?: number) => Promise<void>;
+  changeQuantity: (lineId: string, quantity: number) => Promise<void>;
+  removeItem: (lineId: string) => Promise<void>;
   itemCount: number;
+  checkoutUrl: string | null;
 };
 
 const ShopContext = createContext<ShopContextValue | undefined>(undefined);
 
 export function ShopProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [cartId, setCartId] = useState<string | null>(null);
+  const [items, setItems] = useState<ShopifyCartItem[]>([]);
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [bagOpen, setBagOpen] = useState(false);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("lioness-bag");
-    if (!saved) return;
-    try {
-      setItems(JSON.parse(saved) as CartItem[]);
-    } catch {
-      window.localStorage.removeItem("lioness-bag");
-    }
+    const savedId = window.localStorage.getItem(CART_ID_KEY);
+    if (!savedId) return;
+    getCart({ data: savedId })
+      .then((cart) => {
+        if (!cart) {
+          window.localStorage.removeItem(CART_ID_KEY);
+          return;
+        }
+        setCartId(cart.id);
+        setItems(cart.items);
+        setCheckoutUrl(cart.checkoutUrl);
+      })
+      .catch(() => window.localStorage.removeItem(CART_ID_KEY));
   }, []);
 
-  useEffect(() => {
-    window.localStorage.setItem("lioness-bag", JSON.stringify(items));
-  }, [items]);
-
-  const value = useMemo<ShopContextValue>(() => ({
-    items,
-    bagOpen,
-    setBagOpen,
-    addToBag: (product, quantity = 1) => {
-      setItems((current) => {
-        const existing = current.find((item) => item.slug === product.slug);
-        return existing
-          ? current.map((item) => item.slug === product.slug ? { ...item, quantity: item.quantity + quantity } : item)
-          : [...current, { ...product, quantity }];
-      });
-      setBagOpen(true);
-    },
-    changeQuantity: (slug, quantity) => setItems((current) => current.map((item) => item.slug === slug ? { ...item, quantity: Math.max(1, quantity) } : item)),
-    removeItem: (slug) => setItems((current) => current.filter((item) => item.slug !== slug)),
-    itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
-  }), [bagOpen, items]);
+  const value = useMemo<ShopContextValue>(
+    () => ({
+      items,
+      bagOpen,
+      setBagOpen,
+      checkoutUrl,
+      addToBag: async (product, quantity = 1) => {
+        const cart = await addToCart({
+          data: { cartId: cartId ?? undefined, variantId: product.variantId, quantity },
+        });
+        setCartId(cart.id);
+        window.localStorage.setItem(CART_ID_KEY, cart.id);
+        setItems(cart.items);
+        setCheckoutUrl(cart.checkoutUrl);
+        setBagOpen(true);
+      },
+      changeQuantity: async (lineId, quantity) => {
+        if (!cartId || quantity < 1) return;
+        const cart = await updateCartLineQuantity({ data: { cartId, lineId, quantity } });
+        setItems(cart.items);
+        setCheckoutUrl(cart.checkoutUrl);
+      },
+      removeItem: async (lineId) => {
+        if (!cartId) return;
+        const cart = await removeFromCart({ data: { cartId, lineId } });
+        setItems(cart.items);
+        setCheckoutUrl(cart.checkoutUrl);
+      },
+      itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
+    }),
+    [bagOpen, items, cartId, checkoutUrl],
+  );
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 }

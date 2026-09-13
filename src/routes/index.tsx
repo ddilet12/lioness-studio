@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import heroImage from "@/assets/lioness-hero.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
 import storyImage from "@/assets/lioness-story.jpg";
-import { products } from "@/lib/products";
+import { formatPrice } from "@/lib/products";
+import { getProducts } from "@/lib/shopify.server";
 
 export const Route = createFileRoute("/")({
+  loader: () => getProducts(),
   head: () => ({
     meta: [
       { title: "Lioness Dress — Black Angel Collection" },
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const products = Route.useLoaderData();
   const [filter, setFilter] = useState<"ALL" | "BLACK" | "RED">("ALL");
   const visibleProducts = products.filter((product) => filter === "ALL" || product.color === filter);
 
@@ -62,7 +65,7 @@ function Index() {
       <div className="product-grid">
         {visibleProducts.map((product) => <Link to="/product/$slug" params={{ slug: product.slug }} className="product-card" key={product.slug}>
           <div className="product-card__image"><span>NEW IN</span><img src={product.image} alt={product.name} width={1024} height={1280} loading="lazy" /></div>
-          <h3>{product.name}</h3><p>{`$${product.price}.00`}</p>
+          <h3>{product.name}</h3><p>{formatPrice(product.price)}</p>
         </Link>)}
       </div>
     </section>

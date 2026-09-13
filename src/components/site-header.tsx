@@ -1,18 +1,26 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, Search, ShoppingBag, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
-import { products } from "@/lib/products";
+import { getProducts, type ShopifyProduct } from "@/lib/shopify.server";
 
 export function SiteHeader() {
   const path = useRouterState({ select: (state) => state.location.pathname });
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [searchableProducts, setSearchableProducts] = useState<ShopifyProduct[]>([]);
   const { itemCount, setBagOpen } = useShop();
   const home = path === "/";
-  const matches = query.trim() ? products.filter((product) => product.name.toLowerCase().includes(query.toLowerCase())) : [];
+  const matches = query.trim()
+    ? searchableProducts.filter((product) => product.name.toLowerCase().includes(query.toLowerCase()))
+    : [];
+
+  useEffect(() => {
+    if (!searchOpen || searchableProducts.length) return;
+    getProducts().then(setSearchableProducts);
+  }, [searchOpen, searchableProducts.length]);
 
   return (
     <>

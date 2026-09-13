@@ -3,11 +3,12 @@ import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
-import { formatPrice, products } from "@/lib/products";
+import { formatPrice } from "@/lib/products";
+import { getProductByHandle } from "@/lib/shopify.server";
 
 export const Route = createFileRoute("/product/$slug")({
-  loader: ({ params }) => {
-    const product = products.find((item) => item.slug === params.slug);
+  loader: async ({ params }) => {
+    const product = await getProductByHandle({ data: params.slug });
     if (!product) throw notFound();
     return product;
   },
