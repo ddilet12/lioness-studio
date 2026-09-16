@@ -1,8 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Heart, Plus } from "lucide-react";
 import heroImage from "@/assets/lioness-hero.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
 import storyImage from "@/assets/lioness-story.jpg";
+import { Button } from "@/components/ui/button";
+import { useShop } from "@/components/shop-context";
 import { formatPrice } from "@/lib/products";
 import { getProducts } from "@/lib/shopify.server";
 
@@ -25,6 +28,7 @@ function Index() {
   const products = Route.useLoaderData();
   const [filter, setFilter] = useState<"ALL" | "BLACK" | "RED">("ALL");
   const visibleProducts = products.filter((product) => filter === "ALL" || product.color === filter);
+  const { addToBag, toggleWishlist, isWishlisted } = useShop();
 
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
@@ -64,7 +68,34 @@ function Index() {
       </div>
       <div className="product-grid">
         {visibleProducts.map((product) => <Link to="/product/$slug" params={{ slug: product.slug }} className="product-card" key={product.slug}>
-          <div className="product-card__image"><span>NEW IN</span><img src={product.image} alt={product.name} width={1024} height={1280} loading="lazy" /></div>
+          <div className="product-card__image">
+            <span>NEW IN</span>
+            <button
+              type="button"
+              className={`product-card__wish ${isWishlisted(product.slug) ? "is-active" : ""}`}
+              aria-label={isWishlisted(product.slug) ? "Remove from wishlist" : "Save to wishlist"}
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                toggleWishlist({ slug: product.slug, name: product.name, price: product.price, image: product.image });
+              }}
+            >
+              <Heart />
+            </button>
+            <img src={product.image} alt={product.name} width={1024} height={1280} loading="lazy" />
+            <Button
+              variant="luxury"
+              size="plain"
+              className="product-card__quick-add"
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                addToBag(product);
+              }}
+            >
+              <Plus /> ADD TO BAG
+            </Button>
+          </div>
           <h3>{product.name}</h3><p>{formatPrice(product.price)}</p>
         </Link>)}
       </div>

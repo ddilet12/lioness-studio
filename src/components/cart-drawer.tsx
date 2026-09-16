@@ -2,11 +2,13 @@ import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { formatPrice } from "@/lib/products";
-import { useShop } from "@/components/shop-context";
+import { FREE_SHIPPING_THRESHOLD, useShop } from "@/components/shop-context";
 
 export function CartDrawer() {
   const { items, bagOpen, setBagOpen, changeQuantity, removeItem, checkoutUrl } = useShop();
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - total);
+  const progress = Math.min(100, (total / FREE_SHIPPING_THRESHOLD) * 100);
   return (
     <Sheet open={bagOpen} onOpenChange={setBagOpen}>
       <SheetContent className="bag-drawer">
@@ -14,6 +16,12 @@ export function CartDrawer() {
           <SheetTitle>YOUR BAG</SheetTitle>
           <SheetDescription>{items.length ? `${items.length} selected style${items.length > 1 ? "s" : ""}` : "Your bag is empty."}</SheetDescription>
         </SheetHeader>
+        {items.length > 0 && (
+          <div className="shipping-progress">
+            <p>{remaining > 0 ? <>Add {formatPrice(remaining)} more for free shipping</> : "You've unlocked free shipping"}</p>
+            <div className="shipping-progress__track"><div className="shipping-progress__fill" style={{ width: `${progress}%` }} /></div>
+          </div>
+        )}
         <div className="bag-list">
           {items.map((item) => <article key={item.lineId} className="bag-item">
             <img src={item.image} alt={item.name} width={1024} height={1280} />

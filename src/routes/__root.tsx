@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ShopProvider } from "../components/shop-context";
 import { SiteHeader } from "../components/site-header";
 import { CartDrawer } from "../components/cart-drawer";
+import { WishlistDrawer } from "../components/wishlist-drawer";
 
 function NotFoundComponent() {
   return (
@@ -125,6 +126,7 @@ function RootComponent() {
         <SiteHeader />
         <Outlet />
         <CartDrawer />
+        <WishlistDrawer />
       </ShopProvider>
     </QueryClientProvider>
   );

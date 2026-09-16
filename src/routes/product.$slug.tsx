@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { Minus, Plus } from "lucide-react";
+import { Heart, Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
 import { formatPrice } from "@/lib/products";
@@ -28,12 +28,23 @@ export const Route = createFileRoute("/product/$slug")({
 function ProductPage() {
   const product = Route.useLoaderData();
   const [quantity, setQuantity] = useState(1);
-  const { addToBag } = useShop();
+  const { addToBag, toggleWishlist, isWishlisted } = useShop();
+  const wishlisted = isWishlisted(product.slug);
   return <main className="product-page">
     <div className="product-page__image"><img src={product.image} alt={product.name} width={1024} height={1280} /></div>
     <section className="product-page__details">
       <p className="eyebrow">BLACK ANGEL · PARIS 2026</p>
-      <h1>{product.name}</h1>
+      <div className="product-page__title-row">
+        <h1>{product.name}</h1>
+        <button
+          type="button"
+          className={`product-page__wish ${wishlisted ? "is-active" : ""}`}
+          aria-label={wishlisted ? "Remove from wishlist" : "Save to wishlist"}
+          onClick={() => toggleWishlist({ slug: product.slug, name: product.name, price: product.price, image: product.image })}
+        >
+          <Heart />
+        </button>
+      </div>
       <p className="product-page__price">{formatPrice(product.price)}</p>
       <p className="product-page__description">{product.description}</p>
       <div className="size-row"><span>SIZE</span>{["XS", "S", "M", "L"].map((size) => <Button key={size} variant="quantity" size="iconSlim">{size}</Button>)}</div>
