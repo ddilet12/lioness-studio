@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Heart, Plus } from "lucide-react";
 import heroImage from "@/assets/lioness-hero.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
@@ -30,6 +30,7 @@ function Index() {
   const [filter, setFilter] = useState<"ALL" | "BLACK" | "RED">("ALL");
   const visibleProducts = products.filter((product) => filter === "ALL" || product.color === filter);
   const { addToBag, toggleWishlist, isWishlisted } = useShop();
+  const heroImageWrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
@@ -40,9 +41,28 @@ function Index() {
     return () => observer.disconnect();
   }, []);
 
+  // Subtle parallax: the hero photo lags slightly behind scroll, capped and rAF-throttled.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const offset = Math.min(window.scrollY * 0.12, 70);
+        if (heroImageWrapRef.current) heroImageWrapRef.current.style.transform = `translateY(${offset}px)`;
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return <main>
     <section className="hero" aria-label="Black Angel collection">
-      <img className="hero__image" src={heroImage} alt="Woman wearing the Black Angel dress inside a private jet" width={1536} height={1920} />
+      <div className="hero__image-wrap" ref={heroImageWrapRef}>
+        <img className="hero__image" src={heroImage} alt="Woman wearing the Black Angel dress inside a private jet" width={1536} height={1920} />
+      </div>
       <div className="hero__shade" />
       <div className="hero__copy">
         <p className="eyebrow">PARIS 2026</p>

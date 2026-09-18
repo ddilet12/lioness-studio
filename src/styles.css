@@ -76,11 +76,14 @@ button { font: inherit; }
 .wishlist-icon.is-active, .product-card__wish.is-active svg, .product-page__wish.is-active svg { fill: currentColor; }
 
 .hero { position: relative; height: min(100vh, 940px); min-height: 690px; overflow: hidden; color: var(--primary-foreground); background: var(--primary); }
-.hero__image { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center 45%; animation: hero-in 1.4s cubic-bezier(.2,.7,.2,1) both; }
+.hero__image-wrap { position: absolute; inset: 0; will-change: transform; }
+.hero__image { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center 8%; animation: hero-in 1.8s cubic-bezier(.2,.7,.2,1) both; }
 .hero__shade { position: absolute; inset: 0; background: linear-gradient(90deg, color-mix(in oklab, var(--primary) 44%, transparent), transparent 57%), linear-gradient(0deg, color-mix(in oklab, var(--primary) 28%, transparent), transparent 45%); }
-.hero__copy { position: absolute; left: clamp(24px, 4vw, 64px); bottom: 20%; animation: copy-in 1s .25s ease both; }
+.hero__copy { position: absolute; left: clamp(24px, 4vw, 64px); bottom: 20%; }
+.hero__copy .eyebrow { animation: copy-in .8s .4s cubic-bezier(.2,.7,.2,1) both; }
+.hero h1 { margin: 0 0 34px; font: 400 clamp(62px, 7.2vw, 112px)/.75 var(--font-serif); letter-spacing: 0; animation: copy-in .9s .75s cubic-bezier(.2,.7,.2,1) both; }
+.hero__copy .text-link { animation: copy-in .8s 1.15s cubic-bezier(.2,.7,.2,1) both; }
 .eyebrow { margin: 0 0 25px; font-size: 8px; font-weight: 500; line-height: 1.2; letter-spacing: 0; }
-.hero h1 { margin: 0 0 34px; font: 400 clamp(62px, 7.2vw, 112px)/.75 var(--font-serif); letter-spacing: 0; }
 .text-link { display: inline-flex; gap: 10px; align-items: center; font-size: 8px; font-weight: 500; padding-bottom: 4px; border-bottom: 1px solid currentColor; }
 .text-link--light { color: var(--primary-foreground); }
 .hero__meta { position: absolute; left: clamp(24px, 4vw, 64px); right: clamp(24px, 4vw, 64px); bottom: 25px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 28px; font-size: 6px; }
@@ -140,7 +143,7 @@ button { font: inherit; }
 
 [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity 850ms ease, transform 850ms ease; }
 [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
-@keyframes hero-in { from { opacity: 0; transform: scale(1.03); } to { opacity: 1; transform: scale(1); } }
+@keyframes hero-in { from { opacity: 0; transform: scale(1.08); } to { opacity: 1; transform: scale(1); } }
 @keyframes copy-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 
 .menu-panel, .search-overlay { position: fixed; inset: 0; z-index: 60; background: var(--background); color: var(--foreground); }
