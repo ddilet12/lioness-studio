@@ -60,7 +60,8 @@ button { font: inherit; }
 .site-header__right { justify-content: flex-end; }
 .site-header a, .site-header button { transition: opacity 400ms ease; }
 .site-header a:hover, .site-header button:hover { opacity: .62; }
-.site-logo { font: 500 24px/1 var(--font-serif); }
+.site-logo { display: flex; align-items: center; }
+.site-logo img { height: 26px; width: auto; display: block; }
 .site-header__mobile { display: none; justify-self: end; }
 
 .shop-menu { position: relative; }
@@ -130,8 +131,8 @@ button { font: inherit; }
 .story__copy p { margin: 0 0 42px; }
 
 .footer { min-height: 185px; display: grid; grid-template-columns: 1.8fr repeat(3, 1fr); gap: 55px; padding-top: 44px; padding-bottom: 45px; background: var(--footer); color: var(--footer-foreground); font-size: 8px; }
-.footer__brand strong { display: block; color: oklch(0.68 0.07 67); font: 400 30px/1 var(--font-serif); }
-.footer__brand span { display: block; margin-top: 10px; font: 400 8px var(--font-serif); }
+.footer__brand img { display: block; height: 48px; width: auto; }
+.footer__brand span { display: block; margin-top: 14px; font: 400 8px var(--font-serif); }
 .footer__brand small { display: block; margin-top: 17px; font-size: 5px; }
 .footer h3 { margin: 2px 0 17px; font-size: 7px; font-weight: 400; }
 .footer a { display: block; line-height: 1.75; color: color-mix(in oklab, var(--footer-foreground) 76%, transparent); }
@@ -143,6 +144,7 @@ button { font: inherit; }
 
 .menu-panel, .search-overlay { position: fixed; inset: 0; z-index: 60; background: var(--background); color: var(--foreground); }
 .menu-panel { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; font: 400 29px var(--font-serif); }
+.menu-panel__logo img { height: 40px; width: auto; }
 .menu-panel__close, .search-overlay__close { position: absolute; top: 20px; right: 20px; }
 .search-overlay { padding: 18vh 8vw; }
 .search-overlay label { display: block; margin-bottom: 25px; font-size: 8px; }
@@ -214,8 +216,7 @@ button { font: inherit; }
   .story { display: flex; flex-direction: column; min-height: 0; gap: 36px; padding-top: 62px; padding-bottom: 68px; }
   .story img { order: 2; max-height: none; }
   .story__copy { order: 3; align-self: flex-end; }
-  .footer { grid-template-columns: 1fr 1fr; min-height: 440px; gap: 38px 30px; }
-  .footer__brand { grid-column: 1 / -1; }
+  .footer { grid-template-columns: 1fr; min-height: 0; gap: 38px; }
   .product-page { grid-template-columns: 1fr; }
   .product-page__image { min-height: 0; height: 58vh; }
   .product-page__details { padding: 55px 24px 80px; }

@@ -4,6 +4,7 @@ import { Heart, Plus } from "lucide-react";
 import heroImage from "@/assets/lioness-hero.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
 import storyImage from "@/assets/lioness-story.jpg";
+import logoBadge from "@/assets/logo-badge.svg";
 import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
 import { formatPrice } from "@/lib/products";
@@ -114,10 +115,10 @@ function Index() {
     </section>
 
     <footer className="footer section-pad">
-      <div className="footer__brand"><strong>LD</strong><span>LIONESS DRESS</span><small>DESIGNED FOR SELF-CONFIDENT GIRLS</small></div>
+      <div className="footer__brand"><img src={logoBadge} alt="Lioness Dress" /><span>LIONESS DRESS</span><small>Dresses for self-confident girls</small></div>
       <div><h3>CLIENT CARE</h3><a href="mailto:info@lionessdress.com">Contact</a><a href="#delivery">Delivery & returns</a><a href="#size-guide">Size guide</a></div>
-      <div><h3>FOLLOW</h3><a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a><a href="https://wa.me/" target="_blank" rel="noreferrer">WhatsApp</a></div>
-      <div><h3>PRIVATE ACCESS</h3><a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.lionessdress.com">www.lionessdress.com</a></div>
+      <div><h3>FOLLOW</h3><a href="https://instagram.com/lioness.dress" target="_blank" rel="noreferrer">Instagram</a><a href="https://wa.me/77789654642" target="_blank" rel="noreferrer">WhatsApp</a></div>
+      <div><h3>PRIVATE ACCESS</h3><a href="https://instagram.com/lioness.dress" target="_blank" rel="noreferrer">Instagram</a><a href="https://lionessdress.com">lionessdress.com</a></div>
     </footer>
   </main>;
 }

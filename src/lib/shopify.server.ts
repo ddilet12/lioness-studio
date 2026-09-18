@@ -1,6 +1,24 @@
 import { createStorefrontApiClient } from "@shopify/storefront-api-client";
 import { createServerFn } from "@tanstack/react-start";
 import type { Product } from "@/lib/products";
+import placeholderAsymmetric from "@/assets/product-asymmetric.jpg";
+import placeholderMidi from "@/assets/product-midi.jpg";
+import placeholderRouge from "@/assets/product-rouge.jpg";
+import placeholderVelvet from "@/assets/product-velvet.jpg";
+
+// Temporary local fallback images for the "(заглушка)" placeholder products,
+// used until real product photography is uploaded in Shopify.
+const PLACEHOLDER_IMAGES: Record<string, string> = {
+  "the-asymmetric": placeholderAsymmetric,
+  "black-angel-midi": placeholderMidi,
+  "rouge-obsession": placeholderRouge,
+  "velvet-rebellion": placeholderVelvet,
+};
+
+function resolvePlaceholderImage(handle: string): string | undefined {
+  const match = Object.keys(PLACEHOLDER_IMAGES).find((key) => handle.startsWith(key));
+  return match ? PLACEHOLDER_IMAGES[match] : undefined;
+}
 
 export type ShopifyProduct = Product & { variantId: string };
 
@@ -67,7 +85,7 @@ function mapProduct(node: any): ShopifyProduct {
     name: node.title,
     price: Number(node.priceRange.minVariantPrice.amount),
     color: deriveColor(node.tags ?? []),
-    image: node.featuredImage?.url ?? "",
+    image: node.featuredImage?.url ?? resolvePlaceholderImage(node.handle) ?? "",
     description: node.description ?? "",
     variantId: node.variants.edges[0]?.node.id ?? "",
   };

@@ -6,6 +6,7 @@ import { useShop } from "@/components/shop-context";
 import { getProducts, type ShopifyProduct } from "@/lib/shopify.server";
 import heroImage from "@/assets/lioness-hero.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
+import logoMark from "@/assets/logo-mark.svg";
 
 export function SiteHeader() {
   const path = useRouterState({ select: (state) => state.location.pathname });
@@ -54,7 +55,7 @@ export function SiteHeader() {
             <Link to="/" hash="collection">BLACK ANGEL</Link>
             <Link to="/" hash="story">OUR STORY</Link>
           </div>
-          <Link to="/" className="site-logo" aria-label="Lioness Dress home">LD</Link>
+          <Link to="/" className="site-logo" aria-label="Lioness Dress home"><img src={logoMark} alt="Lioness Dress" /></Link>
           <div className="site-header__right">
             <Button variant="editorial" size="plain" onClick={() => setSearchOpen(true)}>SEARCH</Button>
             <Button variant="editorial" size="plain" onClick={() => setWishlistOpen(true)} aria-label="Open wishlist">
@@ -68,7 +69,7 @@ export function SiteHeader() {
 
       {menuOpen && <div className="menu-panel" role="dialog" aria-label="Menu">
         <Button variant="editorialDark" size="iconSlim" className="menu-panel__close" onClick={() => setMenuOpen(false)} aria-label="Close menu"><X /></Button>
-        <Link to="/" onClick={() => setMenuOpen(false)}>LD</Link>
+        <Link to="/" className="menu-panel__logo" onClick={() => setMenuOpen(false)}><img src={logoMark} alt="Lioness Dress" /></Link>
         <Link to="/" hash="collection" onClick={() => setMenuOpen(false)}>SHOP</Link>
         <Link to="/" hash="collection" onClick={() => setMenuOpen(false)}>BLACK ANGEL</Link>
         <Link to="/" hash="story" onClick={() => setMenuOpen(false)}>OUR STORY</Link>
