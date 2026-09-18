@@ -115,9 +115,9 @@ function Index() {
     </section>
 
     <footer className="footer section-pad">
-      <div className="footer__brand"><img src={logoBadge} alt="Lioness Dress" /><span>LIONESS DRESS</span><small>Dresses for self-confident girls</small></div>
+      <div className="footer__brand"><img src={logoBadge} alt="Lioness Dress" /><span>LIONESS DRESS</span><small>Dress for self confident girls</small></div>
       <div><h3>CLIENT CARE</h3><a href="mailto:info@lionessdress.com">Contact</a><a href="#delivery">Delivery & returns</a><a href="#size-guide">Size guide</a></div>
-      <div><h3>FOLLOW</h3><a href="https://instagram.com/lioness.dress" target="_blank" rel="noreferrer">Instagram</a><a href="https://wa.me/77789654642" target="_blank" rel="noreferrer">WhatsApp</a></div>
+      <div className="footer__contact"><h3>FOLLOW</h3><a href="https://instagram.com/lioness.dress" target="_blank" rel="noreferrer">Instagram</a><a href="https://wa.me/77789654642" target="_blank" rel="noreferrer">WhatsApp</a></div>
       <div><h3>PRIVATE ACCESS</h3><a href="https://instagram.com/lioness.dress" target="_blank" rel="noreferrer">Instagram</a><a href="https://lionessdress.com">lionessdress.com</a></div>
     </footer>
   </main>;

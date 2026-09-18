@@ -136,6 +136,10 @@ button { font: inherit; }
 .footer__brand small { display: block; margin-top: 17px; font-size: 5px; }
 .footer h3 { margin: 2px 0 17px; font-size: 7px; font-weight: 400; }
 .footer a { display: block; line-height: 1.75; color: color-mix(in oklab, var(--footer-foreground) 76%, transparent); }
+.footer__contact { padding: 18px 20px; margin: -18px -20px; background: color-mix(in oklab, var(--footer-foreground) 6%, transparent); border: 1px solid color-mix(in oklab, var(--footer-foreground) 18%, transparent); }
+.footer__contact h3 { font-size: 8px; letter-spacing: .08em; }
+.footer__contact a { font: 500 22px/1.5 var(--font-serif); color: oklch(0.68 0.07 67); transition: opacity 400ms ease; }
+.footer__contact a:hover { opacity: .7; }
 
 [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity 850ms ease, transform 850ms ease; }
 [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
