@@ -25,6 +25,14 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+// Which intro video to play. "remotion" ends exactly on the hero photo, so it hands over with a plain cross-fade
+// instead of dipping through dark.
+const HERO_INTRO_VARIANT: "graded" | "remotion" = "graded";
+const HERO_INTRO = {
+  graded: { desktop: "/videos/hero-desktop.mp4", mobile: "/videos/hero-mobile.mp4", poster: "/videos/hero-poster.jpg", endsOnPhoto: false },
+  remotion: { desktop: "/videos/hero-rm-desktop.mp4", mobile: "/videos/hero-rm-mobile.mp4", poster: "/videos/hero-rm-poster.jpg", endsOnPhoto: true },
+}[HERO_INTRO_VARIANT];
+
 // The intro video plays once per full page load; in-app navigation back to "/" skips it.
 let heroIntroPlayed = false;
 
@@ -58,7 +66,7 @@ function Index() {
     const mobile = window.matchMedia("(max-width: 700px)").matches;
     video.muted = true;
     video.preload = "auto";
-    video.src = mobile ? "/videos/hero-mobile.mp4" : "/videos/hero-desktop.mp4";
+    video.src = mobile ? HERO_INTRO.mobile : HERO_INTRO.desktop;
     // Play straight away (iOS won't buffer or fire canplaythrough before play()); the guards below only
     // step in if playback never starts, or freezes for good on a very slow link.
     let stallTimer = 0;
@@ -73,8 +81,9 @@ function Index() {
       window.clearTimeout(stallTimer);
       stallTimer = window.setTimeout(() => finish(false), 3000);
     };
-    // Start the dip-to-dark slightly before the last frame so it flows instead of freezing.
-    const onTime = () => { if (video.duration && video.currentTime >= video.duration - 0.5) finish(false); };
+    // Hand over slightly before the last frame so it flows instead of freezing.
+    const handOver = HERO_INTRO.endsOnPhoto ? 0.25 : 0.5;
+    const onTime = () => { if (video.duration && video.currentTime >= video.duration - handOver) finish(false); };
     const onEnded = () => finish(false);
     const onError = () => finish(true);
     video.addEventListener("playing", onPlaying);
@@ -138,10 +147,10 @@ function Index() {
   }, []);
 
   return <main>
-    <section className={`hero${heroDone ? " hero--done" : ""}${heroFallback ? " hero--fallback" : ""}`} aria-label="Black Angel collection">
+    <section className={`hero${HERO_INTRO.endsOnPhoto ? " hero--seamless" : ""}${heroDone ? " hero--done" : ""}${heroFallback ? " hero--fallback" : ""}`} aria-label="Black Angel collection">
       <div className="hero__image-wrap" ref={heroImageWrapRef}>
         <img className="hero__image" src={heroImage} alt="Woman wearing the Black Angel dress inside a private jet" width={1536} height={1920} />
-        <video className="hero__video" ref={heroVideoRef} poster="/videos/hero-poster.jpg" muted playsInline preload="none" aria-hidden="true" tabIndex={-1} />
+        <video className="hero__video" ref={heroVideoRef} poster={HERO_INTRO.poster} muted playsInline preload="none" aria-hidden="true" tabIndex={-1} />
       </div>
       <div className="hero__shade" />
       <div className="hero__copy">

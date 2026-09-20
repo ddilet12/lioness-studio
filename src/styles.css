@@ -84,6 +84,10 @@ button { font: inherit; }
 .hero--done .hero__image { animation: hero-in 1.8s var(--hero-delay) cubic-bezier(.2,.7,.2,1) both; }
 .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 15%; opacity: 1; transition: opacity .9s ease; pointer-events: none; background: var(--primary); }
 .hero--done .hero__video { opacity: 0; }
+/* Intro that ends on the hero photo itself: same framing, so swap with a plain cross-fade (no scale-in). */
+.hero--seamless { --hero-delay: 0s; }
+.hero--seamless .hero__video { object-position: center 8%; transition-duration: .7s; }
+.hero--seamless.hero--done .hero__image { animation: none; opacity: 1; }
 .hero__shade { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s calc(var(--hero-delay) + .1s) ease; background: linear-gradient(90deg, color-mix(in oklab, var(--primary) 44%, transparent), transparent 57%), linear-gradient(0deg, color-mix(in oklab, var(--primary) 28%, transparent), transparent 45%); }
 .hero--done .hero__shade { opacity: 1; }
 .hero__copy { position: absolute; left: clamp(24px, 4vw, 64px); bottom: 20%; }
@@ -206,7 +210,7 @@ button { font: inherit; }
   .site-header__mobile { display: inline-flex; grid-column: 3; }
   .site-logo { grid-column: 2; }
   .hero { min-height: 650px; height: 100svh; }
-  .hero__image { object-position: 48% center; }
+  .hero__image, .hero--seamless .hero__video { object-position: 48% center; }
   .hero__copy { left: 24px; bottom: 17%; }
   .hero h1 { font-size: 64px; }
   .hero__meta { left: 20px; right: 20px; bottom: 18px; gap: 13px; }
