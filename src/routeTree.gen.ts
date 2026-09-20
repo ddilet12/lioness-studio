@@ -18,7 +18,6 @@ import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ReturnsExchangesRouteImport } from './routes/returns-exchanges'
 import { Route as SizeGuideRouteImport } from './routes/size-guide'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
-import { Route as WholesaleEnquiriesRouteImport } from './routes/wholesale-enquiries'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -66,11 +65,6 @@ const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
   path: '/terms-of-service',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WholesaleEnquiriesRoute = WholesaleEnquiriesRouteImport.update({
-  id: '/wholesale-enquiries',
-  path: '/wholesale-enquiries',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProductSlugRoute = ProductSlugRouteImport.update({
   id: '/product/$slug',
   path: '/product/$slug',
@@ -87,7 +81,6 @@ export interface FileRoutesByFullPath {
   '/returns-exchanges': typeof ReturnsExchangesRoute
   '/size-guide': typeof SizeGuideRoute
   '/terms-of-service': typeof TermsOfServiceRoute
-  '/wholesale-enquiries': typeof WholesaleEnquiriesRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesByTo {
@@ -100,7 +93,6 @@ export interface FileRoutesByTo {
   '/returns-exchanges': typeof ReturnsExchangesRoute
   '/size-guide': typeof SizeGuideRoute
   '/terms-of-service': typeof TermsOfServiceRoute
-  '/wholesale-enquiries': typeof WholesaleEnquiriesRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesById {
@@ -114,7 +106,6 @@ export interface FileRoutesById {
   '/returns-exchanges': typeof ReturnsExchangesRoute
   '/size-guide': typeof SizeGuideRoute
   '/terms-of-service': typeof TermsOfServiceRoute
-  '/wholesale-enquiries': typeof WholesaleEnquiriesRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRouteTypes {
@@ -129,7 +120,6 @@ export interface FileRouteTypes {
     | '/returns-exchanges'
     | '/size-guide'
     | '/terms-of-service'
-    | '/wholesale-enquiries'
     | '/product/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -142,7 +132,6 @@ export interface FileRouteTypes {
     | '/returns-exchanges'
     | '/size-guide'
     | '/terms-of-service'
-    | '/wholesale-enquiries'
     | '/product/$slug'
   id:
     | '__root__'
@@ -155,7 +144,6 @@ export interface FileRouteTypes {
     | '/returns-exchanges'
     | '/size-guide'
     | '/terms-of-service'
-    | '/wholesale-enquiries'
     | '/product/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -169,7 +157,6 @@ export interface RootRouteChildren {
   ReturnsExchangesRoute: typeof ReturnsExchangesRoute
   SizeGuideRoute: typeof SizeGuideRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
-  WholesaleEnquiriesRoute: typeof WholesaleEnquiriesRoute
   ProductSlugRoute: typeof ProductSlugRoute
 }
 
@@ -238,13 +225,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsOfServiceRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/wholesale-enquiries': {
-      id: '/wholesale-enquiries'
-      path: '/wholesale-enquiries'
-      fullPath: '/wholesale-enquiries'
-      preLoaderRoute: typeof WholesaleEnquiriesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/product/$slug': {
       id: '/product/$slug'
       path: '/product/$slug'
@@ -265,7 +245,6 @@ const rootRouteChildren: RootRouteChildren = {
   ReturnsExchangesRoute: ReturnsExchangesRoute,
   SizeGuideRoute: SizeGuideRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
-  WholesaleEnquiriesRoute: WholesaleEnquiriesRoute,
   ProductSlugRoute: ProductSlugRoute,
 }
 export const routeTree = rootRouteImport
