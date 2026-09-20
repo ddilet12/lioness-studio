@@ -10,11 +10,65 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutUsRouteImport } from './routes/about-us'
+import { Route as DeliveryRouteImport } from './routes/delivery'
+import { Route as LoyaltyProgramRouteImport } from './routes/loyalty-program'
+import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as ReturnsExchangesRouteImport } from './routes/returns-exchanges'
+import { Route as SizeGuideRouteImport } from './routes/size-guide'
+import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
+import { Route as WholesaleEnquiriesRouteImport } from './routes/wholesale-enquiries'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutUsRoute = AboutUsRouteImport.update({
+  id: '/about-us',
+  path: '/about-us',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeliveryRoute = DeliveryRouteImport.update({
+  id: '/delivery',
+  path: '/delivery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoyaltyProgramRoute = LoyaltyProgramRouteImport.update({
+  id: '/loyalty-program',
+  path: '/loyalty-program',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnersRoute = PartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReturnsExchangesRoute = ReturnsExchangesRouteImport.update({
+  id: '/returns-exchanges',
+  path: '/returns-exchanges',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SizeGuideRoute = SizeGuideRouteImport.update({
+  id: '/size-guide',
+  path: '/size-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
+  id: '/terms-of-service',
+  path: '/terms-of-service',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WholesaleEnquiriesRoute = WholesaleEnquiriesRouteImport.update({
+  id: '/wholesale-enquiries',
+  path: '/wholesale-enquiries',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductSlugRoute = ProductSlugRouteImport.update({
@@ -25,27 +79,97 @@ const ProductSlugRoute = ProductSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about-us': typeof AboutUsRoute
+  '/delivery': typeof DeliveryRoute
+  '/loyalty-program': typeof LoyaltyProgramRoute
+  '/partners': typeof PartnersRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/returns-exchanges': typeof ReturnsExchangesRoute
+  '/size-guide': typeof SizeGuideRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
+  '/wholesale-enquiries': typeof WholesaleEnquiriesRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about-us': typeof AboutUsRoute
+  '/delivery': typeof DeliveryRoute
+  '/loyalty-program': typeof LoyaltyProgramRoute
+  '/partners': typeof PartnersRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/returns-exchanges': typeof ReturnsExchangesRoute
+  '/size-guide': typeof SizeGuideRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
+  '/wholesale-enquiries': typeof WholesaleEnquiriesRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about-us': typeof AboutUsRoute
+  '/delivery': typeof DeliveryRoute
+  '/loyalty-program': typeof LoyaltyProgramRoute
+  '/partners': typeof PartnersRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/returns-exchanges': typeof ReturnsExchangesRoute
+  '/size-guide': typeof SizeGuideRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
+  '/wholesale-enquiries': typeof WholesaleEnquiriesRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/product/$slug'
+  fullPaths:
+    | '/'
+    | '/about-us'
+    | '/delivery'
+    | '/loyalty-program'
+    | '/partners'
+    | '/privacy-policy'
+    | '/returns-exchanges'
+    | '/size-guide'
+    | '/terms-of-service'
+    | '/wholesale-enquiries'
+    | '/product/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/product/$slug'
-  id: '__root__' | '/' | '/product/$slug'
+  to:
+    | '/'
+    | '/about-us'
+    | '/delivery'
+    | '/loyalty-program'
+    | '/partners'
+    | '/privacy-policy'
+    | '/returns-exchanges'
+    | '/size-guide'
+    | '/terms-of-service'
+    | '/wholesale-enquiries'
+    | '/product/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/about-us'
+    | '/delivery'
+    | '/loyalty-program'
+    | '/partners'
+    | '/privacy-policy'
+    | '/returns-exchanges'
+    | '/size-guide'
+    | '/terms-of-service'
+    | '/wholesale-enquiries'
+    | '/product/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutUsRoute: typeof AboutUsRoute
+  DeliveryRoute: typeof DeliveryRoute
+  LoyaltyProgramRoute: typeof LoyaltyProgramRoute
+  PartnersRoute: typeof PartnersRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  ReturnsExchangesRoute: typeof ReturnsExchangesRoute
+  SizeGuideRoute: typeof SizeGuideRoute
+  TermsOfServiceRoute: typeof TermsOfServiceRoute
+  WholesaleEnquiriesRoute: typeof WholesaleEnquiriesRoute
   ProductSlugRoute: typeof ProductSlugRoute
 }
 
@@ -56,6 +180,69 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about-us': {
+      id: '/about-us'
+      path: '/about-us'
+      fullPath: '/about-us'
+      preLoaderRoute: typeof AboutUsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/delivery': {
+      id: '/delivery'
+      path: '/delivery'
+      fullPath: '/delivery'
+      preLoaderRoute: typeof DeliveryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/loyalty-program': {
+      id: '/loyalty-program'
+      path: '/loyalty-program'
+      fullPath: '/loyalty-program'
+      preLoaderRoute: typeof LoyaltyProgramRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partners': {
+      id: '/partners'
+      path: '/partners'
+      fullPath: '/partners'
+      preLoaderRoute: typeof PartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/returns-exchanges': {
+      id: '/returns-exchanges'
+      path: '/returns-exchanges'
+      fullPath: '/returns-exchanges'
+      preLoaderRoute: typeof ReturnsExchangesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/size-guide': {
+      id: '/size-guide'
+      path: '/size-guide'
+      fullPath: '/size-guide'
+      preLoaderRoute: typeof SizeGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms-of-service': {
+      id: '/terms-of-service'
+      path: '/terms-of-service'
+      fullPath: '/terms-of-service'
+      preLoaderRoute: typeof TermsOfServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wholesale-enquiries': {
+      id: '/wholesale-enquiries'
+      path: '/wholesale-enquiries'
+      fullPath: '/wholesale-enquiries'
+      preLoaderRoute: typeof WholesaleEnquiriesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/product/$slug': {
@@ -70,6 +257,15 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutUsRoute: AboutUsRoute,
+  DeliveryRoute: DeliveryRoute,
+  LoyaltyProgramRoute: LoyaltyProgramRoute,
+  PartnersRoute: PartnersRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
+  ReturnsExchangesRoute: ReturnsExchangesRoute,
+  SizeGuideRoute: SizeGuideRoute,
+  TermsOfServiceRoute: TermsOfServiceRoute,
+  WholesaleEnquiriesRoute: WholesaleEnquiriesRoute,
   ProductSlugRoute: ProductSlugRoute,
 }
 export const routeTree = rootRouteImport

@@ -21,6 +21,8 @@ type ShopContextValue = {
   wishlist: WishlistItem[];
   wishlistOpen: boolean;
   setWishlistOpen: (open: boolean) => void;
+  searchOpen: boolean;
+  setSearchOpen: (open: boolean) => void;
   toggleWishlist: (item: WishlistItem) => void;
   isWishlisted: (slug: string) => boolean;
 };
@@ -34,6 +36,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [bagOpen, setBagOpen] = useState(false);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [wishlistOpen, setWishlistOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const savedId = window.localStorage.getItem(CART_ID_KEY);
@@ -70,6 +73,8 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       wishlist,
       wishlistOpen,
       setWishlistOpen,
+      searchOpen,
+      setSearchOpen,
       toggleWishlist: (item) => {
         setWishlist((current) => {
           const exists = current.some((entry) => entry.slug === item.slug);
@@ -103,7 +108,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       },
       itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
     }),
-    [bagOpen, items, cartId, checkoutUrl, wishlist, wishlistOpen],
+    [bagOpen, items, cartId, checkoutUrl, wishlist, wishlistOpen, searchOpen],
   );
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;

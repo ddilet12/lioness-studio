@@ -94,6 +94,9 @@ button { font: inherit; }
 .manifesto__grid { display: grid; grid-template-columns: 1.15fr .85fr; align-items: end; max-width: 1200px; margin-top: 38px; }
 .manifesto h2 { margin: 0; font: 400 clamp(58px, 7.4vw, 112px)/.78 var(--font-serif); letter-spacing: 0; }
 .manifesto h2 span { color: var(--red); display: inline-block; transform: translateX(36%); }
+/* Russian words are longer than the English headline: scale the display type so it stays inside the layout. */
+html[lang="ru"] .manifesto h2 { font-size: clamp(46px, 5.6vw, 88px); }
+html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .manifesto__grid > p { margin: 0 0 6px; font: 400 17px/1.18 var(--font-serif); }
 .mobile-only { display: none; }
 
@@ -133,13 +136,29 @@ button { font: inherit; }
 .story__copy { align-self: center; font: 400 15px/1.3 var(--font-serif); }
 .story__copy p { margin: 0 0 42px; }
 
-.footer { min-height: 185px; display: grid; grid-template-columns: 1.8fr repeat(3, 1fr); gap: 70px; padding-top: 56px; padding-bottom: 58px; background: var(--footer); color: var(--footer-foreground); font-size: 10px; }
+.footer { min-height: 185px; display: grid; grid-template-columns: 1.3fr repeat(4, minmax(0, 1fr)); gap: 46px 44px; padding-top: 56px; padding-bottom: 58px; background: var(--footer); color: var(--footer-foreground); font-size: 10px; }
 .footer__brand img { display: block; height: 60px; width: auto; }
 .footer__brand span { display: block; margin-top: 18px; font: 400 13px var(--font-serif); letter-spacing: .04em; }
 .footer__brand small { display: block; margin-top: 21px; font-size: 11px; }
-.footer h3 { margin: 2px 0 21px; font-size: 12px; font-weight: 500; letter-spacing: .06em; color: var(--footer-foreground); }
-.footer a { display: block; line-height: 2.1; font-size: 13px; color: color-mix(in oklab, var(--footer-foreground) 76%, transparent); transition: opacity 400ms ease; }
-.footer a:hover { opacity: .7; }
+.footer__social { margin-top: 18px; }
+.footer h3 { margin: 2px 0 21px; font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--footer-foreground); }
+.footer a, .footer__link { display: block; padding: 5px 0; line-height: 1.35; font-size: 13px; color: color-mix(in oklab, var(--footer-foreground) 76%, transparent); transition: opacity 400ms ease; }
+.footer__link { width: 100%; border: 0; background: none; font-family: inherit; text-align: left; cursor: pointer; }
+.footer a:hover, .footer__link:hover { opacity: .7; }
+.footer__bottom { grid-column: 1 / -1; padding-top: 26px; border-top: 1px solid color-mix(in oklab, var(--footer-foreground) 22%, transparent); }
+.footer__lang { display: flex; align-items: center; gap: 12px; font-size: 13px; color: color-mix(in oklab, var(--footer-foreground) 76%, transparent); }
+.footer__lang button { padding: 0 0 1px; border: 0; border-bottom: 1px solid transparent; background: none; color: inherit; font: inherit; cursor: pointer; opacity: .55; transition: opacity 400ms ease; }
+.footer__lang button:hover { opacity: .85; }
+.footer__lang button[aria-pressed="true"] { opacity: 1; border-bottom-color: currentColor; }
+
+.stub-page { min-height: 60vh; padding: 120px clamp(24px, 4vw, 64px) 140px; background: var(--background); }
+.stub-page h1 { margin: 0; font: 400 clamp(44px, 6vw, 84px)/.95 var(--font-serif); letter-spacing: 0; }
+.stub-page__note { margin: 28px 0 0; font-size: 13px; color: var(--muted-foreground); }
+
+@media (max-width: 1100px) {
+  .footer { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 46px 32px; }
+  .footer__brand { grid-column: 1 / -1; }
+}
 
 [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity 850ms ease, transform 850ms ease; }
 [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
@@ -204,6 +223,8 @@ button { font: inherit; }
   .manifesto__grid { grid-template-columns: 1fr; gap: 45px; margin-top: 35px; }
   .manifesto h2 { font-size: 62px; line-height: .8; }
   .manifesto h2 span { transform: translateX(22%); }
+  html[lang="ru"] .manifesto h2 { font-size: 46px; }
+  html[lang="ru"] .manifesto h2 span { transform: translateX(10%); }
   .manifesto__grid > p { justify-self: end; font-size: 16px; }
   .mobile-only { display: inline; }
   .collection { padding-top: 70px; padding-bottom: 80px; }
@@ -220,7 +241,8 @@ button { font: inherit; }
   .story { display: flex; flex-direction: column; min-height: 0; gap: 36px; padding-top: 62px; padding-bottom: 68px; }
   .story img { order: 2; max-height: none; }
   .story__copy { order: 3; align-self: flex-end; }
-  .footer { grid-template-columns: 1fr; min-height: 0; gap: 48px; }
+  .footer { grid-template-columns: repeat(2, minmax(0, 1fr)); min-height: 0; gap: 44px 28px; }
+  .stub-page { padding-top: 72px; padding-bottom: 96px; }
   .product-page { grid-template-columns: 1fr; }
   .product-page__image { min-height: 0; height: 58vh; }
   .product-page__details { padding: 55px 24px 80px; }
