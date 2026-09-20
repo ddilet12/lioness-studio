@@ -1,18 +1,14 @@
 import { createStorefrontApiClient } from "@shopify/storefront-api-client";
 import { createServerFn } from "@tanstack/react-start";
 import { cleanProductName, type Product } from "@/lib/products";
-import placeholderAsymmetric from "@/assets/product-asymmetric.jpg";
-import placeholderMidi from "@/assets/product-midi.jpg";
-import placeholderRouge from "@/assets/product-rouge.jpg";
-import placeholderVelvet from "@/assets/product-velvet.jpg";
-
-// Temporary local fallback images for the "(заглушка)" placeholder products,
-// used until real product photography is uploaded in Shopify.
+// Local product photography, used until real photos are uploaded in Shopify. These live in /public (served as
+// static files): images imported only from server code are emitted into the server bundle, not the public
+// assets, and 404 in production. Bump `?v=` when a photo changes to bust caches.
 const PLACEHOLDER_IMAGES: Record<string, string> = {
-  "the-asymmetric": placeholderAsymmetric,
-  "black-angel-midi": placeholderMidi,
-  "rouge-obsession": placeholderRouge,
-  "velvet-rebellion": placeholderVelvet,
+  "the-asymmetric": "/products/asymmetric.jpg?v=2",
+  "black-angel-midi": "/products/midi.jpg?v=2",
+  "rouge-obsession": "/products/rouge.jpg?v=2",
+  "velvet-rebellion": "/products/velvet.jpg?v=2",
 };
 
 function resolvePlaceholderImage(handle: string): string | undefined {
