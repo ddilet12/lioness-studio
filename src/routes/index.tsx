@@ -25,12 +25,74 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+// The intro video plays once per full page load; in-app navigation back to "/" skips it.
+let heroIntroPlayed = false;
+
 function Index() {
   const products = Route.useLoaderData();
   const [filter, setFilter] = useState<"ALL" | "BLACK" | "RED">("ALL");
   const visibleProducts = products.filter((product) => filter === "ALL" || product.color === filter);
   const { addToBag, toggleWishlist, isWishlisted } = useShop();
   const heroImageWrapRef = useRef<HTMLDivElement>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
+  const [heroDone, setHeroDone] = useState(heroIntroPlayed);
+  const [heroFallback, setHeroFallback] = useState(heroIntroPlayed);
+
+  // Intro video: muted autoplay, once. Any failure/opt-out falls straight through to the photo.
+  useEffect(() => {
+    if (heroIntroPlayed) return;
+    const video = heroVideoRef.current;
+    let started = false;
+    let cancelled = false;
+    const finish = (fallback: boolean) => {
+      if (cancelled) return;
+      heroIntroPlayed = true;
+      if (fallback) setHeroFallback(true);
+      setHeroDone(true);
+    };
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+    if (!video || saveData || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      finish(true);
+      return;
+    }
+    const mobile = window.matchMedia("(max-width: 700px)").matches;
+    video.muted = true;
+    video.src = mobile ? "/videos/hero-mobile.mp4" : "/videos/hero-desktop.mp4";
+    const onPlaying = () => { started = true; };
+    // Start the dip-to-dark slightly before the last frame so it flows instead of freezing.
+    const onTime = () => { if (video.duration && video.currentTime >= video.duration - 0.5) finish(false); };
+    const onEnded = () => finish(false);
+    const onError = () => finish(true);
+    video.addEventListener("playing", onPlaying);
+    video.addEventListener("timeupdate", onTime);
+    video.addEventListener("ended", onEnded);
+    video.addEventListener("error", onError);
+    video.play()?.catch((error: unknown) => {
+      if ((error as { name?: string })?.name !== "AbortError") finish(true);
+    });
+    const timer = window.setTimeout(() => { if (!started) finish(true); }, 5000);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+      video.removeEventListener("playing", onPlaying);
+      video.removeEventListener("timeupdate", onTime);
+      video.removeEventListener("ended", onEnded);
+      video.removeEventListener("error", onError);
+    };
+  }, []);
+
+  // Once the fade has finished, release the video so it stops decoding/holding memory.
+  useEffect(() => {
+    if (!heroDone) return;
+    const timer = window.setTimeout(() => {
+      const video = heroVideoRef.current;
+      if (!video) return;
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+    }, 1500);
+    return () => window.clearTimeout(timer);
+  }, [heroDone]);
 
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
@@ -59,9 +121,10 @@ function Index() {
   }, []);
 
   return <main>
-    <section className="hero" aria-label="Black Angel collection">
+    <section className={`hero${heroDone ? " hero--done" : ""}${heroFallback ? " hero--fallback" : ""}`} aria-label="Black Angel collection">
       <div className="hero__image-wrap" ref={heroImageWrapRef}>
         <img className="hero__image" src={heroImage} alt="Woman wearing the Black Angel dress inside a private jet" width={1536} height={1920} />
+        <video className="hero__video" ref={heroVideoRef} poster="/videos/hero-poster.jpg" muted playsInline preload="none" aria-hidden="true" tabIndex={-1} />
       </div>
       <div className="hero__shade" />
       <div className="hero__copy">
