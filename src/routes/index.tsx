@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
 
 // Which intro video to play. "remotion" ends exactly on the hero photo, so it hands over with a plain cross-fade
 // instead of dipping through dark.
-const HERO_INTRO_VARIANT: "graded" | "remotion" = "graded";
+const HERO_INTRO_VARIANT: "graded" | "remotion" = "remotion";
 const HERO_INTRO = {
   graded: { desktop: "/videos/hero-desktop.mp4", mobile: "/videos/hero-mobile.mp4", poster: "/videos/hero-poster.jpg", endsOnPhoto: false },
   remotion: { desktop: "/videos/hero-rm-desktop.mp4", mobile: "/videos/hero-rm-mobile.mp4", poster: "/videos/hero-rm-poster.jpg", endsOnPhoto: true },
