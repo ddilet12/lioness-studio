@@ -59,32 +59,39 @@ function Index() {
     video.muted = true;
     video.preload = "auto";
     video.src = mobile ? "/videos/hero-mobile.mp4" : "/videos/hero-desktop.mp4";
-    let hardCap = 0;
-    // Only start once the browser expects to play through without stalling; on a slow link the photo just shows.
-    const onCanPlayThrough = () => {
-      if (started || cancelled) return;
+    // Play straight away (iOS won't buffer or fire canplaythrough before play()); the guards below only
+    // step in if playback never starts, or freezes for good on a very slow link.
+    let stallTimer = 0;
+    let startTimer = 0;
+    const onPlaying = () => {
       started = true;
       window.clearTimeout(startTimer);
-      video.play()?.catch((error: unknown) => {
-        if ((error as { name?: string })?.name !== "AbortError") finish(true);
-      });
-      // Never let a mid-play stall drag the intro on: video is ~5s, so cap it.
-      hardCap = window.setTimeout(() => finish(false), 7500);
+      window.clearTimeout(stallTimer);
+    };
+    const onWaiting = () => {
+      if (!started) return;
+      window.clearTimeout(stallTimer);
+      stallTimer = window.setTimeout(() => finish(false), 3000);
     };
     // Start the dip-to-dark slightly before the last frame so it flows instead of freezing.
     const onTime = () => { if (video.duration && video.currentTime >= video.duration - 0.5) finish(false); };
     const onEnded = () => finish(false);
     const onError = () => finish(true);
-    video.addEventListener("canplaythrough", onCanPlayThrough);
+    video.addEventListener("playing", onPlaying);
+    video.addEventListener("waiting", onWaiting);
     video.addEventListener("timeupdate", onTime);
     video.addEventListener("ended", onEnded);
     video.addEventListener("error", onError);
-    const startTimer = window.setTimeout(() => { if (!started) finish(true); }, 3500);
+    video.play()?.catch((error: unknown) => {
+      if ((error as { name?: string })?.name !== "AbortError") finish(true);
+    });
+    startTimer = window.setTimeout(() => { if (!started) finish(true); }, 8000);
     return () => {
       cancelled = true;
       window.clearTimeout(startTimer);
-      window.clearTimeout(hardCap);
-      video.removeEventListener("canplaythrough", onCanPlayThrough);
+      window.clearTimeout(stallTimer);
+      video.removeEventListener("playing", onPlaying);
+      video.removeEventListener("waiting", onWaiting);
       video.removeEventListener("timeupdate", onTime);
       video.removeEventListener("ended", onEnded);
       video.removeEventListener("error", onError);
