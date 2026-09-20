@@ -65,6 +65,12 @@ const en = {
   "product.wishAdd": "Save to wishlist",
   "product.wishRemove": "Remove from wishlist",
   "product.addToBag": "ADD TO BAG",
+  "product.soon": "COMING SOON",
+  "product.selectSize": "SELECT SIZE",
+  "desc.asymmetric": "One-shoulder evening gown in black. One long fitted sleeve, a softly draped and ruched waist and a side train that flows to the floor.",
+  "desc.midi": "Black midi dress with a sweetheart bodice, sheer mesh sleeves and an illusion high neck. Fitted through the waist, with a draped hip and a pencil skirt.",
+  "desc.rouge": "Deep red midi dress with sheer chiffon puff sleeves and buttoned cuffs. A draped, ruched waist flows into a fitted pencil skirt with a cascading side drape.",
+  "desc.velvet": "Black velvet bodice with a round neckline and sheer tulle puff sleeves finished with velvet cuffs, over a flared mini skirt of black lace on tulle.",
 
   // Campaign
   "campaign.alt": "Woman wearing a Lioness Dress on a Paris street",
@@ -82,6 +88,8 @@ const en = {
   // Product page
   "pdp.eyebrow": "BLACK ANGEL · PARIS 2026",
   "pdp.size": "SIZE",
+  "pdp.chooseSize": "Please choose a size.",
+  "bag.size": "Size: {size}",
   "pdp.back": "← BACK TO COLLECTION",
   "pdp.decrease": "Decrease quantity",
   "pdp.increase": "Increase quantity",
@@ -185,6 +193,12 @@ const ru: Record<TKey, string> = {
   "product.wishAdd": "Добавить в избранное",
   "product.wishRemove": "Удалить из избранного",
   "product.addToBag": "В КОРЗИНУ",
+  "product.soon": "СКОРО В ПРОДАЖЕ",
+  "product.selectSize": "ВЫБРАТЬ РАЗМЕР",
+  "desc.asymmetric": "Вечернее платье в пол с открытым плечом, чёрное. Одно длинное приталенное плечо, мягкая драпировка на талии и шлейф, струящийся до пола.",
+  "desc.midi": "Чёрное платье-миди с лифом-сердечком, полупрозрачными рукавами из сетки и воротником-иллюзией. Приталенный силуэт, драпировка на бедре и юбка-карандаш.",
+  "desc.rouge": "Глубокое красное платье-миди с шифоновыми рукавами-фонариками и манжетами на пуговицах. Драпированная талия переходит в облегающую юбку-карандаш с каскадной драпировкой сбоку.",
+  "desc.velvet": "Чёрный бархатный лиф с круглым вырезом и прозрачными рукавами из тюля с бархатными манжетами, пышная мини-юбка из чёрного кружева на тюле.",
 
   "campaign.alt": "Девушка в платье Lioness Dress на парижской улице",
   "campaign.eyebrow": "ЖЕНЩИНА LIONESS",
@@ -199,6 +213,8 @@ const ru: Record<TKey, string> = {
 
   "pdp.eyebrow": "BLACK ANGEL · ПАРИЖ 2026",
   "pdp.size": "РАЗМЕР",
+  "pdp.chooseSize": "Пожалуйста, выберите размер.",
+  "bag.size": "Размер: {size}",
   "pdp.back": "← НАЗАД В КОЛЛЕКЦИЮ",
   "pdp.decrease": "Уменьшить количество",
   "pdp.increase": "Увеличить количество",
@@ -253,6 +269,9 @@ const ru: Record<TKey, string> = {
 const dictionaries: Record<Lang, Record<TKey, string>> = { en, ru };
 
 type Vars = Record<string, string | number>;
+
+/** Translate outside React (e.g. page <head> metadata, which is rendered on the server in English). */
+export const translateFor = (lang: Lang, key: TKey, vars?: Vars) => translate(lang, key, vars);
 
 function translate(lang: Lang, key: TKey, vars?: Vars) {
   let text = dictionaries[lang][key];

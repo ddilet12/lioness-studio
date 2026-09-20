@@ -1,6 +1,6 @@
 import { createStorefrontApiClient } from "@shopify/storefront-api-client";
 import { createServerFn } from "@tanstack/react-start";
-import type { Product } from "@/lib/products";
+import { cleanProductName, type Product } from "@/lib/products";
 import placeholderAsymmetric from "@/assets/product-asymmetric.jpg";
 import placeholderMidi from "@/assets/product-midi.jpg";
 import placeholderRouge from "@/assets/product-rouge.jpg";
@@ -30,6 +30,7 @@ export type ShopifyCartItem = {
   price: number;
   image: string;
   quantity: number;
+  size?: string;
 };
 
 export type ShopifyCart = {
@@ -62,6 +63,7 @@ const CART_FIELDS = `
       node {
         id
         quantity
+        attributes { key value }
         merchandise {
           ... on ProductVariant {
             id
@@ -82,11 +84,12 @@ function deriveColor(tags: string[]): Product["color"] {
 function mapProduct(node: any): ShopifyProduct {
   return {
     slug: node.handle,
-    name: node.title,
+    name: cleanProductName(node.title),
     price: Number(node.priceRange.minVariantPrice.amount),
     color: deriveColor(node.tags ?? []),
     image: node.featuredImage?.url ?? resolvePlaceholderImage(node.handle) ?? "",
     description: node.description ?? "",
+    available: Boolean(node.availableForSale),
     variantId: node.variants.edges[0]?.node.id ?? "",
   };
 }
@@ -102,10 +105,12 @@ function mapCart(cart: any): ShopifyCart {
       lineId: node.id,
       variantId: node.merchandise.id,
       slug: node.merchandise.product.handle,
-      name: node.merchandise.product.title,
+      name: cleanProductName(node.merchandise.product.title),
       price: Number(node.merchandise.price.amount),
-      image: node.merchandise.product.featuredImage?.url ?? "",
+      image: node.merchandise.product.featuredImage?.url ?? resolvePlaceholderImage(node.merchandise.product.handle) ?? "",
       quantity: node.quantity,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      size: node.attributes?.find((attribute: any) => attribute.key === "Size")?.value,
     })),
   };
 }
@@ -121,6 +126,7 @@ async function fetchProducts(): Promise<ShopifyProduct[]> {
             title
             description
             tags
+            availableForSale
             featuredImage { url }
             priceRange { minVariantPrice { amount } }
             variants(first: 1) { edges { node { id } } }
@@ -144,6 +150,7 @@ async function fetchProductByHandle(handle: string): Promise<ShopifyProduct | un
         title
         description
         tags
+        availableForSale
         featuredImage { url }
         priceRange { minVariantPrice { amount } }
         variants(first: 1) { edges { node { id } } }
@@ -155,7 +162,11 @@ async function fetchProductByHandle(handle: string): Promise<ShopifyProduct | un
   return data?.productByHandle ? mapProduct(data.productByHandle) : undefined;
 }
 
-async function createCart(variantId: string, quantity: number): Promise<ShopifyCart> {
+// The store has a single variant per product for now, so the chosen size travels as a line attribute
+// (it shows up on the order); real size variants can replace this later.
+const sizeAttributes = (size?: string) => (size ? [{ key: "Size", value: size }] : []);
+
+async function createCart(variantId: string, quantity: number, size?: string): Promise<ShopifyCart> {
   const client = getClient();
   const { data, errors } = await client.request(
     `mutation CartCreate($lines: [CartLineInput!]) {
@@ -164,14 +175,14 @@ async function createCart(variantId: string, quantity: number): Promise<ShopifyC
         userErrors { message }
       }
     }`,
-    { variables: { lines: [{ merchandiseId: variantId, quantity }] } },
+    { variables: { lines: [{ merchandiseId: variantId, quantity, attributes: sizeAttributes(size) }] } },
   );
   const userError = data?.cartCreate?.userErrors?.[0]?.message;
   if (errors || userError) throw new Error(userError ?? errors?.message ?? "Failed to create cart");
   return mapCart(data.cartCreate.cart);
 }
 
-async function addCartLine(cartId: string, variantId: string, quantity: number): Promise<ShopifyCart> {
+async function addCartLine(cartId: string, variantId: string, quantity: number, size?: string): Promise<ShopifyCart> {
   const client = getClient();
   const { data, errors } = await client.request(
     `mutation CartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
@@ -180,7 +191,7 @@ async function addCartLine(cartId: string, variantId: string, quantity: number):
         userErrors { message }
       }
     }`,
-    { variables: { cartId, lines: [{ merchandiseId: variantId, quantity }] } },
+    { variables: { cartId, lines: [{ merchandiseId: variantId, quantity, attributes: sizeAttributes(size) }] } },
   );
   const userError = data?.cartLinesAdd?.userErrors?.[0]?.message;
   if (errors || userError) throw new Error(userError ?? errors?.message ?? "Failed to add to cart");
@@ -239,12 +250,14 @@ export const getCart = createServerFn({ method: "GET" })
   .validator((cartId: string) => cartId)
   .handler(async ({ data: cartId }) => fetchCart(cartId));
 
-type AddToCartInput = { cartId?: string; variantId: string; quantity: number };
+type AddToCartInput = { cartId?: string; variantId: string; quantity: number; size?: string };
 
 export const addToCart = createServerFn({ method: "POST" })
   .validator((input: AddToCartInput) => input)
   .handler(async ({ data }) =>
-    data.cartId ? addCartLine(data.cartId, data.variantId, data.quantity) : createCart(data.variantId, data.quantity),
+    data.cartId
+      ? addCartLine(data.cartId, data.variantId, data.quantity, data.size)
+      : createCart(data.variantId, data.quantity, data.size),
   );
 
 type UpdateCartLineInput = { cartId: string; lineId: string; quantity: number };

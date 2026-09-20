@@ -27,7 +27,7 @@ export function CartDrawer() {
         <div className="bag-list">
           {items.map((item) => <article key={item.lineId} className="bag-item">
             <img src={item.image} alt={item.name} width={1024} height={1280} />
-            <div><h3>{item.name}</h3><p>{formatPrice(item.price)}</p>
+            <div><h3>{item.name}</h3><p>{formatPrice(item.price)}</p>{item.size && <p className="bag-item__size">{t("bag.size", { size: item.size })}</p>}
               <div className="quantity-control">
                 <Button variant="quantity" size="iconSlim" onClick={() => changeQuantity(item.lineId, item.quantity - 1)} aria-label={t("pdp.decrease")}><Minus /></Button>
                 <span>{item.quantity}</span>

@@ -13,7 +13,7 @@ type ShopContextValue = {
   items: ShopifyCartItem[];
   bagOpen: boolean;
   setBagOpen: (open: boolean) => void;
-  addToBag: (product: ShopifyProduct, quantity?: number) => Promise<void>;
+  addToBag: (product: ShopifyProduct, quantity?: number, size?: string) => Promise<void>;
   changeQuantity: (lineId: string, quantity: number) => Promise<void>;
   removeItem: (lineId: string) => Promise<void>;
   itemCount: number;
@@ -84,9 +84,9 @@ export function ShopProvider({ children }: { children: ReactNode }) {
         });
       },
       isWishlisted: (slug) => wishlist.some((entry) => entry.slug === slug),
-      addToBag: async (product, quantity = 1) => {
+      addToBag: async (product, quantity = 1, size) => {
         const cart = await addToCart({
-          data: { cartId: cartId ?? undefined, variantId: product.variantId, quantity },
+          data: { cartId: cartId ?? undefined, variantId: product.variantId, quantity, ...(size ? { size } : {}) },
         });
         setCartId(cart.id);
         window.localStorage.setItem(CART_ID_KEY, cart.id);

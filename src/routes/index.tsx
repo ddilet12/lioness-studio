@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Heart, Plus } from "lucide-react";
+import { Heart } from "lucide-react";
 import heroImage from "@/assets/lioness-hero.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
 import storyImage from "@/assets/lioness-story.jpg";
@@ -29,7 +29,7 @@ function Index() {
   const products = Route.useLoaderData();
   const [filter, setFilter] = useState<"ALL" | "BLACK" | "RED">("ALL");
   const visibleProducts = products.filter((product) => filter === "ALL" || product.color === filter);
-  const { addToBag, toggleWishlist, isWishlisted } = useShop();
+  const { toggleWishlist, isWishlisted } = useShop();
   const { t } = useI18n();
   const filterLabels = { ALL: t("collection.all"), BLACK: t("collection.black"), RED: t("collection.red") } as const;
   const heroImageWrapRef = useRef<HTMLDivElement>(null);
@@ -92,7 +92,7 @@ function Index() {
       <div className="product-grid">
         {visibleProducts.map((product) => <Link to="/product/$slug" params={{ slug: product.slug }} className="product-card" key={product.slug}>
           <div className="product-card__image">
-            <span>{t("product.new")}</span>
+            <span>{product.available ? t("product.new") : t("product.soon")}</span>
             <button
               type="button"
               className={`product-card__wish ${isWishlisted(product.slug) ? "is-active" : ""}`}
@@ -106,17 +106,15 @@ function Index() {
               <Heart />
             </button>
             <img src={product.image} alt={product.name} width={1024} height={1280} loading="lazy" />
+            {/* A size is required, so the card sends shoppers to the product page; while a style has no stock it reads "coming soon". */}
             <Button
               variant="luxury"
               size="plain"
               className="product-card__quick-add"
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                addToBag(product);
-              }}
+              disabled={!product.available}
+              tabIndex={-1}
             >
-              <Plus /> {t("product.addToBag")}
+              {product.available ? t("product.selectSize") : t("product.soon")}
             </Button>
           </div>
           <h3>{product.name}</h3><p>{formatPrice(product.price)}</p>
