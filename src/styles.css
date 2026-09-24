@@ -44,6 +44,13 @@
   --red: oklch(0.44 0.17 25);
   --footer: oklch(0.095 0.004 60);
   --footer-foreground: oklch(0.79 0.015 78);
+
+  /* Single source of truth for every interactive transition on the site (hover/active/focus state
+     changes) — see AGENTS.md task history for why this exists. Keep new interactive elements on
+     these tokens instead of hardcoding a duration/easing. */
+  --transition-duration: 240ms;
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
 }
 
 * { box-sizing: border-box; border-color: var(--border); }
@@ -52,13 +59,30 @@ body { margin: 0; background: var(--background); color: var(--foreground); font-
 a { color: inherit; text-decoration: none; }
 button { font: inherit; }
 
+a, button {
+  transition:
+    background-color var(--transition-duration) var(--ease-out),
+    color var(--transition-duration) var(--ease-out),
+    border-color var(--transition-duration) var(--ease-out),
+    box-shadow var(--transition-duration) var(--ease-out),
+    opacity var(--transition-duration) var(--ease-out),
+    transform var(--transition-duration) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+/* .product-card__quick-add animates its own reveal (opacity/translateY) and keeps that
+   untouched — see its rule below — so it's excluded from the generic press/hover scale. */
+button:not(:disabled):not(.product-card__quick-add):hover { transform: scale(1.03); }
+button:not(:disabled):not(.product-card__quick-add):active {
+  transform: scale(.97);
+  transition-timing-function: var(--ease-in-out);
+}
+
 .site-header { height: 64px; width: 100%; z-index: 40; font-size: 9px; font-weight: 500; }
 .site-header--overlay { position: absolute; inset: 0 0 auto; color: var(--primary-foreground); border-bottom: 1px solid color-mix(in oklab, var(--primary-foreground) 30%, transparent); }
 .site-header--solid { position: relative; color: var(--foreground); border-bottom: 1px solid var(--border); background: var(--background); }
 .site-header__nav { height: 100%; padding: 0 clamp(24px, 4vw, 64px); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
 .site-header__left, .site-header__right { display: flex; align-items: center; gap: 26px; }
 .site-header__right { justify-content: flex-end; }
-.site-header a, .site-header button { transition: opacity 400ms ease; }
 .site-header a:hover, .site-header button:hover { opacity: .62; }
 .site-logo { display: flex; align-items: center; }
 .site-logo img { height: 46px; width: auto; display: block; }
@@ -85,6 +109,7 @@ button { font: inherit; }
 .hero__copy .text-link { animation: copy-in .8s 1.15s cubic-bezier(.2,.7,.2,1) both; }
 .eyebrow { margin: 0 0 25px; font-size: 8px; font-weight: 500; line-height: 1.2; letter-spacing: 0; }
 .text-link { display: inline-flex; gap: 10px; align-items: center; font-size: 8px; font-weight: 500; padding-bottom: 4px; border-bottom: 1px solid currentColor; }
+.text-link:hover { opacity: .62; }
 .text-link--light { color: var(--primary-foreground); }
 .hero__meta { position: absolute; left: clamp(24px, 4vw, 64px); right: clamp(24px, 4vw, 64px); bottom: 25px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 28px; font-size: 6px; }
 .hero__meta i { height: 1px; background: color-mix(in oklab, var(--primary-foreground) 50%, transparent); }
@@ -105,6 +130,7 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .collection h2, .story h2 { font: 400 50px/.9 var(--font-serif); margin: 0; }
 .filters { display: flex; gap: 24px; padding-bottom: 8px; }
 .filters button { border: 0; padding: 0 0 3px; color: var(--muted-foreground); background: transparent; font-size: 7px; cursor: pointer; }
+.filters button:not(.active):hover { color: var(--foreground); }
 .filters button.active { color: var(--foreground); border-bottom: 1px solid currentColor; }
 .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .product-card { min-width: 0; animation: copy-in .7s ease both; }
@@ -114,11 +140,11 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .product-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms cubic-bezier(.2,.7,.2,1); }
 .product-card:hover img { transform: scale(1.035); }
 
-.product-card__wish { position: absolute; z-index: 2; top: 10px; right: 10px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border: 0; background: color-mix(in oklab, var(--background) 78%, transparent); color: var(--foreground); cursor: pointer; transition: opacity 400ms ease; }
+.product-card__wish { position: absolute; z-index: 2; top: 10px; right: 10px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border: 0; background: color-mix(in oklab, var(--background) 78%, transparent); color: var(--foreground); cursor: pointer; }
 .product-card__wish svg { width: 11px; height: 11px; }
 .product-card__wish:hover { opacity: .65; }
 
-.product-card__quick-add { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; justify-content: center; width: 100%; height: 38px; opacity: 0; transform: translateY(6px); transition: opacity 300ms ease, transform 300ms ease; }
+.product-card__quick-add { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; justify-content: center; width: 100%; height: 38px; opacity: 0; transform: translateY(6px); transition: opacity var(--transition-duration) var(--ease-out), transform var(--transition-duration) var(--ease-out); }
 .product-card__quick-add svg { width: 11px; height: 11px; }
 .product-card:hover .product-card__quick-add { opacity: 1; transform: translateY(0); }
 .product-card h3 { margin: 15px 0 4px; font: 400 13px/1 var(--font-serif); }
@@ -142,7 +168,7 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .footer__brand small { display: block; margin-top: 21px; font-size: 11px; }
 .footer__social { margin-top: 18px; }
 .footer h3 { margin: 2px 0 21px; font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--footer-foreground); }
-.footer a, .footer__link { display: block; padding: 5px 0; line-height: 1.35; font-size: 13px; color: color-mix(in oklab, var(--footer-foreground) 76%, transparent); transition: opacity 400ms ease; }
+.footer a, .footer__link { display: block; padding: 5px 0; line-height: 1.35; font-size: 13px; color: color-mix(in oklab, var(--footer-foreground) 76%, transparent); }
 .footer__link { width: 100%; border: 0; background: none; font-family: inherit; text-align: left; cursor: pointer; }
 .footer a:hover, .footer__link:hover { opacity: .7; }
 .footer__bottom { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 40px; padding-top: 26px; border-top: 1px solid color-mix(in oklab, var(--footer-foreground) 22%, transparent); }
@@ -151,7 +177,7 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .footer .footer__legal a { display: inline; padding: 0; font-size: inherit; line-height: inherit; color: inherit; text-decoration: none; }
 .footer .footer__legal a:hover { opacity: 1; color: var(--footer-foreground); }
 .footer__lang { display: flex; align-items: center; gap: 12px; font-size: 13px; color: color-mix(in oklab, var(--footer-foreground) 76%, transparent); }
-.footer__lang button { padding: 0 0 1px; border: 0; border-bottom: 1px solid transparent; background: none; color: inherit; font: inherit; cursor: pointer; opacity: .55; transition: opacity 400ms ease; }
+.footer__lang button { padding: 0 0 1px; border: 0; border-bottom: 1px solid transparent; background: none; color: inherit; font: inherit; cursor: pointer; opacity: .55; }
 .footer__lang button:hover { opacity: .85; }
 .footer__lang button[aria-pressed="true"] { opacity: 1; border-bottom-color: currentColor; }
 
@@ -179,7 +205,8 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .menu-panel__close, .search-overlay__close { position: absolute; top: 20px; right: 20px; }
 .search-overlay { padding: 18vh 8vw; }
 .search-overlay label { display: block; margin-bottom: 25px; font-size: 8px; }
-.search-overlay input { width: 100%; border: 0; border-bottom: 1px solid var(--foreground); padding: 10px 0; outline: 0; background: transparent; color: var(--foreground); font: 400 clamp(30px, 5vw, 65px) var(--font-serif); }
+.search-overlay input { width: 100%; border: 0; border-bottom: 1px solid var(--foreground); padding: 10px 0; outline: 0; background: transparent; color: var(--foreground); font: 400 clamp(30px, 5vw, 65px) var(--font-serif); transition: border-color var(--transition-duration) var(--ease-out); }
+.search-overlay input:focus { border-color: var(--red); }
 .search-overlay input::placeholder { color: var(--muted-foreground); }
 .search-results { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; font: 400 22px var(--font-serif); }
 
@@ -207,7 +234,7 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .product-page__details { align-self: center; padding: 70px clamp(35px, 6vw, 110px); }
 .product-page__details h1 { margin: 0; font: 400 clamp(45px, 5vw, 72px)/.9 var(--font-serif); }
 .product-page__title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
-.product-page__wish { flex: none; margin-top: 14px; border: 0; background: transparent; color: var(--foreground); cursor: pointer; transition: opacity 400ms ease; }
+.product-page__wish { flex: none; margin-top: 14px; border: 0; background: transparent; color: var(--foreground); cursor: pointer; }
 .product-page__wish:hover { opacity: .6; }
 .product-page__wish svg { width: 18px; height: 18px; }
 .product-page__price { font-size: 10px; }
@@ -218,6 +245,7 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .size-row button:disabled, .product-page__actions button:disabled { cursor: not-allowed; opacity: .5; }
 .product-card__quick-add:disabled { cursor: not-allowed; }
 .size-row__guide { margin-left: 6px; font-size: 8px; color: var(--muted-foreground); text-decoration: underline; text-underline-offset: 4px; }
+.size-row__guide:hover { color: var(--foreground); }
 .size-hint { margin: -16px 0 22px; font-size: 9px; color: var(--red); }
 .bag-item__size { margin-top: 2px; font-size: 9px; color: var(--muted-foreground); }
 .product-page__actions { max-width: 390px; display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: start; margin-bottom: 42px; }

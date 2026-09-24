@@ -11,9 +11,13 @@ export function renderErrorPage(): string {
       h1 { font-size: 1.25rem; margin: 0 0 0.5rem; }
       p { color: #4b5563; margin: 0 0 1.5rem; }
       .actions { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
-      a, button { padding: 0.5rem 1rem; border-radius: 0.375rem; font: inherit; cursor: pointer; text-decoration: none; border: 1px solid transparent; }
+      a, button { padding: 0.5rem 1rem; border-radius: 0.375rem; font: inherit; cursor: pointer; text-decoration: none; border: 1px solid transparent; transition: background-color 240ms cubic-bezier(.16,1,.3,1), border-color 240ms cubic-bezier(.16,1,.3,1), opacity 240ms cubic-bezier(.16,1,.3,1), transform 240ms cubic-bezier(.16,1,.3,1); }
+      button:hover, a:hover { transform: scale(1.03); }
+      button:active, a:active { transform: scale(.97); transition-timing-function: cubic-bezier(.65,0,.35,1); }
       .primary { background: #111; color: #fff; }
+      .primary:hover { background: #2a2a2a; }
       .secondary { background: #fff; color: #111; border-color: #d1d5db; }
+      .secondary:hover { border-color: #111; }
     </style>
   </head>
   <body>
