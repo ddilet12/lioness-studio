@@ -9,14 +9,6 @@ export function SiteFooter() {
 
   return (
     <footer className="footer section-pad">
-      <div className="footer__cards" aria-hidden="true">
-        <div className="footer__card">
-          <img src="/images/business-cards/lioness-card-front.webp" alt="" width={360} height={200} loading="lazy" />
-        </div>
-        <div className="footer__card">
-          <img src="/images/business-cards/lioness-card-back.webp" alt="" width={360} height={200} loading="lazy" />
-        </div>
-      </div>
       <div className="footer__brand">
         <img src={logoBadge} alt="Lioness Dress" />
         <span>LIONESS DRESS</span>
