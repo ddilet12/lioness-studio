@@ -1,6 +1,6 @@
 import { createStorefrontApiClient } from "@shopify/storefront-api-client";
 import { createServerFn } from "@tanstack/react-start";
-import { cleanProductName, type Product } from "@/lib/products";
+import { cleanProductName, SIZES, type Product } from "@/lib/products";
 // Local product photography, used until real photos are uploaded in Shopify. These live in /public (served as
 // static files): images imported only from server code are emitted into the server bundle, not the public
 // assets, and 404 in production. Bump `?v=` when a photo changes to bust caches.
@@ -16,7 +16,9 @@ function resolvePlaceholderImage(handle: string): string | undefined {
   return match ? PLACEHOLDER_IMAGES[match] : undefined;
 }
 
-export type ShopifyProduct = Product & { variantId: string };
+export type ProductSizeOption = { size: string; variantId: string; available: boolean };
+
+export type ShopifyProduct = Product & { variantId: string; sizes: ProductSizeOption[] };
 
 export type ShopifyCartItem = {
   lineId: string;
@@ -76,8 +78,32 @@ function deriveColor(tags: string[]): Product["color"] {
   return tags.some((tag) => tag.toUpperCase() === "RED") ? "RED" : "BLACK";
 }
 
+/**
+ * Real per-size stock, once a product has a Shopify "Size" option configured. Until then (a product
+ * with a single default variant) every size in the local SIZES list maps to that one variant, matching
+ * the previous hardcoded behavior exactly — so this is a no-op for products not yet set up in Shopify.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function mapSizes(node: any, fallbackVariantId: string, fallbackAvailable: boolean): ProductSizeOption[] {
+  const edges = node.variants?.edges ?? [];
+  const sized: ProductSizeOption[] = edges
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .map(({ node: variant }: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const sizeOption = variant.selectedOptions?.find((option: any) => option.name.toLowerCase() === "size");
+      return sizeOption
+        ? { size: sizeOption.value, variantId: variant.id, available: Boolean(variant.availableForSale) }
+        : null;
+    })
+    .filter((entry: ProductSizeOption | null): entry is ProductSizeOption => entry !== null);
+  if (sized.length > 0) return sized;
+  return SIZES.map((size) => ({ size, variantId: fallbackVariantId, available: fallbackAvailable }));
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapProduct(node: any): ShopifyProduct {
+  const variantId = node.variants.edges[0]?.node.id ?? "";
+  const available = Boolean(node.availableForSale);
   return {
     slug: node.handle,
     name: cleanProductName(node.title),
@@ -85,8 +111,9 @@ function mapProduct(node: any): ShopifyProduct {
     color: deriveColor(node.tags ?? []),
     image: node.featuredImage?.url ?? resolvePlaceholderImage(node.handle) ?? "",
     description: node.description ?? "",
-    available: Boolean(node.availableForSale),
-    variantId: node.variants.edges[0]?.node.id ?? "",
+    available,
+    variantId,
+    sizes: mapSizes(node, variantId, available),
   };
 }
 
@@ -149,7 +176,15 @@ async function fetchProductByHandle(handle: string): Promise<ShopifyProduct | un
         availableForSale
         featuredImage { url }
         priceRange { minVariantPrice { amount } }
-        variants(first: 1) { edges { node { id } } }
+        variants(first: 25) {
+          edges {
+            node {
+              id
+              availableForSale
+              selectedOptions { name value }
+            }
+          }
+        }
       }
     }`,
     { variables: { handle } },

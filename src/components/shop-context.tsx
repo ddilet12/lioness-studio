@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import type { ShopifyCartItem, ShopifyProduct } from "@/lib/shopify.server";
+import type { ShopifyCartItem } from "@/lib/shopify.server";
 import { addToCart, getCart, removeFromCart, updateCartLineQuantity } from "@/lib/shopify.server";
 
 const CART_ID_KEY = "lioness-cart-id";
@@ -13,7 +13,7 @@ type ShopContextValue = {
   items: ShopifyCartItem[];
   bagOpen: boolean;
   setBagOpen: (open: boolean) => void;
-  addToBag: (product: ShopifyProduct, quantity?: number, size?: string) => Promise<void>;
+  addToBag: (variantId: string, quantity?: number, size?: string) => Promise<void>;
   changeQuantity: (lineId: string, quantity: number) => Promise<void>;
   removeItem: (lineId: string) => Promise<void>;
   itemCount: number;
@@ -84,9 +84,9 @@ export function ShopProvider({ children }: { children: ReactNode }) {
         });
       },
       isWishlisted: (slug) => wishlist.some((entry) => entry.slug === slug),
-      addToBag: async (product, quantity = 1, size) => {
+      addToBag: async (variantId, quantity = 1, size) => {
         const cart = await addToCart({
-          data: { cartId: cartId ?? undefined, variantId: product.variantId, quantity, ...(size ? { size } : {}) },
+          data: { cartId: cartId ?? undefined, variantId, quantity, ...(size ? { size } : {}) },
         });
         setCartId(cart.id);
         window.localStorage.setItem(CART_ID_KEY, cart.id);

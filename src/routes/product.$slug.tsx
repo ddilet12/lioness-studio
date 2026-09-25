@@ -4,7 +4,7 @@ import { Heart, Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
 import { translateFor, useI18n } from "@/lib/i18n";
-import { fallbackDescriptionKey, formatPrice, SIZES } from "@/lib/products";
+import { fallbackDescriptionKey, formatPrice } from "@/lib/products";
 import { getProductByHandle } from "@/lib/shopify.server";
 
 export const Route = createFileRoute("/product/$slug")({
@@ -40,12 +40,13 @@ function ProductPage() {
   const wishlisted = isWishlisted(product.slug);
   const fallbackKey = fallbackDescriptionKey(product);
   const description = fallbackKey ? t(fallbackKey) : product.description;
+  const selectedVariant = product.sizes.find((option) => option.size === size);
   const handleAdd = () => {
-    if (!size) {
+    if (!selectedVariant) {
       setSizeMissing(true);
       return;
     }
-    void addToBag(product, quantity, size);
+    void addToBag(selectedVariant.variantId, quantity, selectedVariant.size);
   };
   return <main className="product-page">
     <div className="product-page__image"><img src={product.image} alt={product.name} width={1024} height={1280} /></div>
@@ -66,16 +67,16 @@ function ProductPage() {
       <p className="product-page__description">{description}</p>
       <div className="size-row" role="group" aria-label={t("pdp.size")}>
         <span>{t("pdp.size")}</span>
-        {SIZES.map((option) => (
+        {product.sizes.map((option) => (
           <Button
-            key={option}
+            key={option.size}
             variant="quantity"
             size="iconSlim"
-            aria-pressed={size === option}
-            disabled={!product.available}
-            onClick={() => { setSize(option); setSizeMissing(false); }}
+            aria-pressed={size === option.size}
+            disabled={!product.available || !option.available}
+            onClick={() => { setSize(option.size); setSizeMissing(false); }}
           >
-            {option}
+            {option.size}
           </Button>
         ))}
         <Link to="/size-guide" className="size-row__guide">{t("footer.sizeGuide")}</Link>
