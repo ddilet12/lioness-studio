@@ -163,6 +163,51 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .story__copy p { margin: 0 0 42px; }
 
 .footer { min-height: 185px; display: grid; grid-template-columns: 1.3fr repeat(4, minmax(0, 1fr)); gap: 46px 44px; padding-top: 56px; padding-bottom: 58px; background: var(--footer); color: var(--footer-foreground); font-size: 10px; }
+
+.footer__cards { grid-column: 1 / -1; display: flex; justify-content: center; align-items: center; margin: -8px 0 48px; padding: 34px 0 18px; perspective: 1400px; }
+.footer__card {
+  position: relative;
+  width: min(230px, 40vw);
+  aspect-ratio: 9 / 5;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #0a0a0a;
+  box-shadow:
+    0 24px 40px -18px rgba(0, 0, 0, 0.7),
+    0 6px 14px -6px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(190, 140, 70, 0.5);
+  transition:
+    transform var(--transition-duration) var(--ease-out),
+    box-shadow var(--transition-duration) var(--ease-out);
+  will-change: transform;
+}
+.footer__card img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* Glossy top-edge highlight, on top of the photo. */
+.footer__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 14%, rgba(255, 255, 255, 0) 30%);
+  pointer-events: none;
+}
+.footer__card--front { transform: translateX(14px) rotateY(-10deg) rotateX(3deg); z-index: 2; }
+.footer__card--back { transform: translateX(-14px) rotateY(10deg) rotateX(3deg); margin-left: -46px; z-index: 1; }
+.footer__card--front:hover, .footer__card--back:hover {
+  transform: translateY(-8px) rotateY(0deg) rotateX(0deg) scale(1.045);
+  box-shadow:
+    0 34px 54px -18px rgba(0, 0, 0, 0.75),
+    0 10px 20px -8px rgba(0, 0, 0, 0.6),
+    0 0 10px 0px rgba(201, 162, 75, 0.35),
+    inset 0 0 0 1px rgba(201, 162, 75, 0.75);
+  z-index: 3;
+}
+
+@media (max-width: 700px) {
+  .footer__cards { flex-direction: column; perspective: 900px; gap: 18px; margin-bottom: 40px; }
+  .footer__card { width: min(280px, 78vw); }
+  .footer__card--front, .footer__card--back { transform: rotateY(0deg) rotateX(0deg); margin-left: 0; }
+  .footer__card--front:hover, .footer__card--back:hover { transform: translateY(-6px) scale(1.03); }
+}
 .footer__brand img { display: block; height: 60px; width: auto; }
 .footer__brand span { display: block; margin-top: 18px; font: 400 13px var(--font-serif); letter-spacing: .04em; }
 .footer__brand small { display: block; margin-top: 21px; font-size: 11px; }
