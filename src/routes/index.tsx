@@ -33,6 +33,36 @@ function Index() {
   const { t } = useI18n();
   const filterLabels = { ALL: t("collection.all"), BLACK: t("collection.black"), RED: t("collection.red") } as const;
   const heroImageWrapRef = useRef<HTMLDivElement>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
+
+  // Some browsers (mobile webviews, post-hydration SPA navigation) don't
+  // honor the autoplay attribute reliably, so kick playback explicitly too.
+  // The video starts transparent and only fades in once frames are actually
+  // playing, so a blocked autoplay (data saver, low power mode, etc.) leaves
+  // the static fallback photo visible instead of the video's black first frame.
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+    video.play().catch(() => {});
+
+    const onPlaying = () => video.classList.add("hero__video--ready");
+    video.addEventListener("playing", onPlaying);
+
+    // The clip is a 9:16 crop, cover-cropped into a wide hero, so most of its
+    // height is never shown. The closing logo card needs a lower crop window
+    // than the Paris scene, so shift it only during the fade to black (~5.7s)
+    // where the change is invisible, and switch back via classList directly
+    // (no React state) to avoid a re-render on every timeupdate tick.
+    const OUTRO_START = 5.7;
+    const onTimeUpdate = () => {
+      video.classList.toggle("hero__video--outro", video.currentTime >= OUTRO_START);
+    };
+    video.addEventListener("timeupdate", onTimeUpdate);
+    return () => {
+      video.removeEventListener("playing", onPlaying);
+      video.removeEventListener("timeupdate", onTimeUpdate);
+    };
+  }, []);
 
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
@@ -63,7 +93,18 @@ function Index() {
   return <main>
     <section className="hero" aria-label={t("hero.label")}>
       <div className="hero__image-wrap" ref={heroImageWrapRef}>
-        <img className="hero__image" src={heroImage} alt={t("hero.alt")} width={1536} height={1920} />
+        <img className="hero__image hero__image--fallback" src={heroImage} alt={t("hero.alt")} width={1536} height={1920} />
+        <video
+          ref={heroVideoRef}
+          className="hero__video"
+          src="/videos/hero-intro.mp4"
+          poster={heroImage}
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+        />
       </div>
       <div className="hero__shade" />
       <div className="hero__copy">
