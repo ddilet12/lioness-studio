@@ -164,7 +164,7 @@ function Index() {
     </section>
 
     <section className="campaign" data-reveal>
-      <img src={campaignImage} alt={t("campaign.alt")} width={1920} height={1280} loading="lazy" />
+      <img src={campaignImage} alt={t("campaign.alt")} width={1920} height={880} loading="lazy" />
       <div className="campaign__shade" />
       <div className="campaign__copy"><p className="eyebrow">{t("campaign.eyebrow")}</p><h2>{lines(t("campaign.title"))}</h2><Link to="/product/$slug" params={{ slug: "the-asymmetric" }} className="text-link text-link--light">{t("campaign.cta")} <span>→</span></Link></div>
     </section>
