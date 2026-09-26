@@ -102,7 +102,7 @@ button:not(:disabled):not(.product-card__quick-add):active {
 .hero { position: relative; height: min(100vh, 940px); min-height: 690px; overflow: hidden; color: var(--primary-foreground); background: var(--primary); }
 .hero__image-wrap { position: absolute; inset: 0; will-change: transform; }
 .hero__image { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center 8%; animation: hero-in 1.8s cubic-bezier(.2,.7,.2,1) both; }
-.hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; opacity: 0; transition: object-position .8s ease, opacity .5s ease; }
+.hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; opacity: 0; transition: opacity .5s ease; }
 .hero__video--ready { opacity: 1; }
 .hero__video--outro { object-position: center 50%; }
 @media (prefers-reduced-motion: reduce) { .hero__video { display: none; } }
