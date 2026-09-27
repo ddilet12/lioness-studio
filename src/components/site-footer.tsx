@@ -50,12 +50,8 @@ export function SiteFooter() {
           <span aria-hidden="true">/</span>
           <button type="button" aria-pressed={lang === "ru"} onClick={() => setLang("ru")}>{t("footer.langRu")}</button>
         </div>
-        {/* Exact wording as supplied by the client; identical in both languages. */}
         <p className="footer__legal">
-          <span>© 2026 LIONESS DRESS</span>
-          <span>Email: <a href="mailto:Info@lionessdress.com">Info@lionessdress.com</a></span>
-          <span>Phone: <a href="tel:+77789654642">+7 778 965 4642</a></span>
-          <span>Location: Astana, Kazakhstan</span>
+          <span>{t("footer.copyright")}</span>
         </p>
       </div>
     </footer>

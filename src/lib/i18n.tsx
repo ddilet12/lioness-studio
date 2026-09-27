@@ -140,6 +140,7 @@ const en = {
   "footer.language": "Language",
   "footer.langEn": "English",
   "footer.langRu": "Русский",
+  "footer.copyright": "© 2026 LIONESS DRESS. All rights reserved.",
 
   // Placeholder pages
   "stub.soon": "This page is coming soon.",
@@ -344,6 +345,7 @@ const ru: Record<TKey, string> = {
   "footer.language": "Язык",
   "footer.langEn": "English",
   "footer.langRu": "Русский",
+  "footer.copyright": "© 2026 LIONESS DRESS. Все права защищены.",
 
   "stub.soon": "Эта страница скоро появится.",
 
