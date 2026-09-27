@@ -86,7 +86,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       isWishlisted: (slug) => wishlist.some((entry) => entry.slug === slug),
       addToBag: async (variantId, quantity = 1, size) => {
         const cart = await addToCart({
-          data: { cartId: cartId ?? undefined, variantId, quantity, ...(size ? { size } : {}) },
+          data: { ...(cartId ? { cartId } : {}), variantId, quantity, ...(size ? { size } : {}) },
         });
         setCartId(cart.id);
         window.localStorage.setItem(CART_ID_KEY, cart.id);

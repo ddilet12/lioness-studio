@@ -39,9 +39,9 @@ export type ShopifyCart = {
 };
 
 function getClient() {
-  const storeDomain = process.env.SHOPIFY_STORE_DOMAIN;
-  const publicAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-  const apiVersion = process.env.SHOPIFY_STOREFRONT_API_VERSION ?? "2026-01";
+  const storeDomain = process.env["SHOPIFY_STORE_DOMAIN"];
+  const publicAccessToken = process.env["SHOPIFY_STOREFRONT_ACCESS_TOKEN"];
+  const apiVersion = process.env["SHOPIFY_STOREFRONT_API_VERSION"] ?? "2026-01";
 
   if (!storeDomain || !publicAccessToken) {
     throw new Error(
