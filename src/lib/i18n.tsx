@@ -103,7 +103,7 @@ const en = {
   "bag.unlocked": "You've unlocked free shipping",
   "bag.remove": "REMOVE",
   "bag.total": "TOTAL",
-  "bag.checkout": "CHECKOUT",
+  "bag.checkout": "GO TO SHOPIFY",
 
   // Wishlist
   "wishlist.title": "WISHLIST",
@@ -310,7 +310,7 @@ const ru: Record<TKey, string> = {
   "bag.unlocked": "Бесплатная доставка включена",
   "bag.remove": "УДАЛИТЬ",
   "bag.total": "ИТОГО",
-  "bag.checkout": "ОФОРМИТЬ ЗАКАЗ",
+  "bag.checkout": "ОФОРМИТЬ В SHOPIFY",
 
   "wishlist.title": "ИЗБРАННОЕ",
   "wishlist.empty": "Пока ничего не сохранено.",

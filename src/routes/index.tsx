@@ -93,7 +93,7 @@ function Index() {
   return <main>
     <section className="hero" aria-label={t("hero.label")}>
       <div className="hero__image-wrap" ref={heroImageWrapRef}>
-        <img className="hero__image hero__image--fallback" src={heroImage} alt={t("hero.alt")} width={1536} height={1920} />
+        <img className="hero__image hero__image--fallback" src={heroImage} alt={t("hero.alt")} width={1536} height={1920} fetchPriority="high" />
         <video
           ref={heroVideoRef}
           className="hero__video"
@@ -102,7 +102,7 @@ function Index() {
           autoPlay
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           aria-hidden="true"
         />
       </div>
