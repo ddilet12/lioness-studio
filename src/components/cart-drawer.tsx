@@ -1,17 +1,21 @@
+import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { KaspiPaymentDialog } from "@/components/kaspi-payment-dialog";
 import { useI18n } from "@/lib/i18n";
 import { formatPrice } from "@/lib/products";
 import { FREE_SHIPPING_THRESHOLD, useShop } from "@/components/shop-context";
 
 export function CartDrawer() {
-  const { items, bagOpen, setBagOpen, changeQuantity, removeItem, checkoutUrl } = useShop();
+  const { items, bagOpen, setBagOpen, changeQuantity, removeItem, cartId, clearCart } = useShop();
   const { t, tn } = useI18n();
+  const [kaspiOpen, setKaspiOpen] = useState(false);
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - total);
   const progress = Math.min(100, (total / FREE_SHIPPING_THRESHOLD) * 100);
   return (
+    <>
     <Sheet open={bagOpen} onOpenChange={setBagOpen}>
       <SheetContent className="bag-drawer">
         <SheetHeader>
@@ -37,8 +41,18 @@ export function CartDrawer() {
             </div>
           </article>)}
         </div>
-        {items.length > 0 && <div className="bag-total"><span>{t("bag.total")}</span><strong>{formatPrice(total)}</strong><Button variant="luxury" size="wide" onClick={() => { if (checkoutUrl) window.location.href = checkoutUrl; }}>{t("bag.checkout")}</Button></div>}
+        {items.length > 0 && <div className="bag-total"><span>{t("bag.total")}</span><strong>{formatPrice(total)}</strong><Button variant="luxury" size="wide" onClick={() => { setBagOpen(false); setKaspiOpen(true); }}>{t("bag.checkout")}</Button></div>}
       </SheetContent>
     </Sheet>
+    <KaspiPaymentDialog
+      open={kaspiOpen}
+      onOpenChange={setKaspiOpen}
+      cartId={cartId}
+      total={total}
+      onPaid={() => {
+        clearCart();
+      }}
+    />
+    </>
   );
 }
