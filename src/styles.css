@@ -144,7 +144,8 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .product-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms cubic-bezier(.2,.7,.2,1); }
 .product-card:hover img { transform: scale(1.035); }
 
-.product-card__wish { position: absolute; z-index: 2; top: 10px; right: 10px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border: 0; background: color-mix(in oklab, var(--background) 78%, transparent); color: var(--foreground); cursor: pointer; }
+/* 24x24px minimum per WCAG 2.2 AA Target Size (was 22x22, found via ui-ux-pro-max audit). */
+.product-card__wish { position: absolute; z-index: 2; top: 10px; right: 10px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border: 0; background: color-mix(in oklab, var(--background) 78%, transparent); color: var(--foreground); cursor: pointer; }
 .product-card__wish svg { width: 11px; height: 11px; }
 .product-card__wish:hover { opacity: .65; }
 
@@ -314,6 +315,14 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
   .product-page__details { padding: 55px 24px 80px; }
   .product-page__actions { grid-template-columns: 1fr; }
 }
+
+.kaspi-dialog [role="tablist"] { width: 100%; }
+.kaspi-dialog__panel { margin-top: 18px; display: flex; flex-direction: column; gap: 14px; font-size: 12px; color: var(--muted-foreground); }
+.kaspi-dialog__panel button { font-size: 10px; }
+.kaspi-dialog__pending { align-items: center; text-align: center; }
+.kaspi-dialog__pending img { width: 220px; height: 220px; object-fit: contain; border: 1px solid var(--border); }
+.kaspi-dialog__spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border); border-top-color: var(--foreground); animation: kaspi-spin 800ms linear infinite; }
+@keyframes kaspi-spin { to { transform: rotate(360deg); } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

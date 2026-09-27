@@ -17,7 +17,10 @@ type ShopContextValue = {
   changeQuantity: (lineId: string, quantity: number) => Promise<void>;
   removeItem: (lineId: string) => Promise<void>;
   itemCount: number;
+  cartId: string | null;
   checkoutUrl: string | null;
+  /** Abandons the local cart after a Kaspi payment completes — the paid cart is left as-is in Shopify. */
+  clearCart: () => void;
   wishlist: WishlistItem[];
   wishlistOpen: boolean;
   setWishlistOpen: (open: boolean) => void;
@@ -69,7 +72,14 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       items,
       bagOpen,
       setBagOpen,
+      cartId,
       checkoutUrl,
+      clearCart: () => {
+        window.localStorage.removeItem(CART_ID_KEY);
+        setCartId(null);
+        setItems([]);
+        setCheckoutUrl(null);
+      },
       wishlist,
       wishlistOpen,
       setWishlistOpen,

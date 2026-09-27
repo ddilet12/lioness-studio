@@ -65,8 +65,8 @@ async function apipayRequest<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export type CreateQrInvoiceInput = {
-  /** Whole or fractional tenge; QR invoices accept tiyn (POST /invoices does not). */
-  amount: number;
+  /** Whole or fractional tenge; QR invoices accept tiyn (POST /invoices does not). Omit when passing `cartItems`. */
+  amount?: number;
   /** Shown as the line item name on the Kaspi QR receipt — Kaspi truncates at 100 chars. */
   description?: string;
   /** Our own order/cart reference, returned as-is on the invoice and in webhooks. */
@@ -77,6 +77,11 @@ export type CreateQrInvoiceInput = {
   internalComment?: string;
   /** Sandbox only: skip the QR entirely and create the invoice already in this terminal status. */
   simulate?: "paid" | "cancelled" | "expired";
+  /**
+   * Required instead of `amount` for organizations with ApiPay's catalog mode on (itemized Kaspi
+   * fiscal receipts) — each entry must reference a catalog item already created via `createCatalogItems`.
+   */
+  cartItems?: { catalogItemId: number; count: number; price?: number }[];
 };
 
 /** POST /invoices/qr — an immediate, scan-to-pay QR invoice (TTL ~5 minutes per ApiPay's docs). */
@@ -89,6 +94,11 @@ export async function createQrInvoice(input: CreateQrInvoiceInput): Promise<ApiP
       external_order_id: input.externalOrderId,
       external_order_id_idempotency: input.externalOrderIdIdempotency,
       internal_comment: input.internalComment,
+      cart_items: input.cartItems?.map((item) => ({
+        catalog_item_id: item.catalogItemId,
+        count: item.count,
+        ...(item.price !== undefined ? { price: item.price } : {}),
+      })),
       simulate: input.simulate,
     }),
   });
@@ -146,4 +156,44 @@ export async function getWebhookLogs(invoiceId: number | string) {
   return apipayRequest<{ current_page: number; data: unknown[]; total: number }>(
     `/webhook-logs?invoice_id=${encodeURIComponent(String(invoiceId))}`,
   );
+}
+
+export type ApiPayCatalogItem = {
+  id: number;
+  name: string;
+  selling_price: number;
+  unit_id: number | null;
+  external_ref?: string | null;
+};
+
+/**
+ * This organization has ApiPay's "catalog" mode on (needed for itemized Kaspi fiscal receipts), so
+ * QR invoices must reference existing catalog items via `cart_items` instead of a flat `amount`.
+ */
+export async function findCatalogItemsByExternalRefs(externalRefs: string[]): Promise<ApiPayCatalogItem[]> {
+  if (externalRefs.length === 0) return [];
+  const query = externalRefs.map((ref) => `external_refs[]=${encodeURIComponent(ref)}`).join("&");
+  const result = await apipayRequest<{ data: ApiPayCatalogItem[] }>(`/catalog?${query}`);
+  return result.data;
+}
+
+export type NewCatalogItem = { name: string; sellingPrice: number; externalRef: string };
+
+/** Unit id 1 = "шт." (piece) — see GET /catalog/units. */
+const PIECE_UNIT_ID = 1;
+
+export async function createCatalogItems(items: NewCatalogItem[]): Promise<ApiPayCatalogItem[]> {
+  if (items.length === 0) return [];
+  const result = await apipayRequest<{ data: ApiPayCatalogItem[] }>("/catalog", {
+    method: "POST",
+    body: JSON.stringify({
+      items: items.map((item) => ({
+        name: item.name,
+        selling_price: item.sellingPrice,
+        unit_id: PIECE_UNIT_ID,
+        external_ref: item.externalRef,
+      })),
+    }),
+  });
+  return result.data;
 }
