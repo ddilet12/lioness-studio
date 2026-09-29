@@ -45,17 +45,24 @@ function Index() {
   useEffect(() => {
     const video = heroVideoRef.current;
     if (!video) return;
-    video.play().catch(() => {});
 
-    const onPlaying = () => video.classList.add("hero__video--ready");
+    // autoplay can start the video (and fire "playing") before this effect
+    // gets a chance to attach a listener for it, so check the already-playing
+    // case directly too instead of relying on the event alone.
+    const markReady = () => video.classList.add("hero__video--ready");
+    if (!video.paused) markReady();
+    video.play().then(markReady).catch(() => {});
+
+    const onPlaying = () => markReady();
     video.addEventListener("playing", onPlaying);
 
     // The clip is a 9:16 crop, cover-cropped into a wide hero, so most of its
     // height is never shown. The closing logo card needs a lower crop window
-    // than the Paris scene, so shift it only during the fade to black (~5.7s)
-    // where the change is invisible, and switch back via classList directly
-    // (no React state) to avoid a re-render on every timeupdate tick.
-    const OUTRO_START = 5.7;
+    // than the runway scene, so shift it only during the fade to black (~6.0s
+    // in this clip) where the change is invisible, and switch back via
+    // classList directly (no React state) to avoid a re-render on every
+    // timeupdate tick.
+    const OUTRO_START = 6.0;
     const onTimeUpdate = () => {
       video.classList.toggle("hero__video--outro", video.currentTime >= OUTRO_START);
     };
