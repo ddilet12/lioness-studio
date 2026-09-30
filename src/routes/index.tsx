@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Heart } from "lucide-react";
-import heroImage from "@/assets/lioness-hero.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
 import storyImage from "@/assets/lioness-story.jpg";
 import { Button } from "@/components/ui/button";
@@ -41,7 +40,7 @@ function Index() {
   // honor the autoplay attribute reliably, so kick playback explicitly too.
   // The video starts transparent and only fades in once frames are actually
   // playing, so a blocked autoplay (data saver, low power mode, etc.) leaves
-  // the static fallback photo visible instead of the video's black first frame.
+  // the hero on its plain background instead of the video's black first frame.
   useEffect(() => {
     const video = heroVideoRef.current;
     if (!video) return;
@@ -58,11 +57,11 @@ function Index() {
 
     // The clip is a 9:16 crop, cover-cropped into a wide hero, so most of its
     // height is never shown. The closing logo card needs a lower crop window
-    // than the runway scene, so shift it only during the fade to black (~6.0s
-    // in this clip) where the change is invisible, and switch back via
-    // classList directly (no React state) to avoid a re-render on every
-    // timeupdate tick.
-    const OUTRO_START = 6.0;
+    // than the runway scene, so shift it only once the fade to black is fully
+    // dark (measured ~6.25s in this clip, not ~6.0s as the frame is still lit
+    // there) so the crop jump is invisible, and switch back via classList
+    // directly (no React state) to avoid a re-render on every timeupdate tick.
+    const OUTRO_START = 6.3;
     const onTimeUpdate = () => {
       video.classList.toggle("hero__video--outro", video.currentTime >= OUTRO_START);
     };
@@ -102,12 +101,10 @@ function Index() {
   return <main>
     <section className="hero" aria-label={t("hero.label")}>
       <div className="hero__image-wrap" ref={heroImageWrapRef}>
-        <img className="hero__image hero__image--fallback" src={heroImage} alt={t("hero.alt")} width={1536} height={1920} fetchPriority="high" />
         <video
           ref={heroVideoRef}
           className="hero__video"
           src="/videos/hero-intro.mp4"
-          poster={heroImage}
           autoPlay
           muted
           playsInline

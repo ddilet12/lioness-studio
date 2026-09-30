@@ -43,7 +43,6 @@ const en = {
 
   // Hero
   "hero.label": "Black Angel collection",
-  "hero.alt": "Woman wearing the Black Angel dress inside a private jet",
   "hero.eyebrow": "PARIS 2026",
   "hero.cta": "DISCOVER THE COLLECTION",
   "hero.meta": "DESIGNED FOR SELF-CONFIDENT GIRLS",
@@ -257,7 +256,6 @@ const ru: Record<TKey, string> = {
   "search.placeholder": "ВВЕДИТЕ НАЗВАНИЕ ТОВАРА",
 
   "hero.label": "Коллекция Black Angel",
-  "hero.alt": "Девушка в платье Black Angel в салоне частного самолёта",
   "hero.eyebrow": "ПАРИЖ 2026",
   "hero.cta": "СМОТРЕТЬ КОЛЛЕКЦИЮ",
   "hero.meta": "СОЗДАНО ДЛЯ УВЕРЕННЫХ В СЕБЕ ДЕВУШЕК",
