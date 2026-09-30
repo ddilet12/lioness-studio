@@ -154,7 +154,7 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .product-card > p { margin: 0; font-size: 7px; color: var(--muted-foreground); }
 
 .campaign { position: relative; height: min(84vw, 850px); min-height: 610px; overflow: hidden; color: var(--primary-foreground); background: var(--primary); }
-.campaign > img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 1.2s ease; }
+.campaign > img { width: 100%; height: 100%; object-fit: cover; object-position: center 22%; transition: transform 1.2s ease; }
 .campaign:hover > img { transform: scale(1.015); }
 .campaign__shade { position: absolute; inset: 0; background: linear-gradient(0deg, color-mix(in oklab, var(--primary) 88%, transparent) 0%, color-mix(in oklab, var(--primary) 45%, transparent) 30%, transparent 62%); }
 .campaign__copy { position: absolute; left: clamp(24px, 4vw, 64px); bottom: 11%; }
