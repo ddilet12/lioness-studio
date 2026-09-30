@@ -55,20 +55,8 @@ function Index() {
     const onPlaying = () => markReady();
     video.addEventListener("playing", onPlaying);
 
-    // The clip is a 9:16 crop, cover-cropped into a wide hero, so most of its
-    // height is never shown. The closing logo card needs a lower crop window
-    // than the runway scene, so shift it only once the fade to black is fully
-    // dark (measured ~6.25s in this clip, not ~6.0s as the frame is still lit
-    // there) so the crop jump is invisible, and switch back via classList
-    // directly (no React state) to avoid a re-render on every timeupdate tick.
-    const OUTRO_START = 6.3;
-    const onTimeUpdate = () => {
-      video.classList.toggle("hero__video--outro", video.currentTime >= OUTRO_START);
-    };
-    video.addEventListener("timeupdate", onTimeUpdate);
     return () => {
       video.removeEventListener("playing", onPlaying);
-      video.removeEventListener("timeupdate", onTimeUpdate);
     };
   }, []);
 

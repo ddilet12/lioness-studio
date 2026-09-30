@@ -103,7 +103,6 @@ button:not(:disabled):not(.product-card__quick-add):active {
 .hero__image-wrap { position: absolute; inset: 0; will-change: transform; }
 .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; opacity: 0; transition: opacity .5s ease; }
 .hero__video--ready { opacity: 1; }
-.hero__video--outro { object-position: center 50%; }
 @media (prefers-reduced-motion: reduce) { .hero__video { display: none; } }
 .hero__shade { position: absolute; inset: 0; background: linear-gradient(90deg, color-mix(in oklab, var(--primary) 44%, transparent), transparent 57%), linear-gradient(0deg, color-mix(in oklab, var(--primary) 28%, transparent), transparent 45%); }
 .hero__copy { position: absolute; left: clamp(24px, 4vw, 64px); bottom: 20%; }
