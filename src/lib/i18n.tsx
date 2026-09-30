@@ -72,9 +72,9 @@ const en = {
   "desc.velvet": "Black velvet bodice with a round neckline and sheer tulle puff sleeves finished with velvet cuffs, over a flared mini skirt of black lace on tulle.",
 
   // Campaign
-  "campaign.alt": "Woman wearing a Lioness Dress on a Paris street",
+  "campaign.alt": "Woman wearing a Lioness Dress inside a private jet",
   "campaign.eyebrow": "THE LIONESS WOMAN",
-  "campaign.title": "She doesn’t follow the room.\nShe changes it.",
+  "campaign.title": "Her confidence\nis beyond fashion.",
   "campaign.cta": "SHOP THE SIGNATURE DRESS",
 
   // Story
@@ -282,9 +282,9 @@ const ru: Record<TKey, string> = {
   "desc.rouge": "Глубокое красное платье-миди с шифоновыми рукавами-фонариками и манжетами на пуговицах. Драпированная талия переходит в облегающую юбку-карандаш с каскадной драпировкой сбоку.",
   "desc.velvet": "Чёрный бархатный лиф с круглым вырезом и прозрачными рукавами из тюля с бархатными манжетами, пышная мини-юбка из чёрного кружева на тюле.",
 
-  "campaign.alt": "Девушка в платье Lioness Dress на парижской улице",
+  "campaign.alt": "Девушка в платье Lioness Dress в салоне частного самолёта",
   "campaign.eyebrow": "ЖЕНЩИНА LIONESS",
-  "campaign.title": "Она не идёт за толпой.\nОна задаёт тон.",
+  "campaign.title": "Её уверенность\nвне моды.",
   "campaign.cta": "СМОТРЕТЬ ФИРМЕННОЕ ПЛАТЬЕ",
 
   "story.alt": "Ателье Lioness Dress: чёрные, молочные и красные платья",
