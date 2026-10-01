@@ -72,13 +72,13 @@ const en = {
   "desc.velvet": "Black velvet bodice with a round neckline and sheer tulle puff sleeves finished with velvet cuffs, over a flared mini skirt of black lace on tulle.",
 
   // Campaign
-  "campaign.alt": "Woman wearing a Lioness Dress inside a private jet",
+  "campaign.alt": "Woman in a Lioness Dress gown holding a black LD umbrella in a Paris park",
   "campaign.eyebrow": "THE LIONESS WOMAN",
   "campaign.title": "Her confidence\nis beyond fashion.",
   "campaign.cta": "SHOP THE SIGNATURE DRESS",
 
   // Story
-  "story.alt": "Woman in a Lioness Dress gown holding a black LD umbrella in a Paris park",
+  "story.alt": "Lioness Dress atelier with black, ivory and red dresses",
   "story.eyebrow": "OUR SIGNATURE",
   "story.title": "From Astana\nto Paris.",
   "story.body": "Designed around confidence,\nsensuality and clean feminine\nlines. Every silhouette is created\nto make an entrance — and stay\nin memory.",
@@ -282,12 +282,12 @@ const ru: Record<TKey, string> = {
   "desc.rouge": "Глубокое красное платье-миди с шифоновыми рукавами-фонариками и манжетами на пуговицах. Драпированная талия переходит в облегающую юбку-карандаш с каскадной драпировкой сбоку.",
   "desc.velvet": "Чёрный бархатный лиф с круглым вырезом и прозрачными рукавами из тюля с бархатными манжетами, пышная мини-юбка из чёрного кружева на тюле.",
 
-  "campaign.alt": "Девушка в платье Lioness Dress в салоне частного самолёта",
+  "campaign.alt": "Девушка в платье Lioness Dress с чёрным зонтом LD в парижском парке",
   "campaign.eyebrow": "ЖЕНЩИНА LIONESS",
   "campaign.title": "Её уверенность\nвне моды.",
   "campaign.cta": "СМОТРЕТЬ ФИРМЕННОЕ ПЛАТЬЕ",
 
-  "story.alt": "Девушка в платье Lioness Dress с чёрным зонтом LD в парижском парке",
+  "story.alt": "Ателье Lioness Dress: чёрные, молочные и красные платья",
   "story.eyebrow": "НАШ ПОЧЕРК",
   "story.title": "Из Астаны\nв Париж.",
   "story.body": "Создано вокруг уверенности,\nчувственности и чистых женских\nлиний. Каждый силуэт задуман,\nчтобы произвести впечатление —\nи остаться в памяти.",
