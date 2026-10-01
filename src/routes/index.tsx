@@ -165,7 +165,7 @@ function Index() {
 
     <section id="story" className="story section-pad" data-reveal>
       <div className="story__title"><p className="eyebrow">{t("story.eyebrow")}</p><h2>{lines(t("story.title"))}</h2></div>
-      <img src={storyImage} alt={t("story.alt")} width={1024} height={1280} loading="lazy" />
+      <img src={storyImage} alt={t("story.alt")} width={1125} height={2000} loading="lazy" />
       <div className="story__copy"><p>{lines(t("story.body"))}</p><Link to="/" hash="story" className="text-link">{t("story.cta")} <span>→</span></Link></div>
     </section>
   </main>;

@@ -78,7 +78,7 @@ const en = {
   "campaign.cta": "SHOP THE SIGNATURE DRESS",
 
   // Story
-  "story.alt": "Lioness Dress atelier with black, ivory and red dresses",
+  "story.alt": "Woman in a Lioness Dress gown holding a black LD umbrella in a Paris park",
   "story.eyebrow": "OUR SIGNATURE",
   "story.title": "From Astana\nto Paris.",
   "story.body": "Designed around confidence,\nsensuality and clean feminine\nlines. Every silhouette is created\nto make an entrance — and stay\nin memory.",
@@ -287,7 +287,7 @@ const ru: Record<TKey, string> = {
   "campaign.title": "Её уверенность\nвне моды.",
   "campaign.cta": "СМОТРЕТЬ ФИРМЕННОЕ ПЛАТЬЕ",
 
-  "story.alt": "Ателье Lioness Dress: чёрные, молочные и красные платья",
+  "story.alt": "Девушка в платье Lioness Dress с чёрным зонтом LD в парижском парке",
   "story.eyebrow": "НАШ ПОЧЕРК",
   "story.title": "Из Астаны\nв Париж.",
   "story.body": "Создано вокруг уверенности,\nчувственности и чистых женских\nлиний. Каждый силуэт задуман,\nчтобы произвести впечатление —\nи остаться в памяти.",
