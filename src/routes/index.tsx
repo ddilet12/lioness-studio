@@ -10,7 +10,11 @@ import { formatPrice } from "@/lib/products";
 import { getProducts } from "@/lib/shopify.server";
 
 export const Route = createFileRoute("/")({
-  loader: () => getProducts(),
+  loader: () =>
+    getProducts().catch((error) => {
+      console.error("Shopify products unavailable", error);
+      return [];
+    }),
   head: () => ({
     meta: [
       { title: "Lioness Dress — Black Angel Collection" },
