@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { ShopifyCartItem } from "@/lib/shopify.server";
 import { addToCart, getCart, removeFromCart, updateCartLineQuantity } from "@/lib/shopify.server";
+import { getPaymentMode } from "@/lib/kaspi-checkout.server";
 
 const CART_ID_KEY = "lioness-cart-id";
 const WISHLIST_KEY = "lioness-wishlist";
@@ -17,7 +18,10 @@ type ShopContextValue = {
   changeQuantity: (lineId: string, quantity: number) => Promise<void>;
   removeItem: (lineId: string) => Promise<void>;
   itemCount: number;
+  cartId: string | null;
   checkoutUrl: string | null;
+  /** True when Kaspi payment (ApiPay) is configured on the server; otherwise checkout goes to Shopify. */
+  kaspiEnabled: boolean;
   wishlist: WishlistItem[];
   wishlistOpen: boolean;
   setWishlistOpen: (open: boolean) => void;
@@ -34,11 +38,25 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<ShopifyCartItem[]>([]);
   const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [bagOpen, setBagOpen] = useState(false);
+  const [kaspiEnabled, setKaspiEnabled] = useState(false);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
+    getPaymentMode().then((mode) => setKaspiEnabled(mode.kaspi)).catch(() => setKaspiEnabled(false));
+  }, []);
+
+  useEffect(() => {
+    // ApiPay's "back to the shop" button after a successful payment lands here with ?paid=1.
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("paid") === "1") {
+      window.localStorage.removeItem(CART_ID_KEY);
+      params.delete("paid");
+      const query = params.toString();
+      window.history.replaceState(null, "", `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`);
+    }
+
     const savedId = window.localStorage.getItem(CART_ID_KEY);
     if (!savedId) return;
     getCart({ data: savedId })
@@ -69,7 +87,9 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       items,
       bagOpen,
       setBagOpen,
+      cartId,
       checkoutUrl,
+      kaspiEnabled,
       wishlist,
       wishlistOpen,
       setWishlistOpen,
@@ -108,7 +128,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       },
       itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
     }),
-    [bagOpen, items, cartId, checkoutUrl, wishlist, wishlistOpen, searchOpen],
+    [bagOpen, items, cartId, checkoutUrl, kaspiEnabled, wishlist, wishlistOpen, searchOpen],
   );
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;

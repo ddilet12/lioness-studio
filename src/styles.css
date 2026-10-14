@@ -248,6 +248,11 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .quantity-control svg { width: 11px; height: 11px; }
 .bag-total { margin-top: auto; padding-top: 24px; display: grid; grid-template-columns: 1fr auto; gap: 18px; font-size: 10px; }
 .bag-total button { grid-column: 1 / -1; }
+.kaspi-dialog__form { margin-top: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 12px; }
+.kaspi-dialog__form label { margin-top: 6px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-foreground); }
+.kaspi-dialog__form button { margin-top: 14px; }
+.kaspi-dialog__error { margin: 6px 0 0; color: var(--destructive, #b3261e); }
+.kaspi-dialog__note { margin: 4px 0 0; font-size: 10px; line-height: 1.5; color: var(--muted-foreground); }
 
 .product-page { min-height: calc(100vh - 64px); display: grid; grid-template-columns: 58% 42%; background: var(--background); }
 .product-page__image { min-height: calc(100vh - 64px); background: var(--secondary); }
