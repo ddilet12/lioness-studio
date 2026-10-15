@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LanguageProvider, useI18n } from "../lib/i18n";
 import { ShopProvider } from "../components/shop-context";
+import { getPaymentMode } from "../lib/kaspi-checkout.server";
 import { SiteHeader } from "../components/site-header";
 import { SiteFooter } from "../components/site-footer";
 import { CartDrawer } from "../components/cart-drawer";
@@ -102,6 +103,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
     ],
   }),
+  // Known before the first render so the bag never shows (or sends buyers to) the wrong checkout.
+  loader: () => getPaymentMode().catch(() => ({ kaspi: false })),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -124,11 +127,12 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { kaspi } = Route.useLoaderData();
 
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
-        <ShopProvider>
+        <ShopProvider kaspiEnabled={kaspi}>
           <SiteHeader />
           <Outlet />
           <SiteFooter />

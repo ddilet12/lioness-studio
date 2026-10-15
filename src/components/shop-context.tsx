@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { ShopifyCartItem } from "@/lib/shopify.server";
 import { addToCart, getCart, removeFromCart, updateCartLineQuantity } from "@/lib/shopify.server";
-import { getPaymentMode } from "@/lib/kaspi-checkout.server";
 
 const CART_ID_KEY = "lioness-cart-id";
 const WISHLIST_KEY = "lioness-wishlist";
@@ -33,19 +32,14 @@ type ShopContextValue = {
 
 const ShopContext = createContext<ShopContextValue | undefined>(undefined);
 
-export function ShopProvider({ children }: { children: ReactNode }) {
+export function ShopProvider({ children, kaspiEnabled }: { children: ReactNode; kaspiEnabled: boolean }) {
   const [cartId, setCartId] = useState<string | null>(null);
   const [items, setItems] = useState<ShopifyCartItem[]>([]);
   const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [bagOpen, setBagOpen] = useState(false);
-  const [kaspiEnabled, setKaspiEnabled] = useState(false);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-
-  useEffect(() => {
-    getPaymentMode().then((mode) => setKaspiEnabled(mode.kaspi)).catch(() => setKaspiEnabled(false));
-  }, []);
 
   useEffect(() => {
     // ApiPay's "back to the shop" button after a successful payment lands here with ?paid=1.
