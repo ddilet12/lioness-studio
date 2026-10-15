@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Heart } from "lucide-react";
+import heroImage from "@/assets/lioness-hero.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
 import storyImage from "@/assets/lioness-story.jpg";
 import { Button } from "@/components/ui/button";
@@ -37,72 +38,10 @@ function Index() {
   const { toggleWishlist, isWishlisted } = useShop();
   const { t } = useI18n();
   const filterLabels = { ALL: t("collection.all"), BLACK: t("collection.black"), RED: t("collection.red") } as const;
-  const heroImageWrapRef = useRef<HTMLDivElement>(null);
-  const heroVideoRef = useRef<HTMLVideoElement>(null);
-
-  // Some browsers (mobile webviews, post-hydration SPA navigation) don't
-  // honor the autoplay attribute reliably, so kick playback explicitly too.
-  // The video starts transparent and only fades in once frames are actually
-  // playing, so a blocked autoplay (data saver, low power mode, etc.) leaves
-  // the hero on its plain background instead of the video's black first frame.
-  useEffect(() => {
-    const video = heroVideoRef.current;
-    if (!video) return;
-
-    // autoplay can start the video (and fire "playing") before this effect
-    // gets a chance to attach a listener for it, so check the already-playing
-    // case directly too instead of relying on the event alone.
-    const markReady = () => video.classList.add("hero__video--ready");
-    if (!video.paused) markReady();
-    video.play().then(markReady).catch(() => {});
-
-    const onPlaying = () => markReady();
-    video.addEventListener("playing", onPlaying);
-
-    return () => {
-      video.removeEventListener("playing", onPlaying);
-    };
-  }, []);
-
-  useEffect(() => {
-    const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
-    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
-      if (entry.isIntersecting) entry.target.classList.add("is-visible");
-    }), { threshold: 0.12 });
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
-
-  // Subtle parallax: the hero photo lags slightly behind scroll, capped and rAF-throttled.
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const offset = Math.min(window.scrollY * 0.12, 70);
-        if (heroImageWrapRef.current) heroImageWrapRef.current.style.transform = `translateY(${offset}px)`;
-        ticking = false;
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return <main>
     <section className="hero" aria-label={t("hero.label")}>
-      <div className="hero__image-wrap" ref={heroImageWrapRef}>
-        <video
-          ref={heroVideoRef}
-          className="hero__video"
-          src="/videos/hero-intro.mp4"
-          autoPlay
-          muted
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        />
+      <div className="hero__image-wrap">
+        <img className="hero__image" src={heroImage} alt="Woman wearing the Black Angel dress inside a private jet" width={1536} height={1920} />
       </div>
       <div className="hero__shade" />
       <div className="hero__copy">
@@ -113,7 +52,7 @@ function Index() {
       <div className="hero__meta"><span>{t("hero.meta")}</span><i /><span>01 / 03</span></div>
     </section>
 
-    <section className="manifesto section-pad" data-reveal>
+    <section className="manifesto section-pad">
       <p className="eyebrow">{t("manifesto.eyebrow")}</p>
       <div className="manifesto__grid">
         <h2>{lines(t("manifesto.title.a"))}<span>{t("manifesto.title.b")}</span></h2>
@@ -121,7 +60,7 @@ function Index() {
       </div>
     </section>
 
-    <section id="collection" className="collection section-pad" data-reveal>
+    <section id="collection" className="collection section-pad">
       <div className="collection__head">
         <div><p className="eyebrow">{t("collection.eyebrow")}</p><h2>{t("collection.title")}</h2></div>
         <div className="filters" aria-label={t("collection.filterLabel")}>
@@ -161,13 +100,13 @@ function Index() {
       </div>
     </section>
 
-    <section className="campaign" data-reveal>
+    <section className="campaign">
       <img src={campaignImage} alt={t("campaign.alt")} width={1125} height={2000} loading="lazy" />
       <div className="campaign__shade" />
       <div className="campaign__copy"><p className="eyebrow">{t("campaign.eyebrow")}</p><h2>{lines(t("campaign.title"))}</h2><Link to="/product/$slug" params={{ slug: "the-asymmetric" }} className="text-link text-link--light">{t("campaign.cta")} <span>→</span></Link></div>
     </section>
 
-    <section id="story" className="story section-pad" data-reveal>
+    <section id="story" className="story section-pad">
       <div className="story__title"><p className="eyebrow">{t("story.eyebrow")}</p><h2>{lines(t("story.title"))}</h2></div>
       <img src={storyImage} alt={t("story.alt")} width={1024} height={1280} loading="lazy" />
       <div className="story__copy"><p>{lines(t("story.body"))}</p><Link to="/" hash="story" className="text-link">{t("story.cta")} <span>→</span></Link></div>
