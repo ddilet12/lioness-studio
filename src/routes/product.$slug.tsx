@@ -48,8 +48,13 @@ function ProductPage() {
     }
     void addToBag(selectedVariant.variantId, quantity, selectedVariant.size);
   };
-  return <main className="product-page">
-    <div className="product-page__image"><img src={product.image} alt={product.name} width={1024} height={1280} /></div>
+  const gallery = product.images.length > 1;
+  return <main className={`product-page${gallery ? " product-page--gallery" : ""}`}>
+    <div className="product-page__image">
+      {(gallery ? product.images : [product.image]).map((src, index) => (
+        <img key={src} src={src} alt={index === 0 ? product.name : `${product.name} ${index + 1}`} width={1024} height={1280} loading={index < 2 ? "eager" : "lazy"} />
+      ))}
+    </div>
     <section className="product-page__details">
       <p className="eyebrow">{t("pdp.eyebrow")}</p>
       <div className="product-page__title-row">

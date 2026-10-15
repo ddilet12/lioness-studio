@@ -6,6 +6,8 @@ export type Product = {
   price: number;
   color: "BLACK" | "RED";
   image: string;
+  /** Every photo of the product, in Shopify order; falls back to [image] when Shopify has just one. */
+  images: string[];
   description: string;
   /** False while the item has no stock in Shopify: the storefront shows it as "coming soon". */
   available: boolean;

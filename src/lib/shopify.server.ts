@@ -100,6 +100,16 @@ function mapSizes(node: any, fallbackVariantId: string, fallbackAvailable: boole
   return SIZES.map((size) => ({ size, variantId: fallbackVariantId, available: fallbackAvailable }));
 }
 
+/** All Shopify photos of a product; one placeholder/featured image when Shopify has none. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function mapImages(node: any): string[] {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const urls: string[] = (node.images?.edges ?? []).map((edge: any) => edge.node.url).filter(Boolean);
+  if (urls.length > 0) return urls;
+  const single = node.featuredImage?.url ?? resolvePlaceholderImage(node.handle);
+  return single ? [single] : [];
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapProduct(node: any): ShopifyProduct {
   const variantId = node.variants.edges[0]?.node.id ?? "";
@@ -110,6 +120,7 @@ function mapProduct(node: any): ShopifyProduct {
     price: Number(node.priceRange.minVariantPrice.amount),
     color: deriveColor(node.tags ?? []),
     image: node.featuredImage?.url ?? resolvePlaceholderImage(node.handle) ?? "",
+    images: mapImages(node),
     description: node.description ?? "",
     available,
     variantId,
@@ -175,6 +186,7 @@ async function fetchProductByHandle(handle: string): Promise<ShopifyProduct | un
         tags
         availableForSale
         featuredImage { url }
+        images(first: 20) { edges { node { url } } }
         priceRange { minVariantPrice { amount } }
         variants(first: 25) {
           edges {
