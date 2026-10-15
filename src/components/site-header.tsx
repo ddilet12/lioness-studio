@@ -38,8 +38,8 @@ export function SiteHeader() {
                 <div className="mega-menu" role="menu">
                   <div className="mega-menu__links">
                     <Link to="/" hash="collection" onClick={() => setShopMenuOpen(false)}>{t("nav.allDresses")}</Link>
-                    <Link to="/" hash="collection" onClick={() => setShopMenuOpen(false)}>{t("nav.black")}</Link>
-                    <Link to="/" hash="collection" onClick={() => setShopMenuOpen(false)}>{t("nav.red")}</Link>
+                    <Link to="/" search={{ color: "black" }} hash="collection" onClick={() => setShopMenuOpen(false)}>{t("nav.black")}</Link>
+                    <Link to="/" search={{ color: "red" }} hash="collection" onClick={() => setShopMenuOpen(false)}>{t("nav.red")}</Link>
                     <Link to="/" hash="story" onClick={() => setShopMenuOpen(false)}>{t("nav.ourStory")}</Link>
                   </div>
                   <Link to="/" hash="collection" className="mega-menu__feature" onClick={() => setShopMenuOpen(false)}>

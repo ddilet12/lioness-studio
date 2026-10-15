@@ -1,5 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import heroImage from "@/assets/lioness-hero.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
@@ -28,12 +27,18 @@ export const Route = createFileRoute("/")({
       { name: "twitter:image", content: "https://lionessdress.com/og-image.jpg" },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>): { color?: "black" | "red" } =>
+    search["color"] === "black" || search["color"] === "red" ? { color: search["color"] } : {},
   component: Index,
 });
 
 function Index() {
   const products = Route.useLoaderData();
-  const [filter, setFilter] = useState<"ALL" | "BLACK" | "RED">("ALL");
+  const { color } = Route.useSearch();
+  const navigate = useNavigate({ from: "/" });
+  const filter = color === "black" ? "BLACK" : color === "red" ? "RED" : "ALL";
+  const setFilter = (value: "ALL" | "BLACK" | "RED") =>
+    navigate({ search: value === "ALL" ? {} : { color: value === "BLACK" ? "black" : "red" }, hash: "collection", resetScroll: false });
   const visibleProducts = products.filter((product) => filter === "ALL" || product.color === filter);
   const { toggleWishlist, isWishlisted } = useShop();
   const { t } = useI18n();
