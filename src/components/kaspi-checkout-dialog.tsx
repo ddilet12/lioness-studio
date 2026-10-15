@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Linkified } from "@/components/linkified";
 import { useI18n, type TKey } from "@/lib/i18n";
 import { formatPrice } from "@/lib/products";
 import { createKaspiPaymentLink } from "@/lib/kaspi-checkout.server";
@@ -69,7 +70,7 @@ export function KaspiCheckoutDialog({ open, onOpenChange, cartId, total }: Props
           <Input id="kaspi-address" autoComplete="street-address" required maxLength={160} value={address} onChange={(event) => setAddress(event.target.value)} />
           <Label htmlFor="kaspi-comment">{t("kaspi.comment")}</Label>
           <Input id="kaspi-comment" maxLength={120} value={comment} onChange={(event) => setComment(event.target.value)} />
-          {errorKey && <p className="kaspi-dialog__error" role="alert">{t(errorKey)}</p>}
+          {errorKey && <p className="kaspi-dialog__error" role="alert"><Linkified text={t(errorKey)} /></p>}
           <Button type="submit" variant="luxury" size="wide" disabled={submitting || !cartId}>
             {submitting ? t("kaspi.creating") : t("kaspi.pay")}
           </Button>

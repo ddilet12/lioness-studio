@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { KaspiCheckoutDialog } from "@/components/kaspi-checkout-dialog";
@@ -30,8 +31,10 @@ export function CartDrawer() {
         </SheetHeader>
         <div className="bag-list">
           {items.map((item) => <article key={item.lineId} className="bag-item">
-            <img src={item.image} alt={item.name} width={1024} height={1280} />
-            <div><h3>{item.name}</h3><p>{formatPrice(item.price)}</p>{item.size && <p className="bag-item__size">{t("bag.size", { size: item.size })}</p>}
+            <Link to="/product/$slug" params={{ slug: item.slug }} onClick={() => setBagOpen(false)}>
+              <img src={item.image} alt={item.name} width={1024} height={1280} />
+            </Link>
+            <div><Link to="/product/$slug" params={{ slug: item.slug }} onClick={() => setBagOpen(false)}><h3>{item.name}</h3></Link><p>{formatPrice(item.price)}</p>{item.size && <p className="bag-item__size">{t("bag.size", { size: item.size })}</p>}
               <div className="quantity-control">
                 <Button variant="quantity" size="iconSlim" onClick={() => changeQuantity(item.lineId, item.quantity - 1)} aria-label={t("pdp.decrease")}><Minus /></Button>
                 <span>{item.quantity}</span>
