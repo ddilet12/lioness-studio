@@ -5,8 +5,6 @@ import { addToCart, getCart, removeFromCart, updateCartLineQuantity } from "@/li
 const CART_ID_KEY = "lioness-cart-id";
 const WISHLIST_KEY = "lioness-wishlist";
 
-export const FREE_SHIPPING_THRESHOLD = 100000;
-
 export type WishlistItem = { slug: string; name: string; price: number; image: string };
 
 type ShopContextValue = {

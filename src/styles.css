@@ -233,10 +233,6 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 
 .bag-drawer { width: min(92vw, 470px) !important; max-width: none !important; padding: 34px !important; box-shadow: none !important; }
 .bag-drawer h2 { font: 400 30px var(--font-serif); }
-.shipping-progress { margin-top: 22px; font-size: 8px; }
-.shipping-progress p { margin: 0 0 10px; color: var(--muted-foreground); }
-.shipping-progress__track { height: 1px; background: var(--border); }
-.shipping-progress__fill { height: 1px; background: var(--foreground); transition: width 400ms ease; }
 .bag-list { margin-top: 35px; display: flex; flex-direction: column; gap: 24px; max-height: 62vh; overflow: auto; }
 .wishlist-empty { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 60px 10px; text-align: center; color: var(--muted-foreground); font-size: 10px; }
 .wishlist-empty svg { width: 22px; height: 22px; }
