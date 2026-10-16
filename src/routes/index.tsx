@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import heroImage from "@/assets/lioness-hero.jpg";
-import campaignImage from "@/assets/lioness-campaign.jpg";
+import campaignWide from "@/assets/lioness-campaign-wide.jpg";
+import campaignTall from "@/assets/lioness-campaign-tall.jpg";
 import storyImage from "@/assets/lioness-story.jpg";
 import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
@@ -121,7 +122,10 @@ function Index() {
     </section>
 
     <section className="campaign">
-      <img src={campaignImage} alt={t("campaign.alt")} width={1125} height={2000} loading="lazy" />
+      <picture>
+        <source media="(min-width: 701px)" srcSet={campaignWide} width={1280} height={720} />
+        <img src={campaignTall} alt={t("campaign.alt")} width={853} height={1280} loading="lazy" />
+      </picture>
       <div className="campaign__shade" />
       <div className="campaign__copy"><p className="eyebrow">{t("campaign.eyebrow")}</p><h2>{lines(t("campaign.title"))}</h2><Link to="/product/$slug" params={{ slug: "the-asymmetric" }} className="text-link text-link--light">{t("campaign.cta")} <span>→</span></Link></div>
     </section>
