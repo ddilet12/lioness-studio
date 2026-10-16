@@ -6,7 +6,7 @@ import { useShop } from "@/components/shop-context";
 import { getCollections, getProducts, type ShopifyCollection, type ShopifyProduct } from "@/lib/shopify.server";
 import { useI18n } from "@/lib/i18n";
 import heroImage from "@/assets/lioness-hero.jpg";
-import campaignImage from "@/assets/lioness-campaign-tall.jpg";
+import campaignImage from "@/assets/lioness-campaign.jpg";
 import logoMark from "@/assets/logo-mark.svg";
 
 export function SiteHeader() {
