@@ -283,6 +283,25 @@ async function fetchCart(cartId: string): Promise<ShopifyCart | undefined> {
   return data?.cart ? mapCart(data.cart) : undefined;
 }
 
+export type ShopifyCollection = { handle: string; title: string; productHandles: string[] };
+
+/** Collections the brand set up in Shopify (via the hidden studio panel), with the products filed in each. */
+async function fetchCollections(): Promise<ShopifyCollection[]> {
+  const client = getClient();
+  const { data, errors } = await client.request(
+    `query Collections { collections(first: 20) { nodes { handle title products(first: 50) { nodes { handle } } } } }`,
+  );
+  if (errors) throw new Error(errors.message ?? "Failed to load collections");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data?.collections?.nodes ?? [])
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .filter((node: any) => node.handle !== "frontpage")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .map((node: any) => ({ handle: node.handle, title: node.title, productHandles: node.products.nodes.map((p: any) => p.handle) }));
+}
+
+export const getCollections = createServerFn({ method: "GET" }).handler(async () => fetchCollections());
+
 export const getProducts = createServerFn({ method: "GET" }).handler(async () => fetchProducts());
 
 export const getProductByHandle = createServerFn({ method: "GET" })

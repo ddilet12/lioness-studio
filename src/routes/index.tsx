@@ -7,14 +7,22 @@ import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
 import { lines, useI18n } from "@/lib/i18n";
 import { formatPrice } from "@/lib/products";
-import { getProducts } from "@/lib/shopify.server";
+import { getCollections, getProducts } from "@/lib/shopify.server";
 
 export const Route = createFileRoute("/")({
-  loader: () =>
-    getProducts().catch((error) => {
-      console.error("Shopify products unavailable", error);
-      return [];
-    }),
+  loader: async () => {
+    const [products, collections] = await Promise.all([
+      getProducts().catch((error) => {
+        console.error("Shopify products unavailable", error);
+        return [];
+      }),
+      getCollections().catch((error) => {
+        console.error("Shopify collections unavailable", error);
+        return [];
+      }),
+    ]);
+    return { products, collections };
+  },
   head: () => ({
     meta: [
       { title: "Lioness Dress — Black Angel Collection" },
@@ -27,19 +35,25 @@ export const Route = createFileRoute("/")({
       { name: "twitter:image", content: "https://lionessdress.com/og-image.jpg" },
     ],
   }),
-  validateSearch: (search: Record<string, unknown>): { color?: "black" | "red" } =>
-    search["color"] === "black" || search["color"] === "red" ? { color: search["color"] } : {},
+  validateSearch: (search: Record<string, unknown>): { color?: "black" | "red"; collection?: string } => {
+    const color = search["color"] === "black" || search["color"] === "red" ? search["color"] : undefined;
+    const collection = typeof search["collection"] === "string" && /^[a-z0-9-]{1,80}$/.test(search["collection"]) ? search["collection"] : undefined;
+    return { ...(color ? { color } : {}), ...(collection ? { collection } : {}) };
+  },
   component: Index,
 });
 
 function Index() {
-  const products = Route.useLoaderData();
-  const { color } = Route.useSearch();
+  const { products, collections } = Route.useLoaderData();
+  const { color, collection } = Route.useSearch();
   const navigate = useNavigate({ from: "/" });
   const filter = color === "black" ? "BLACK" : color === "red" ? "RED" : "ALL";
   const setFilter = (value: "ALL" | "BLACK" | "RED") =>
     navigate({ search: value === "ALL" ? {} : { color: value === "BLACK" ? "black" : "red" }, hash: "collection", resetScroll: false });
-  const visibleProducts = products.filter((product) => filter === "ALL" || product.color === filter);
+  const activeCollection = collections.find((c) => c.handle === collection);
+  const visibleProducts = products.filter((product) =>
+    activeCollection ? activeCollection.productHandles.includes(product.slug) : filter === "ALL" || product.color === filter,
+  );
   const { toggleWishlist, isWishlisted } = useShop();
   const { t } = useI18n();
   const filterLabels = { ALL: t("collection.all"), BLACK: t("collection.black"), RED: t("collection.red") } as const;
@@ -69,7 +83,8 @@ function Index() {
       <div className="collection__head">
         <div><p className="eyebrow">{t("collection.eyebrow")}</p><h2>{t("collection.title")}</h2></div>
         <div className="filters" aria-label={t("collection.filterLabel")}>
-          {(["ALL", "BLACK", "RED"] as const).map((value) => <button key={value} className={filter === value ? "active" : ""} onClick={() => setFilter(value)}>{filterLabels[value]}</button>)}
+          {(["ALL", "BLACK", "RED"] as const).map((value) => <button key={value} className={!activeCollection && filter === value ? "active" : ""} onClick={() => setFilter(value)}>{filterLabels[value]}</button>)}
+          {collections.map((c) => <button key={c.handle} className={activeCollection?.handle === c.handle ? "active" : ""} onClick={() => navigate({ search: { collection: c.handle }, hash: "collection", resetScroll: false })}>{c.title}</button>)}
         </div>
       </div>
       <div className="product-grid">
