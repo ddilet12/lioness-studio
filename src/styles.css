@@ -326,3 +326,5 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .menu-panel__fold-toggle svg { width: 20px; height: 20px; transition: transform .2s ease; }
 .menu-panel__fold-toggle svg.is-open { transform: rotate(180deg); }
 .menu-panel__fold-list { display: flex; flex-direction: column; align-items: center; gap: 14px; font-size: 19px; }
+/* The hero photo already carries the LD mark on the umbrella, so the gold logo is hidden over it. */
+.site-header--overlay .site-logo img { visibility: hidden; }
