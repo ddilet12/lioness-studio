@@ -22,6 +22,12 @@ function ReturnsExchanges() {
       <h2>{t("returns.nonReturnableTitle")}</h2>
       <p>{t("returns.nonReturnableBody")}</p>
 
+      <h2>{t("returns.refundTitle")}</h2>
+      <p>{t("returns.refundBody")}</p>
+
+      <h2>{t("returns.defectTitle")}</h2>
+      <p>{t("returns.defectBody")}</p>
+
       <h2>{t("returns.howTitle")}</h2>
       <p>{t("returns.howBody")}</p>
     </ContentPage>

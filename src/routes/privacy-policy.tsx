@@ -14,6 +14,9 @@ function PrivacyPolicy() {
       <p className="content-page__meta">{t("privacy.updated")}</p>
       <p className="content-page__intro">{t("privacy.intro")}</p>
 
+      <h2>{t("privacy.consentTitle")}</h2>
+      <p>{t("privacy.consentBody")}</p>
+
       <h2>{t("privacy.collectTitle")}</h2>
       <ContentList text={t("privacy.collectBody")} />
 
@@ -25,6 +28,12 @@ function PrivacyPolicy() {
 
       <h2>{t("privacy.rightsTitle")}</h2>
       <p>{t("privacy.rightsBody")}</p>
+
+      <h2>{t("privacy.storageTitle")}</h2>
+      <p>{t("privacy.storageBody")}</p>
+
+      <h2>{t("privacy.cookiesTitle")}</h2>
+      <p>{t("privacy.cookiesBody")}</p>
 
       <h2>{t("privacy.contactTitle")}</h2>
       <p>{t("privacy.contactBody")}</p>
