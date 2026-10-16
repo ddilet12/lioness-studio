@@ -1,9 +1,9 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
+import { ChevronDown, Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
-import { getProducts, type ShopifyProduct } from "@/lib/shopify.server";
+import { getCollections, getProducts, type ShopifyCollection, type ShopifyProduct } from "@/lib/shopify.server";
 import { useI18n } from "@/lib/i18n";
 import heroImage from "@/assets/lioness-hero.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
@@ -13,6 +13,8 @@ export function SiteHeader() {
   const path = useRouterState({ select: (state) => state.location.pathname });
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopMenuOpen, setShopMenuOpen] = useState(false);
+  const [collectionsOpen, setCollectionsOpen] = useState(false);
+  const [collections, setCollections] = useState<ShopifyCollection[]>([]);
   const [query, setQuery] = useState("");
   const [searchableProducts, setSearchableProducts] = useState<ShopifyProduct[]>([]);
   const { itemCount, setBagOpen, wishlist, setWishlistOpen, searchOpen, setSearchOpen } = useShop();
@@ -21,6 +23,10 @@ export function SiteHeader() {
   const matches = query.trim()
     ? searchableProducts.filter((product) => product.name.toLowerCase().includes(query.toLowerCase()))
     : [];
+
+  useEffect(() => {
+    getCollections().then(setCollections).catch(() => setCollections([]));
+  }, []);
 
   useEffect(() => {
     if (!searchOpen || searchableProducts.length) return;
@@ -72,7 +78,18 @@ export function SiteHeader() {
         <Button variant="editorialDark" size="iconSlim" className="menu-panel__close" onClick={() => setMenuOpen(false)} aria-label={t("nav.closeMenu")}><X /></Button>
         <Link to="/" className="menu-panel__logo" onClick={() => setMenuOpen(false)}><img src={logoMark} alt="Lioness Dress" /></Link>
         <Link to="/" hash="collection" onClick={() => setMenuOpen(false)}>{t("nav.shop")}</Link>
-        <Link to="/" hash="collection" onClick={() => setMenuOpen(false)}>{t("nav.blackAngel")}</Link>
+        {collections.length === 0 ? (
+          <Link to="/" hash="collection" onClick={() => setMenuOpen(false)}>{t("nav.blackAngel")}</Link>
+        ) : (
+          <div className="menu-panel__fold">
+            <button type="button" className="menu-panel__fold-toggle" aria-expanded={collectionsOpen} onClick={() => setCollectionsOpen((open) => !open)}>
+              {t("nav.blackAngel")} <ChevronDown className={collectionsOpen ? "is-open" : ""} />
+            </button>
+            {collectionsOpen && <div className="menu-panel__fold-list">
+              {collections.map((collection) => <Link key={collection.handle} to="/" search={{ collection: collection.handle }} hash="collection" onClick={() => setMenuOpen(false)}>{collection.title}</Link>)}
+            </div>}
+          </div>
+        )}
         <Link to="/" hash="story" onClick={() => setMenuOpen(false)}>{t("nav.ourStory")}</Link>
         <Button variant="editorialDark" size="plain" onClick={() => { setMenuOpen(false); setSearchOpen(true); }}>{t("nav.search")}</Button>
         <Button variant="editorialDark" size="plain" onClick={() => { setMenuOpen(false); setWishlistOpen(true); }}>{t("nav.wishlist")} {wishlist.length}</Button>
