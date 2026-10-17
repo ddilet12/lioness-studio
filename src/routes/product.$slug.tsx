@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Heart, Minus, Plus } from "lucide-react";
 import { AltPrice } from "@/components/alt-price";
+import { ImageLightbox } from "@/components/image-lightbox";
 import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
 import { translateFor, useI18n } from "@/lib/i18n";
@@ -34,6 +35,7 @@ export const Route = createFileRoute("/product/$slug")({
 function ProductPage() {
   const product = Route.useLoaderData();
   const [quantity, setQuantity] = useState(1);
+  const [zoomIndex, setZoomIndex] = useState<number | null>(null);
   const [size, setSize] = useState<string | null>(null);
   const [sizeMissing, setSizeMissing] = useState(false);
   const { addToBag, toggleWishlist, isWishlisted } = useShop();
@@ -53,9 +55,10 @@ function ProductPage() {
   return <main className={`product-page${gallery ? " product-page--gallery" : ""}`}>
     <div className="product-page__image">
       {(gallery ? product.images : [product.image]).map((src, index) => (
-        <img key={src} src={src} alt={index === 0 ? product.name : `${product.name} ${index + 1}`} width={1024} height={1280} loading={index < 2 ? "eager" : "lazy"} />
+        <img key={src} src={src} alt={index === 0 ? product.name : `${product.name} ${index + 1}`} width={1024} height={1280} loading={index < 2 ? "eager" : "lazy"} className="zoomable" onClick={() => setZoomIndex(index)} />
       ))}
     </div>
+    <ImageLightbox images={gallery ? product.images : [product.image]} index={zoomIndex} label={product.name} onClose={() => setZoomIndex(null)} onChange={setZoomIndex} />
     <section className="product-page__details">
       <p className="eyebrow">{t("pdp.eyebrow")}</p>
       <div className="product-page__title-row">

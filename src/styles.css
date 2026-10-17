@@ -138,7 +138,6 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .product-card__image { position: relative; overflow: hidden; aspect-ratio: .82; background: var(--secondary); }
 .product-card__image span { position: absolute; z-index: 1; top: 12px; left: 12px; font-size: 6px; }
 .product-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms cubic-bezier(.2,.7,.2,1); }
-.product-card:hover img { transform: scale(1.035); }
 
 /* 24x24px minimum per WCAG 2.2 AA Target Size (was 22x22, found via ui-ux-pro-max audit). */
 .product-card__wish { position: absolute; z-index: 2; top: 10px; right: 10px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border: 0; background: color-mix(in oklab, var(--background) 78%, transparent); color: var(--foreground); cursor: pointer; }
@@ -331,3 +330,6 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 
 .alt-price { display: block; margin-top: 3px; font-size: 9px; font-weight: 400; opacity: .62; letter-spacing: .02em; }
 .alt-price__note { display: block; margin-top: 4px; font-size: 8px; line-height: 1.4; max-width: 260px; }
+
+/* Only photos on a product page can be opened and zoomed; catalog cards stay still. */
+.product-page__image img.zoomable { cursor: zoom-in; }
