@@ -350,3 +350,6 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
   .section-page { padding-top: 96px; padding-bottom: 80px; }
   .lookbook__looks { grid-template-columns: 1fr; margin-bottom: 48px; }
 }
+/* The phone menu has many entries: let it scroll on short screens instead of cutting items off. */
+.menu-panel { overflow-y: auto; justify-content: safe center; gap: 24px; padding: 72px 0 36px; }
+.menu-panel__fold-list { padding-bottom: 6px; }
