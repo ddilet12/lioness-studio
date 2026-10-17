@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Heart, Minus, Plus } from "lucide-react";
+import { AltPrice } from "@/components/alt-price";
 import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
 import { translateFor, useI18n } from "@/lib/i18n";
@@ -68,7 +69,7 @@ function ProductPage() {
           <Heart />
         </button>
       </div>
-      <p className="product-page__price">{formatPrice(product.price)}</p>
+      <p className="product-page__price">{formatPrice(product.price)}<AltPrice value={product.price} note /></p>
       <p className="product-page__description">{description}</p>
       <div className="size-row" role="group" aria-label={t("pdp.size")}>
         <span>{t("pdp.size")}</span>

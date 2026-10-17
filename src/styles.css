@@ -328,3 +328,6 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .menu-panel__fold-list { display: flex; flex-direction: column; align-items: center; gap: 14px; font-size: 19px; }
 /* The hero photo already carries the LD mark on the umbrella, so the gold logo is hidden over it. */
 .site-header--overlay .site-logo img { visibility: hidden; }
+
+.alt-price { display: block; margin-top: 3px; font-size: 9px; font-weight: 400; opacity: .62; letter-spacing: .02em; }
+.alt-price__note { display: block; margin-top: 4px; font-size: 8px; line-height: 1.4; max-width: 260px; }

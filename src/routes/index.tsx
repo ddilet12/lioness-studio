@@ -4,6 +4,7 @@ import heroWide from "@/assets/lioness-hero-wide.jpg";
 import heroTall from "@/assets/lioness-hero-tall.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
 import storyImage from "@/assets/lioness-story.jpg";
+import { AltPrice } from "@/components/alt-price";
 import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
 import { lines, useI18n } from "@/lib/i18n";
@@ -119,7 +120,7 @@ function Index() {
               {product.available ? t("product.selectSize") : t("product.soon")}
             </Button>
           </div>
-          <h3>{product.name}</h3><p>{formatPrice(product.price)}</p>
+          <h3>{product.name}</h3><p>{formatPrice(product.price)}<AltPrice value={product.price} /></p>
         </Link>)}
       </div>
     </section>

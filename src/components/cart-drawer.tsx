@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { AltPrice } from "@/components/alt-price";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { KaspiCheckoutDialog } from "@/components/kaspi-checkout-dialog";
@@ -44,7 +45,7 @@ export function CartDrawer() {
             </div>
           </article>)}
         </div>
-        {items.length > 0 && <div className="bag-total"><span>{t("bag.total")}</span><strong>{formatPrice(total)}</strong><Button variant="luxury" size="wide" onClick={checkout}>{t(kaspiEnabled ? "bag.checkoutKaspi" : "bag.checkout")}</Button></div>}
+        {items.length > 0 && <div className="bag-total"><span>{t("bag.total")}</span><strong>{formatPrice(total)}<AltPrice value={total} note /></strong><Button variant="luxury" size="wide" onClick={checkout}>{t(kaspiEnabled ? "bag.checkoutKaspi" : "bag.checkout")}</Button></div>}
       </SheetContent>
     </Sheet>
     <KaspiCheckoutDialog open={kaspiOpen} onOpenChange={setKaspiOpen} cartId={cartId} total={total} />

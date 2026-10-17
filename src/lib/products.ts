@@ -17,7 +17,10 @@ export const SIZES = ["XS", "S", "M", "L"] as const;
 
 /** Prices are stored in Shopify in KZT (₸). */
 const priceFormat = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 });
-export const formatPrice = (price: number) => `${priceFormat.format(price)} ₸`;
+const exactPriceFormat = new Intl.NumberFormat("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+// Whole-tenge prices stay as they are; a price with tiyn is shown exactly, never rounded.
+export const formatPrice = (price: number) =>
+  `${(Math.abs(price - Math.round(price)) > 0.004 ? exactPriceFormat : priceFormat).format(price)} ₸`;
 
 /** Temporary Shopify titles carry a "(заглушка)" suffix; never show it to shoppers. */
 export const cleanProductName = (name: string) => name.replace(/\s*\(заглушка\)\s*$/i, "").trim();

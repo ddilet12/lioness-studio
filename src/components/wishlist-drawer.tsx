@@ -1,5 +1,6 @@
 import { Heart } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { AltPrice } from "@/components/alt-price";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useI18n } from "@/lib/i18n";
@@ -24,7 +25,7 @@ export function WishlistDrawer() {
               </Link>
               <div>
                 <Link to="/product/$slug" params={{ slug: item.slug }} onClick={() => setWishlistOpen(false)}><h3>{item.name}</h3></Link>
-                <p>{formatPrice(item.price)}</p>
+                <p>{formatPrice(item.price)}<AltPrice value={item.price} /></p>
                 <Button variant="text" size="plain" onClick={() => toggleWishlist(item)}>{t("bag.remove")}</Button>
               </div>
             </article>
