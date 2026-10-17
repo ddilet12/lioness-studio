@@ -41,6 +41,11 @@ export function SiteFooter() {
 
       <div>
         <h3>{t("footer.navigation")}</h3>
+        <Link to="/new-collection">{t("nav.newCollection")}</Link>
+        <Link to="/bestsellers">{t("nav.bestsellers")}</Link>
+        <Link to="/party-dresses">{t("nav.partyDresses")}</Link>
+        <Link to="/outlet">{t("nav.outlet")}</Link>
+        <Link to="/lookbook">{t("nav.lookbook")}</Link>
         <button type="button" className="footer__link" onClick={() => setSearchOpen(true)}>{t("footer.search")}</button>
       </div>
 

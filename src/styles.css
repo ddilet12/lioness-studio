@@ -334,3 +334,19 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 
 /* Only photos on a product page can be opened and zoomed; catalog cards stay still. */
 .product-page__image img.zoomable { cursor: zoom-in; }
+
+/* Shop sections (New Collection, Bestsellers, Party Dresses, Outlet) and the Lookbook */
+.section-page { min-height: 60vh; padding: 120px clamp(24px, 4vw, 64px) 120px; background: var(--background); }
+.section-page h1 { margin: 0 0 8px; font: 400 clamp(44px, 6vw, 84px)/.95 var(--font-serif); letter-spacing: 0; }
+.section-page__intro { margin: 0 0 48px; max-width: 600px; font: 400 19px/1.45 var(--font-serif); }
+.section-page__empty { margin: 40px 0 56px; max-width: 460px; font-size: 14px; line-height: 1.6; opacity: .7; }
+.section-page__back { display: inline-block; margin-top: 56px; }
+.price-old { margin-left: 8px; text-decoration: line-through; opacity: .55; }
+.lookbook__looks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 72px; }
+.lookbook__looks img { width: 100%; aspect-ratio: .75; object-fit: cover; }
+.lookbook__collection { margin-bottom: 64px; }
+.lookbook__collection h2 { margin: 0 0 24px; font: 400 clamp(28px, 3.5vw, 44px)/1 var(--font-serif); letter-spacing: 0; }
+@media (max-width: 700px) {
+  .section-page { padding-top: 96px; padding-bottom: 80px; }
+  .lookbook__looks { grid-template-columns: 1fr; margin-bottom: 48px; }
+}

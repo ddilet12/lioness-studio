@@ -11,6 +11,8 @@ export type Product = {
   description: string;
   /** False while the item has no stock in Shopify: the storefront shows it as "coming soon". */
   available: boolean;
+  /** Original price when the style is on sale (Shopify "Compare at price" above the price); drives the Outlet look. */
+  compareAtPrice?: number | undefined;
 };
 
 export const SIZES = ["XS", "S", "M", "L"] as const;

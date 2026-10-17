@@ -110,6 +110,14 @@ function mapImages(node: any): string[] {
   return single ? [single] : [];
 }
 
+/** Shopify "Compare at price" counts as a sale only when it is higher than the real price. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function saleOriginalPrice(node: any): number | undefined {
+  const compare = Number(node.compareAtPriceRange?.minVariantPrice?.amount ?? 0);
+  const price = Number(node.priceRange.minVariantPrice.amount);
+  return compare > price ? compare : undefined;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapProduct(node: any): ShopifyProduct {
   const variantId = node.variants.edges[0]?.node.id ?? "";
@@ -118,6 +126,7 @@ function mapProduct(node: any): ShopifyProduct {
     slug: node.handle,
     name: cleanProductName(node.title),
     price: Number(node.priceRange.minVariantPrice.amount),
+    compareAtPrice: saleOriginalPrice(node),
     color: deriveColor(node.tags ?? []),
     image: node.featuredImage?.url ?? resolvePlaceholderImage(node.handle) ?? "",
     images: mapImages(node),
@@ -163,6 +172,7 @@ async function fetchProducts(): Promise<ShopifyProduct[]> {
             availableForSale
             featuredImage { url }
             priceRange { minVariantPrice { amount } }
+            compareAtPriceRange { minVariantPrice { amount } }
             variants(first: 1) { edges { node { id } } }
           }
         }
@@ -188,6 +198,7 @@ async function fetchProductByHandle(handle: string): Promise<ShopifyProduct | un
         featuredImage { url }
         images(first: 20) { edges { node { url } } }
         priceRange { minVariantPrice { amount } }
+        compareAtPriceRange { minVariantPrice { amount } }
         variants(first: 25) {
           edges {
             node {
@@ -285,6 +296,55 @@ async function fetchCart(cartId: string): Promise<ShopifyCart | undefined> {
 
 export type ShopifyCollection = { handle: string; title: string; productHandles: string[] };
 
+/** Shop sections that are driven by a Shopify collection of the same handle (filled in Shopify admin). */
+export const SECTION_HANDLES = ["new-collection", "bestsellers", "party-dresses", "outlet"] as const;
+
+const CARD_FIELDS = `
+  handle
+  title
+  description
+  tags
+  availableForSale
+  featuredImage { url }
+  priceRange { minVariantPrice { amount } }
+  compareAtPriceRange { minVariantPrice { amount } }
+  variants(first: 1) { edges { node { id } } }
+`;
+
+async function fetchSectionProducts(handle: string): Promise<ShopifyProduct[]> {
+  const client = getClient();
+  const { data, errors } = await client.request(
+    `query Section($handle: String!) { collectionByHandle(handle: $handle) { products(first: 48) { edges { node { ${CARD_FIELDS} } } } } }`,
+    { variables: { handle } },
+  );
+  if (errors) throw new Error(errors.message ?? "Failed to load the collection");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data?.collectionByHandle?.products.edges ?? []).map(({ node }: any) => mapProduct(node));
+}
+
+export type LookbookCollection = { handle: string; title: string; products: ShopifyProduct[] };
+
+/** Every brand collection with its styles, for the Lookbook page (the shop sections are left out). */
+async function fetchLookbook(): Promise<LookbookCollection[]> {
+  const client = getClient();
+  const { data, errors } = await client.request(
+    `query Lookbook { collections(first: 20) { nodes { handle title products(first: 12) { edges { node { ${CARD_FIELDS} } } } } } }`,
+  );
+  if (errors) throw new Error(errors.message ?? "Failed to load collections");
+  return (data?.collections?.nodes ?? [])
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .filter((node: any) => node.handle !== "frontpage" && !SECTION_HANDLES.includes(node.handle))
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .map((node: any) => ({ handle: node.handle, title: node.title, products: node.products.edges.map(({ node: product }: any) => mapProduct(product)) }))
+    .filter((collection: LookbookCollection) => collection.products.length > 0);
+}
+
+export const getSectionProducts = createServerFn({ method: "GET" })
+  .validator((handle: string) => handle)
+  .handler(async ({ data: handle }) => ((SECTION_HANDLES as readonly string[]).includes(handle) ? fetchSectionProducts(handle) : []));
+
+export const getLookbook = createServerFn({ method: "GET" }).handler(async () => fetchLookbook());
+
 /** Collections the brand set up in Shopify (via the hidden studio panel), with the products filed in each. */
 async function fetchCollections(): Promise<ShopifyCollection[]> {
   const client = getClient();
@@ -295,7 +355,7 @@ async function fetchCollections(): Promise<ShopifyCollection[]> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (data?.collections?.nodes ?? [])
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((node: any) => node.handle !== "frontpage")
+    .filter((node: any) => node.handle !== "frontpage" && !SECTION_HANDLES.includes(node.handle))
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .map((node: any) => ({ handle: node.handle, title: node.title, productHandles: node.products.nodes.map((p: any) => p.handle) }));
 }

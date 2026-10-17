@@ -4,7 +4,7 @@ import heroWide from "@/assets/lioness-hero-wide.jpg";
 import heroTall from "@/assets/lioness-hero-tall.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
 import storyImage from "@/assets/lioness-story.jpg";
-import { AltPrice } from "@/components/alt-price";
+import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
 import { lines, useI18n } from "@/lib/i18n";
@@ -93,35 +93,7 @@ function Index() {
         </div>
       </div>
       <div className="product-grid">
-        {visibleProducts.map((product) => <Link to="/product/$slug" params={{ slug: product.slug }} className="product-card" key={product.slug}>
-          <div className="product-card__image">
-            <span>{product.available ? t("product.new") : t("product.soon")}</span>
-            <button
-              type="button"
-              className={`product-card__wish ${isWishlisted(product.slug) ? "is-active" : ""}`}
-              aria-label={isWishlisted(product.slug) ? t("product.wishRemove") : t("product.wishAdd")}
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                toggleWishlist({ slug: product.slug, name: product.name, price: product.price, image: product.image });
-              }}
-            >
-              <Heart />
-            </button>
-            <img src={product.image} alt={product.name} width={1024} height={1280} loading="lazy" />
-            {/* A size is required, so the card sends shoppers to the product page; while a style has no stock it reads "coming soon". */}
-            <Button
-              variant="luxury"
-              size="plain"
-              className="product-card__quick-add"
-              disabled={!product.available}
-              tabIndex={-1}
-            >
-              {product.available ? t("product.selectSize") : t("product.soon")}
-            </Button>
-          </div>
-          <h3>{product.name}</h3><p>{formatPrice(product.price)}<AltPrice value={product.price} /></p>
-        </Link>)}
+        {visibleProducts.map((product) => <ProductCard key={product.slug} product={product} />)}
       </div>
     </section>
 

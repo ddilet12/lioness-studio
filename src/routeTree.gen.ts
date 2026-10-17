@@ -11,9 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutUsRouteImport } from './routes/about-us'
+import { Route as BestsellersRouteImport } from './routes/bestsellers'
 import { Route as DeliveryRouteImport } from './routes/delivery'
+import { Route as LookbookRouteImport } from './routes/lookbook'
 import { Route as LoyaltyProgramRouteImport } from './routes/loyalty-program'
+import { Route as NewCollectionRouteImport } from './routes/new-collection'
+import { Route as OutletRouteImport } from './routes/outlet'
 import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as PartyDressesRouteImport } from './routes/party-dresses'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ReturnsExchangesRouteImport } from './routes/returns-exchanges'
 import { Route as SizeGuideRouteImport } from './routes/size-guide'
@@ -30,9 +35,19 @@ const AboutUsRoute = AboutUsRouteImport.update({
   path: '/about-us',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BestsellersRoute = BestsellersRouteImport.update({
+  id: '/bestsellers',
+  path: '/bestsellers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DeliveryRoute = DeliveryRouteImport.update({
   id: '/delivery',
   path: '/delivery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LookbookRoute = LookbookRouteImport.update({
+  id: '/lookbook',
+  path: '/lookbook',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoyaltyProgramRoute = LoyaltyProgramRouteImport.update({
@@ -40,9 +55,24 @@ const LoyaltyProgramRoute = LoyaltyProgramRouteImport.update({
   path: '/loyalty-program',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewCollectionRoute = NewCollectionRouteImport.update({
+  id: '/new-collection',
+  path: '/new-collection',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OutletRoute = OutletRouteImport.update({
+  id: '/outlet',
+  path: '/outlet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PartnersRoute = PartnersRouteImport.update({
   id: '/partners',
   path: '/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartyDressesRoute = PartyDressesRouteImport.update({
+  id: '/party-dresses',
+  path: '/party-dresses',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
@@ -74,9 +104,14 @@ const ProductSlugRoute = ProductSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
+  '/bestsellers': typeof BestsellersRoute
   '/delivery': typeof DeliveryRoute
+  '/lookbook': typeof LookbookRoute
   '/loyalty-program': typeof LoyaltyProgramRoute
+  '/new-collection': typeof NewCollectionRoute
+  '/outlet': typeof OutletRoute
   '/partners': typeof PartnersRoute
+  '/party-dresses': typeof PartyDressesRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/returns-exchanges': typeof ReturnsExchangesRoute
   '/size-guide': typeof SizeGuideRoute
@@ -86,9 +121,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
+  '/bestsellers': typeof BestsellersRoute
   '/delivery': typeof DeliveryRoute
+  '/lookbook': typeof LookbookRoute
   '/loyalty-program': typeof LoyaltyProgramRoute
+  '/new-collection': typeof NewCollectionRoute
+  '/outlet': typeof OutletRoute
   '/partners': typeof PartnersRoute
+  '/party-dresses': typeof PartyDressesRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/returns-exchanges': typeof ReturnsExchangesRoute
   '/size-guide': typeof SizeGuideRoute
@@ -99,9 +139,14 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
+  '/bestsellers': typeof BestsellersRoute
   '/delivery': typeof DeliveryRoute
+  '/lookbook': typeof LookbookRoute
   '/loyalty-program': typeof LoyaltyProgramRoute
+  '/new-collection': typeof NewCollectionRoute
+  '/outlet': typeof OutletRoute
   '/partners': typeof PartnersRoute
+  '/party-dresses': typeof PartyDressesRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/returns-exchanges': typeof ReturnsExchangesRoute
   '/size-guide': typeof SizeGuideRoute
@@ -113,9 +158,14 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about-us'
+    | '/bestsellers'
     | '/delivery'
+    | '/lookbook'
     | '/loyalty-program'
+    | '/new-collection'
+    | '/outlet'
     | '/partners'
+    | '/party-dresses'
     | '/privacy-policy'
     | '/returns-exchanges'
     | '/size-guide'
@@ -125,9 +175,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about-us'
+    | '/bestsellers'
     | '/delivery'
+    | '/lookbook'
     | '/loyalty-program'
+    | '/new-collection'
+    | '/outlet'
     | '/partners'
+    | '/party-dresses'
     | '/privacy-policy'
     | '/returns-exchanges'
     | '/size-guide'
@@ -137,9 +192,14 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about-us'
+    | '/bestsellers'
     | '/delivery'
+    | '/lookbook'
     | '/loyalty-program'
+    | '/new-collection'
+    | '/outlet'
     | '/partners'
+    | '/party-dresses'
     | '/privacy-policy'
     | '/returns-exchanges'
     | '/size-guide'
@@ -150,9 +210,14 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutUsRoute: typeof AboutUsRoute
+  BestsellersRoute: typeof BestsellersRoute
   DeliveryRoute: typeof DeliveryRoute
+  LookbookRoute: typeof LookbookRoute
   LoyaltyProgramRoute: typeof LoyaltyProgramRoute
+  NewCollectionRoute: typeof NewCollectionRoute
+  OutletRoute: typeof OutletRoute
   PartnersRoute: typeof PartnersRoute
+  PartyDressesRoute: typeof PartyDressesRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ReturnsExchangesRoute: typeof ReturnsExchangesRoute
   SizeGuideRoute: typeof SizeGuideRoute
@@ -176,11 +241,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutUsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bestsellers': {
+      id: '/bestsellers'
+      path: '/bestsellers'
+      fullPath: '/bestsellers'
+      preLoaderRoute: typeof BestsellersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/delivery': {
       id: '/delivery'
       path: '/delivery'
       fullPath: '/delivery'
       preLoaderRoute: typeof DeliveryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lookbook': {
+      id: '/lookbook'
+      path: '/lookbook'
+      fullPath: '/lookbook'
+      preLoaderRoute: typeof LookbookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/loyalty-program': {
@@ -190,11 +269,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoyaltyProgramRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/new-collection': {
+      id: '/new-collection'
+      path: '/new-collection'
+      fullPath: '/new-collection'
+      preLoaderRoute: typeof NewCollectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/outlet': {
+      id: '/outlet'
+      path: '/outlet'
+      fullPath: '/outlet'
+      preLoaderRoute: typeof OutletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/partners': {
       id: '/partners'
       path: '/partners'
       fullPath: '/partners'
       preLoaderRoute: typeof PartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/party-dresses': {
+      id: '/party-dresses'
+      path: '/party-dresses'
+      fullPath: '/party-dresses'
+      preLoaderRoute: typeof PartyDressesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy-policy': {
@@ -238,9 +338,14 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutUsRoute: AboutUsRoute,
+  BestsellersRoute: BestsellersRoute,
   DeliveryRoute: DeliveryRoute,
+  LookbookRoute: LookbookRoute,
   LoyaltyProgramRoute: LoyaltyProgramRoute,
+  NewCollectionRoute: NewCollectionRoute,
+  OutletRoute: OutletRoute,
   PartnersRoute: PartnersRoute,
+  PartyDressesRoute: PartyDressesRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ReturnsExchangesRoute: ReturnsExchangesRoute,
   SizeGuideRoute: SizeGuideRoute,
