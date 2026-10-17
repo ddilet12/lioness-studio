@@ -17,7 +17,6 @@ import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ReturnsExchangesRouteImport } from './routes/returns-exchanges'
 import { Route as SizeGuideRouteImport } from './routes/size-guide'
-import { Route as Studio49a60a9bRouteImport } from './routes/studio-49a60a9b'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 
@@ -61,11 +60,6 @@ const SizeGuideRoute = SizeGuideRouteImport.update({
   path: '/size-guide',
   getParentRoute: () => rootRouteImport,
 } as any)
-const Studio49a60a9bRoute = Studio49a60a9bRouteImport.update({
-  id: '/studio-49a60a9b',
-  path: '/studio-49a60a9b',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
   id: '/terms-of-service',
   path: '/terms-of-service',
@@ -86,7 +80,6 @@ export interface FileRoutesByFullPath {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/returns-exchanges': typeof ReturnsExchangesRoute
   '/size-guide': typeof SizeGuideRoute
-  '/studio-49a60a9b': typeof Studio49a60a9bRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/product/$slug': typeof ProductSlugRoute
 }
@@ -99,7 +92,6 @@ export interface FileRoutesByTo {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/returns-exchanges': typeof ReturnsExchangesRoute
   '/size-guide': typeof SizeGuideRoute
-  '/studio-49a60a9b': typeof Studio49a60a9bRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/product/$slug': typeof ProductSlugRoute
 }
@@ -113,7 +105,6 @@ export interface FileRoutesById {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/returns-exchanges': typeof ReturnsExchangesRoute
   '/size-guide': typeof SizeGuideRoute
-  '/studio-49a60a9b': typeof Studio49a60a9bRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/product/$slug': typeof ProductSlugRoute
 }
@@ -128,7 +119,6 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/returns-exchanges'
     | '/size-guide'
-    | '/studio-49a60a9b'
     | '/terms-of-service'
     | '/product/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -141,7 +131,6 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/returns-exchanges'
     | '/size-guide'
-    | '/studio-49a60a9b'
     | '/terms-of-service'
     | '/product/$slug'
   id:
@@ -154,7 +143,6 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/returns-exchanges'
     | '/size-guide'
-    | '/studio-49a60a9b'
     | '/terms-of-service'
     | '/product/$slug'
   fileRoutesById: FileRoutesById
@@ -168,7 +156,6 @@ export interface RootRouteChildren {
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ReturnsExchangesRoute: typeof ReturnsExchangesRoute
   SizeGuideRoute: typeof SizeGuideRoute
-  Studio49a60a9bRoute: typeof Studio49a60a9bRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
   ProductSlugRoute: typeof ProductSlugRoute
 }
@@ -231,13 +218,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SizeGuideRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/studio-49a60a9b': {
-      id: '/studio-49a60a9b'
-      path: '/studio-49a60a9b'
-      fullPath: '/studio-49a60a9b'
-      preLoaderRoute: typeof Studio49a60a9bRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/terms-of-service': {
       id: '/terms-of-service'
       path: '/terms-of-service'
@@ -264,7 +244,6 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ReturnsExchangesRoute: ReturnsExchangesRoute,
   SizeGuideRoute: SizeGuideRoute,
-  Studio49a60a9bRoute: Studio49a60a9bRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
   ProductSlugRoute: ProductSlugRoute,
 }
