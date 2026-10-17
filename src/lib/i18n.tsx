@@ -81,7 +81,7 @@ const en = {
   "story.alt": "Lioness Dress show in Paris: models in black dresses walking through a historic hall",
   "story.eyebrow": "OUR SIGNATURE",
   "story.title": "From Astana\nto Paris.",
-  "story.body": "Designed around confidence,\nsensuality and clean feminine\nlines. Every silhouette is created\nto make an entrance — and stay\nin memory.",
+  "story.body": "LIONESS DRESS creates dresses for self-confident girls who embrace their sensuality and feminine spirit. In October 2026, we presented BLACK ANGEL — our flagship collection and a favourite among our customers — in Paris during Paris Fashion Week.\n\n“Angel skin” fabric and French mesh, paired with gloves and eye veils, capture the collection’s French chic and the alluring mood of a Parisian evening.",
   "story.cta": "DISCOVER OUR STORY",
 
   // Product page
@@ -323,7 +323,7 @@ const ru: Record<TKey, string> = {
   "story.alt": "Показ Lioness Dress в Париже: модели в чёрных платьях идут по историческому залу",
   "story.eyebrow": "НАШ ПОЧЕРК",
   "story.title": "Из Астаны\nв Париж.",
-  "story.body": "Создано вокруг уверенности,\nчувственности и чистых женских\nлиний. Каждый силуэт задуман,\nчтобы произвести впечатление —\nи остаться в памяти.",
+  "story.body": "LIONESS DRESS создаёт платья для уверенных в себе девушек, которые принимают свою чувственность и женственность. В октябре 2026 года мы представили BLACK ANGEL — нашу флагманскую коллекцию и любимицу клиенток — в Париже во время Недели моды в Париже.\n\nТкань «ангельская кожа» и французская сетка в сочетании с перчатками и вуалями для глаз передают французский шик коллекции и соблазнительное настроение парижского вечера.",
   "story.cta": "УЗНАТЬ НАШУ ИСТОРИЮ",
 
   "pdp.eyebrow": "BLACK ANGEL · ПАРИЖ 2026",
