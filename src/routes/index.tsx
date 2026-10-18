@@ -106,7 +106,7 @@ function Index() {
     <section id="story" className="story section-pad">
       <div className="story__title"><p className="eyebrow">{t("story.eyebrow")}</p><h2>{lines(t("story.title"))}</h2></div>
       <img src={storyImage} alt={t("story.alt")} width={1024} height={1280} loading="lazy" />
-      <div className="story__copy">{t("story.body").split("\n\n").map((paragraph) => <p key={paragraph}>{lines(paragraph)}</p>)}<Link to="/" hash="story" className="text-link">{t("story.cta")} <span>→</span></Link></div>
+      <div className="story__copy">{t("story.body").split("\n\n").map((paragraph) => <p key={paragraph}>{lines(paragraph)}</p>)}<Link to="/about-us" className="text-link">{t("story.cta")} <span>→</span></Link></div>
     </section>
   </main>;
 }
