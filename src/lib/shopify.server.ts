@@ -322,28 +322,10 @@ async function fetchSectionProducts(handle: string): Promise<ShopifyProduct[]> {
   return (data?.collectionByHandle?.products.edges ?? []).map(({ node }: any) => mapProduct(node));
 }
 
-export type LookbookCollection = { handle: string; title: string; products: ShopifyProduct[] };
-
-/** Every brand collection with its styles, for the Lookbook page (the shop sections are left out). */
-async function fetchLookbook(): Promise<LookbookCollection[]> {
-  const client = getClient();
-  const { data, errors } = await client.request(
-    `query Lookbook { collections(first: 20) { nodes { handle title products(first: 12) { edges { node { ${CARD_FIELDS} } } } } } }`,
-  );
-  if (errors) throw new Error(errors.message ?? "Failed to load collections");
-  return (data?.collections?.nodes ?? [])
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((node: any) => node.handle !== "frontpage" && !SECTION_HANDLES.includes(node.handle))
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .map((node: any) => ({ handle: node.handle, title: node.title, products: node.products.edges.map(({ node: product }: any) => mapProduct(product)) }))
-    .filter((collection: LookbookCollection) => collection.products.length > 0);
-}
-
 export const getSectionProducts = createServerFn({ method: "GET" })
   .validator((handle: string) => handle)
   .handler(async ({ data: handle }) => ((SECTION_HANDLES as readonly string[]).includes(handle) ? fetchSectionProducts(handle) : []));
 
-export const getLookbook = createServerFn({ method: "GET" }).handler(async () => fetchLookbook());
 
 /** Collections the brand set up in Shopify (via the hidden studio panel), with the products filed in each. */
 async function fetchCollections(): Promise<ShopifyCollection[]> {

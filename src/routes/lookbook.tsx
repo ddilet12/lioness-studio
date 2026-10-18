@@ -1,57 +1,46 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import campaignImage from "@/assets/lioness-campaign.jpg";
-import heroTall from "@/assets/lioness-hero-tall.jpg";
-import storyImage from "@/assets/lioness-story.jpg";
-import { ProductCard } from "@/components/product-card";
 import { useI18n } from "@/lib/i18n";
-import { getLookbook, getProducts } from "@/lib/shopify.server";
+import { LOOKBOOK } from "@/lib/lookbook";
 
 export const Route = createFileRoute("/lookbook")({
-  loader: async () => {
-    const [products, collections] = await Promise.all([getProducts().catch(() => []), getLookbook().catch(() => [])]);
-    return { products, collections };
-  },
   head: () => ({ meta: [{ title: "Lookbook — Lioness Dress" }] }),
   component: Lookbook,
 });
 
 function Lookbook() {
-  const { products, collections } = Route.useLoaderData();
   const { t } = useI18n();
-  const looks = [
-    { src: heroTall, alt: "Woman in a black dress under an LD umbrella in a Paris garden" },
-    { src: campaignImage, alt: t("campaign.alt") },
-    { src: storyImage, alt: t("story.alt") },
-  ];
   return (
     <main className="section-page lookbook">
       <p className="eyebrow">LIONESS DRESS</p>
       <h1>{t("nav.lookbook")}</h1>
       <p className="section-page__intro">{t("lookbook.intro")}</p>
 
-      <div className="lookbook__looks">
-        {looks.map((look) => (
-          <img key={look.src} src={look.src} alt={look.alt} width={853} height={1280} loading="lazy" />
+      <nav className="lookbook__index" aria-label={t("nav.lookbook")}>
+        {LOOKBOOK.map((entry) => (
+          <a key={entry.slug} href={`#${entry.slug}`}>
+            <span>{entry.year}</span> {entry.name}
+          </a>
         ))}
-      </div>
+      </nav>
 
-      <section className="lookbook__collection">
-        <h2>BLACK ANGEL</h2>
-        <div className="product-grid">
-          {products.map((product) => (
-            <ProductCard key={product.slug} product={product} />
-          ))}
-        </div>
-      </section>
-
-      {collections.map((collection) => (
-        <section key={collection.handle} className="lookbook__collection">
-          <h2>{collection.title}</h2>
-          <div className="product-grid">
-            {collection.products.map((product) => (
-              <ProductCard key={product.slug} product={product} />
-            ))}
-          </div>
+      {LOOKBOOK.map((entry) => (
+        <section key={entry.slug} id={entry.slug} className="lookbook__collection">
+          <p className="eyebrow">{entry.year}</p>
+          <h2>{entry.name}</h2>
+          {entry.photos.length > 0 ? (
+            <div className="lookbook__photos">
+              {entry.photos.map((photo) => (
+                <img key={photo.src} src={photo.src} alt={photo.alt} loading="lazy" />
+              ))}
+            </div>
+          ) : (
+            <p className="lookbook__soon">{t("lookbook.soon")}</p>
+          )}
+          {entry.slug === "black-angel" && (
+            <Link to="/" hash="collection" className="text-link">
+              {t("lookbook.shop")} <span>→</span>
+            </Link>
+          )}
         </section>
       ))}
 

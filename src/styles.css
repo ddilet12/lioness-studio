@@ -369,3 +369,20 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .menu-panel__logo { min-height: 0; padding: 0; margin-bottom: 14px; }
 .menu-panel__fold { gap: 4px; }
 .menu-panel__fold-list a { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* Lookbook: history of collections */
+.lookbook__index { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 0 0 64px; font-size: 11px; letter-spacing: .08em; }
+.lookbook__index a { display: inline-flex; align-items: center; min-height: 32px; border-bottom: 1px solid transparent; }
+.lookbook__index a:hover { border-bottom-color: currentColor; }
+.lookbook__index span { opacity: .55; margin-right: 8px; }
+.lookbook .lookbook__collection { scroll-margin-top: 96px; margin-bottom: 72px; padding-top: 28px; border-top: 1px solid var(--border); }
+.lookbook__collection .eyebrow { margin-bottom: 10px; }
+.lookbook__photos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.lookbook__photos img { width: 100%; aspect-ratio: .75; object-fit: cover; }
+.lookbook__soon { margin: 6px 0 0; font-size: 13px; opacity: .55; }
+.lookbook__collection .text-link { margin-top: 18px; }
+@media (max-width: 700px) {
+  .lookbook__photos { grid-template-columns: 1fr; }
+  .lookbook__index { gap: 2px 16px; margin-bottom: 44px; }
+  .lookbook .lookbook__collection { margin-bottom: 52px; }
+}
