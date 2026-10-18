@@ -71,9 +71,9 @@ export function SiteHeader() {
           <div className="site-header__right">
             <Button variant="editorial" size="plain" onClick={() => setSearchOpen(true)}>{t("nav.search")}</Button>
             <Button variant="editorial" size="plain" onClick={() => setWishlistOpen(true)} aria-label={t("nav.openWishlist")}>
-              <Heart className="wishlist-icon" /> {wishlist.length}
+              <Heart className="wishlist-icon" />{wishlist.length > 0 && <span className="nav-count">{wishlist.length}</span>}
             </Button>
-            <Button variant="editorial" size="plain" onClick={() => setBagOpen(true)}>{t("nav.bag")} {itemCount}</Button>
+            <Button variant="editorial" size="plain" onClick={() => setBagOpen(true)}>{t("nav.bag")}{itemCount > 0 && <span className="nav-count">{itemCount}</span>}</Button>
           </div>
           <Button variant="editorial" size="iconSlim" className="site-header__mobile" onClick={() => setMenuOpen(true)} aria-label={t("nav.openMenu")}><Menu /></Button>
         </nav>
@@ -102,8 +102,8 @@ export function SiteHeader() {
         )}
         <Link to="/" hash="story" onClick={() => setMenuOpen(false)}>{t("nav.ourStory")}</Link>
         <Button variant="editorialDark" size="plain" onClick={() => { setMenuOpen(false); setSearchOpen(true); }}>{t("nav.search")}</Button>
-        <Button variant="editorialDark" size="plain" onClick={() => { setMenuOpen(false); setWishlistOpen(true); }}>{t("nav.wishlist")} {wishlist.length}</Button>
-        <Button variant="editorialDark" size="plain" onClick={() => { setMenuOpen(false); setBagOpen(true); }}>{t("nav.bag")} {itemCount}</Button>
+        <Button variant="editorialDark" size="plain" onClick={() => { setMenuOpen(false); setWishlistOpen(true); }}>{t("nav.wishlist")}{wishlist.length > 0 && <span className="nav-count">{wishlist.length}</span>}</Button>
+        <Button variant="editorialDark" size="plain" onClick={() => { setMenuOpen(false); setBagOpen(true); }}>{t("nav.bag")}{itemCount > 0 && <span className="nav-count">{itemCount}</span>}</Button>
       </div>}
 
       {searchOpen && <div className="search-overlay" role="dialog" aria-label={t("search.dialog")}>

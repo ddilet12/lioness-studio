@@ -359,3 +359,13 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
   .filters button, .text-link, .footer__lang button { display: inline-flex; align-items: center; justify-content: center; min-height: 28px; min-width: 28px; padding-left: 8px; padding-right: 8px; }
   .text-link { padding-left: 0; padding-right: 0; justify-content: flex-start; }
 }
+
+/* Counters show only when there is something in the list, with lining figures (the serif font draws "0" like a letter "o"). */
+.nav-count { margin-left: .5em; font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
+
+/* Phone menu: every entry (links and buttons alike) gets the same height and spacing, so nothing sticks together. */
+.menu-panel { gap: 6px; }
+.menu-panel > a, .menu-panel > button:not(.menu-panel__close), .menu-panel .menu-panel__fold-toggle { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 12px; font: inherit; line-height: 1.2; text-align: center; }
+.menu-panel__logo { min-height: 0; padding: 0; margin-bottom: 14px; }
+.menu-panel__fold { gap: 4px; }
+.menu-panel__fold-list a { display: inline-flex; align-items: center; min-height: 44px; }
