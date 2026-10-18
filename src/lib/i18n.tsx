@@ -55,7 +55,7 @@ const en = {
 
   // Collection
   "collection.eyebrow": "THE COLLECTION",
-  "collection.title": "New arrivals",
+  "collection.title": "Black Angel",
   "collection.filterLabel": "Filter products",
   "collection.all": "ALL",
   "collection.black": "BLACK",
@@ -311,7 +311,7 @@ const ru: Record<TKey, string> = {
   "manifesto.body": "Lioness Dress создан для\nженщины, которая никогда\nне просит разрешения быть\v незабываемой.",
 
   "collection.eyebrow": "КОЛЛЕКЦИЯ",
-  "collection.title": "Новинки",
+  "collection.title": "Black Angel",
   "collection.filterLabel": "Фильтр товаров",
   "collection.all": "ВСЕ",
   "collection.black": "ЧЁРНЫЕ",
