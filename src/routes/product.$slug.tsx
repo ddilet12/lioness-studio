@@ -39,10 +39,10 @@ function ProductPage() {
   const [size, setSize] = useState<string | null>(null);
   const [sizeMissing, setSizeMissing] = useState(false);
   const { addToBag, toggleWishlist, isWishlisted } = useShop();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const wishlisted = isWishlisted(product.slug);
   const fallbackKey = fallbackDescriptionKey(product);
-  const description = fallbackKey ? t(fallbackKey) : product.description;
+  const description = fallbackKey ? t(fallbackKey) : (lang === "ru" && product.descriptionRu) || product.description;
   const selectedVariant = product.sizes.find((option) => option.size === size);
   const handleAdd = () => {
     if (!selectedVariant) {

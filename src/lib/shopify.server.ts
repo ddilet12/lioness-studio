@@ -131,6 +131,7 @@ function mapProduct(node: any): ShopifyProduct {
     image: node.featuredImage?.url ?? resolvePlaceholderImage(node.handle) ?? "",
     images: mapImages(node),
     description: node.description ?? "",
+    descriptionRu: node.descriptionRu?.value || undefined,
     available,
     variantId,
     sizes: mapSizes(node, variantId, available),
@@ -168,6 +169,7 @@ async function fetchProducts(): Promise<ShopifyProduct[]> {
             handle
             title
             description
+            descriptionRu: metafield(namespace: "custom", key: "description_ru") { value }
             tags
             availableForSale
             featuredImage { url }
@@ -193,6 +195,7 @@ async function fetchProductByHandle(handle: string): Promise<ShopifyProduct | un
         handle
         title
         description
+        descriptionRu: metafield(namespace: "custom", key: "description_ru") { value }
         tags
         availableForSale
         featuredImage { url }
@@ -303,6 +306,7 @@ const CARD_FIELDS = `
   handle
   title
   description
+  descriptionRu: metafield(namespace: "custom", key: "description_ru") { value }
   tags
   availableForSale
   featuredImage { url }

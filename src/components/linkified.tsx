@@ -2,7 +2,7 @@ import { Children, cloneElement, Fragment, isValidElement, type ReactNode } from
 
 const EMAIL = "info@lionessdress.com";
 const WHATSAPP_URL = "https://wa.me/77789654642";
-const INSTAGRAM_URL = "https://instagram.com/lioness.dress";
+const INSTAGRAM_URL = "https://www.instagram.com/lioness.dress/";
 
 // Longest alternatives first; the capture group keeps the matched text when splitting.
 const CONTACT_PATTERN = /(info@lionessdress\.com|WhatsApp|Instagram|\+7[\s\d-]{9,}\d)/g;

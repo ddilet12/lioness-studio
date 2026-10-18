@@ -14,7 +14,7 @@ export function SiteFooter() {
         <span>LIONESS DRESS</span>
         <small>{t("footer.slogan")}</small>
         <div className="footer__social">
-          <a href="https://instagram.com/lioness.dress" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.instagram.com/lioness.dress/" target="_blank" rel="noreferrer">Instagram</a>
           <a href="https://wa.me/77789654642" target="_blank" rel="noreferrer">WhatsApp</a>
         </div>
       </div>

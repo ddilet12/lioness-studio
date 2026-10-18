@@ -9,6 +9,8 @@ export type Product = {
   /** Every photo of the product, in Shopify order; falls back to [image] when Shopify has just one. */
   images: string[];
   description: string;
+  /** Russian text from the product's "Описание (русский)" field in Shopify, when filled in. */
+  descriptionRu?: string | undefined;
   /** False while the item has no stock in Shopify: the storefront shows it as "coming soon". */
   available: boolean;
   /** Original price when the style is on sale (Shopify "Compare at price" above the price); drives the Outlet look. */
