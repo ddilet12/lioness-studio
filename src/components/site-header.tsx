@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
 import { getCollections, getProducts, type ShopifyCollection, type ShopifyProduct } from "@/lib/shopify.server";
 import { useI18n } from "@/lib/i18n";
-import heroImage from "@/assets/lioness-hero.jpg";
+import runwayImage from "@/assets/lioness-story.jpg";
 import campaignImage from "@/assets/lioness-campaign.jpg";
 import logoMark from "@/assets/logo-mark.svg";
 
@@ -54,7 +54,7 @@ export function SiteHeader() {
                     <Link to="/" hash="story" onClick={() => setShopMenuOpen(false)}>{t("nav.ourStory")}</Link>
                   </div>
                   <Link to="/" hash="collection" className="mega-menu__feature" onClick={() => setShopMenuOpen(false)}>
-                    <img src={heroImage} alt={t("nav.featureCollectionAlt")} width={640} height={800} />
+                    <img src={runwayImage} alt={t("nav.featureCollectionAlt")} width={640} height={800} />
                     <span>{t("nav.featureCollection")}</span>
                   </Link>
                   <Link to="/" hash="collection" className="mega-menu__feature" onClick={() => setShopMenuOpen(false)}>

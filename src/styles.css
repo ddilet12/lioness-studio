@@ -353,3 +353,9 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 /* The phone menu has many entries: let it scroll on short screens instead of cutting items off. */
 .menu-panel { overflow-y: auto; justify-content: safe center; gap: 24px; padding: 72px 0 36px; }
 .menu-panel__fold-list { padding-bottom: 6px; }
+
+/* Touch targets: small editorial links get at least 28px to tap on phones (WCAG 2.2 AA asks for 24px). */
+@media (max-width: 700px), (pointer: coarse) {
+  .filters button, .text-link, .footer__lang button { display: inline-flex; align-items: center; justify-content: center; min-height: 28px; min-width: 28px; padding-left: 8px; padding-right: 8px; }
+  .text-link { padding-left: 0; padding-right: 0; justify-content: flex-start; }
+}
