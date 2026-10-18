@@ -6,7 +6,6 @@ import { useShop } from "@/components/shop-context";
 import { getCollections, getProducts, type ShopifyCollection, type ShopifyProduct } from "@/lib/shopify.server";
 import { useI18n } from "@/lib/i18n";
 import runwayImage from "@/assets/lioness-story.jpg";
-import campaignImage from "@/assets/lioness-campaign.jpg";
 import logoMark from "@/assets/logo-mark.svg";
 
 export function SiteHeader() {
@@ -48,18 +47,11 @@ export function SiteHeader() {
                     <Link to="/bestsellers" onClick={() => setShopMenuOpen(false)}>{t("nav.bestsellers")}</Link>
                     <Link to="/party-dresses" onClick={() => setShopMenuOpen(false)}>{t("nav.partyDresses")}</Link>
                     <Link to="/outlet" onClick={() => setShopMenuOpen(false)}>{t("nav.outlet")}</Link>
-                    <Link to="/lookbook" onClick={() => setShopMenuOpen(false)}>{t("nav.lookbook")}</Link>
-                    <Link to="/" search={{ color: "black" }} hash="collection" onClick={() => setShopMenuOpen(false)}>{t("nav.black")}</Link>
-                    <Link to="/" search={{ color: "red" }} hash="collection" onClick={() => setShopMenuOpen(false)}>{t("nav.red")}</Link>
                     <Link to="/" hash="story" onClick={() => setShopMenuOpen(false)}>{t("nav.ourStory")}</Link>
                   </div>
                   <Link to="/" hash="collection" className="mega-menu__feature" onClick={() => setShopMenuOpen(false)}>
                     <img src={runwayImage} alt={t("nav.featureCollectionAlt")} width={640} height={800} />
                     <span>{t("nav.featureCollection")}</span>
-                  </Link>
-                  <Link to="/" hash="collection" className="mega-menu__feature" onClick={() => setShopMenuOpen(false)}>
-                    <img src={campaignImage} alt={t("nav.featureNewAlt")} width={640} height={800} />
-                    <span>{t("nav.featureNew")}</span>
                   </Link>
                 </div>
               )}
