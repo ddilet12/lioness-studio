@@ -317,7 +317,7 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
   .product-page { grid-template-columns: 1fr; }
   .product-page__image { min-height: 0; height: auto; aspect-ratio: 4 / 5; }
   .product-page__details { padding: 55px 24px 80px; }
-  .product-page--gallery .product-page__image { height: auto; }
+  .product-page--gallery .product-page__image { height: auto; aspect-ratio: auto; }
   .product-page--gallery .product-page__image img { height: auto; min-height: 0; aspect-ratio: 4 / 5; max-height: none; }
   .product-page--gallery .product-page__details { position: static; }
   .product-page__actions { grid-template-columns: 1fr; }
