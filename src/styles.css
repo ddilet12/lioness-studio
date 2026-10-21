@@ -167,7 +167,10 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .footer__brand img { display: block; height: 60px; width: auto; }
 .footer__brand span { display: block; margin-top: 18px; font: 400 13px var(--font-serif); letter-spacing: .04em; }
 .footer__brand small { display: block; margin-top: 21px; font-size: 11px; }
-.footer__social { margin-top: 18px; }
+.footer__social { display: flex; gap: 10px; margin-top: 18px; }
+.footer .footer__social a { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 1px solid color-mix(in oklab, var(--footer-foreground) 40%, transparent); border-radius: 50%; color: var(--footer-foreground); transition: background-color .2s, border-color .2s; }
+.footer .footer__social a:hover { opacity: 1; border-color: var(--footer-foreground); background: color-mix(in oklab, var(--footer-foreground) 10%, transparent); }
+.footer__social svg { width: 16px; height: 16px; }
 .footer h3 { margin: 2px 0 21px; font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--footer-foreground); }
 .footer a, .footer__link { display: block; padding: 5px 0; line-height: 1.35; font-size: 13px; color: color-mix(in oklab, var(--footer-foreground) 76%, transparent); }
 .footer__link { width: 100%; border: 0; background: none; font-family: inherit; text-align: left; cursor: pointer; }
