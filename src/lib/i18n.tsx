@@ -187,9 +187,9 @@ const en = {
   "delivery.productionTitle": "Production time",
   "delivery.productionBody": "3–7 business days from order confirmation, depending on the style and current queue. We'll message you on WhatsApp once your dress is ready to ship.",
   "delivery.shippingTitle": "Shipping",
-  "delivery.shippingBody": "Astana & Almaty — 1–2 days by courier after your order ships.\nRest of Kazakhstan — 2–5 days via courier or Kazpost.\nOutside Kazakhstan — available on request; write to us for a quote before ordering.",
-  "delivery.costTitle": "Cost & tracking",
-  "delivery.costBody": "Delivery cost is calculated at checkout based on your city. You'll receive a tracking number by WhatsApp or email as soon as your order leaves us.",
+  "delivery.shippingBody": "Astana & Almaty — 1–2 days by courier after your order ships.\nRest of Kazakhstan — 2–5 days via courier or Kazpost.",
+  "delivery.costTitle": "Tracking",
+  "delivery.costBody": "You'll receive a tracking number by WhatsApp or email as soon as your order leaves us.",
 
   // Returns & Exchanges
   "returns.intro": "We want you to love the way your Lioness Dress fits. If something isn't right, we're happy to help with an exchange or return.",
@@ -435,9 +435,9 @@ const ru: Record<TKey, string> = {
   "delivery.productionTitle": "Срок пошива",
   "delivery.productionBody": "3–7 рабочих дней с момента подтверждения заказа, в зависимости от модели и текущей загрузки. Как только платье будет готово к отправке, мы напишем вам в WhatsApp.",
   "delivery.shippingTitle": "Доставка",
-  "delivery.shippingBody": "Астана и Алматы — 1–2 дня курьером после отправки заказа.\nОстальной Казахстан — 2–5 дней курьером или Казпочтой.\nЗа пределы Казахстана — по запросу, напишите нам до заказа, чтобы уточнить стоимость.",
-  "delivery.costTitle": "Стоимость и отслеживание",
-  "delivery.costBody": "Стоимость доставки рассчитывается при оформлении заказа в зависимости от города. Трек-номер вы получите в WhatsApp или на почту сразу после отправки заказа.",
+  "delivery.shippingBody": "Астана и Алматы — 1–2 дня курьером после отправки заказа.\nОстальной Казахстан — 2–5 дней курьером или Казпочтой.",
+  "delivery.costTitle": "Отслеживание",
+  "delivery.costBody": "Трек-номер вы получите в WhatsApp или на почту сразу после отправки заказа.",
 
   "returns.intro": "Мы хотим, чтобы вам было идеально в вашем платье Lioness Dress. Если что-то не подошло, поможем с обменом или возвратом.",
   "returns.windowTitle": "Сроки возврата",

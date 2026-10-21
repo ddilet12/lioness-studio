@@ -135,9 +135,9 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .filters button.active { color: var(--foreground); border-bottom: 1px solid currentColor; }
 .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .product-card { min-width: 0; }
-.product-card__image { position: relative; overflow: hidden; aspect-ratio: .82; background: var(--secondary); }
+.product-card__image { position: relative; overflow: hidden; aspect-ratio: .8; background: #fff; }
 .product-card__image span { position: absolute; z-index: 1; top: 12px; left: 12px; font-size: 6px; }
-.product-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms cubic-bezier(.2,.7,.2,1); }
+.product-card img { width: 100%; height: 100%; object-fit: contain; object-position: center; padding: 3%; box-sizing: border-box; transition: transform 700ms cubic-bezier(.2,.7,.2,1); }
 
 /* 24x24px minimum per WCAG 2.2 AA Target Size (was 22x22, found via ui-ux-pro-max audit). */
 .product-card__wish { position: absolute; z-index: 2; top: 10px; right: 10px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border: 0; background: color-mix(in oklab, var(--background) 78%, transparent); color: var(--foreground); cursor: pointer; }
@@ -199,10 +199,18 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .content-page__table { width: 100%; max-width: 460px; border-collapse: collapse; margin: 4px 0 28px; font-size: 14px; }
 .content-page__table th, .content-page__table td { border: 1px solid var(--border); padding: 9px 14px; text-align: center; }
 .content-page__table th:first-child, .content-page__table td:first-child { text-align: left; color: var(--muted-foreground); font-weight: 400; }
+.content-page__table--wide { max-width: 560px; }
+.content-page__table--transit { max-width: 640px; }
+.content-page__table--transit td:first-child { color: var(--foreground); }
+.content-page__table--transit td:last-child { white-space: nowrap; }
+.content-page__table--wide td:first-child { color: var(--foreground); font-weight: 500; }
+.content-page__figure { display: block; width: 100%; max-width: 420px; height: auto; margin: 8px 0 28px; border: 1px solid var(--border); background: #fff; }
 @media (max-width: 720px) {
   .content-page { padding-top: 72px; padding-bottom: 96px; }
   .content-page__table { font-size: 13px; }
   .content-page__table th, .content-page__table td { padding: 8px; }
+  .content-page__table--wide { font-size: 12px; }
+  .content-page__table--wide th, .content-page__table--wide td { padding: 8px 4px; }
 }
 
 @media (max-width: 1100px) {
@@ -247,11 +255,11 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
 .kaspi-dialog__note { margin: 4px 0 0; font-size: 10px; line-height: 1.5; color: var(--muted-foreground); }
 
 .product-page { min-height: calc(100vh - 64px); display: grid; grid-template-columns: 58% 42%; background: var(--background); }
-.product-page__image { min-height: calc(100vh - 64px); background: var(--secondary); }
-.product-page__image img { width: 100%; height: 100%; object-fit: cover; }
+.product-page__image { min-height: calc(100vh - 64px); background: #fff; }
+.product-page__image img { width: 100%; height: 100%; object-fit: contain; object-position: center; background: #fff; }
 .product-page__details { align-self: center; padding: 70px clamp(35px, 6vw, 110px); }
 .product-page--gallery .product-page__image { display: flex; flex-direction: column; gap: 4px; }
-.product-page--gallery .product-page__image img { height: auto; min-height: calc(100vh - 64px); }
+.product-page--gallery .product-page__image img { height: auto; min-height: 0; aspect-ratio: 4 / 5; max-height: calc(100vh - 64px); }
 .product-page--gallery .product-page__details { align-self: start; position: sticky; top: 64px; }
 .product-page__details h1 { margin: 0; font: 400 clamp(45px, 5vw, 72px)/.9 var(--font-serif); }
 .product-page__title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
@@ -307,10 +315,10 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
   .footer { grid-template-columns: repeat(2, minmax(0, 1fr)); min-height: 0; gap: 44px 28px; }
   .stub-page { padding-top: 72px; padding-bottom: 96px; }
   .product-page { grid-template-columns: 1fr; }
-  .product-page__image { min-height: 0; height: 58vh; }
+  .product-page__image { min-height: 0; height: auto; aspect-ratio: 4 / 5; }
   .product-page__details { padding: 55px 24px 80px; }
   .product-page--gallery .product-page__image { height: auto; }
-  .product-page--gallery .product-page__image img { height: 58vh; min-height: 0; }
+  .product-page--gallery .product-page__image img { height: auto; min-height: 0; aspect-ratio: 4 / 5; max-height: none; }
   .product-page--gallery .product-page__details { position: static; }
   .product-page__actions { grid-template-columns: 1fr; }
 }

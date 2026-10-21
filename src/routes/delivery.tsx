@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ContentPage } from "@/components/content-page";
+import { DeliveryExtra } from "@/components/delivery-extra";
 import { lines, useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/delivery")({
@@ -8,7 +9,7 @@ export const Route = createFileRoute("/delivery")({
 });
 
 function Delivery() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   return (
     <ContentPage titleKey="footer.delivery">
       <p className="content-page__intro">{t("delivery.intro")}</p>
@@ -18,6 +19,8 @@ function Delivery() {
 
       <h2>{t("delivery.shippingTitle")}</h2>
       <p>{lines(t("delivery.shippingBody"))}</p>
+
+      <DeliveryExtra lang={lang} />
 
       <h2>{t("delivery.costTitle")}</h2>
       <p>{t("delivery.costBody")}</p>
