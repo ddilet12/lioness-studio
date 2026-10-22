@@ -58,6 +58,7 @@ export function SiteHeader() {
             </div>
             <Link to="/" hash="collection">{t("nav.blackAngel")}</Link>
             <Link to="/" hash="story">{t("nav.ourStory")}</Link>
+            <Link to="/lookbook">{t("nav.lookbook")}</Link>
           </div>
           <Link to="/" className="site-logo" aria-label={t("nav.home")}><img src={logoMark} alt="Lioness Dress" /></Link>
           <div className="site-header__right">

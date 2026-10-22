@@ -55,6 +55,7 @@ export function SiteFooter() {
       <div>
         <h3>{t("footer.brand")}</h3>
         <Link to="/about-us">{t("footer.about")}</Link>
+        <Link to="/lookbook">{t("nav.lookbook")}</Link>
         <Link to="/partners">{t("footer.partners")}</Link>      </div>
 
       <div>
