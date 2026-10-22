@@ -70,7 +70,7 @@ function Index() {
       <div className="hero__shade" />
       <div className="hero__copy">
         <p className="eyebrow">{t("hero.eyebrow")}</p>
-        <h1>BLACK<br />ANGEL</h1>
+        <h1 className="sr-only">LIONESS DRESS</h1>
         <Link to="/" hash="collection" className="text-link text-link--light">{t("hero.cta")} <span>→</span></Link>
       </div>
       <div className="hero__meta"><span>{t("hero.meta")}</span><i /><span>01 / 03</span></div>

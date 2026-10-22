@@ -46,6 +46,8 @@ export function SiteHeader() {
                     <Link to="/new-collection" onClick={() => setShopMenuOpen(false)}>{t("nav.newCollection")}</Link>
                     <Link to="/bestsellers" onClick={() => setShopMenuOpen(false)}>{t("nav.bestsellers")}</Link>
                     <Link to="/party-dresses" onClick={() => setShopMenuOpen(false)}>{t("nav.partyDresses")}</Link>
+                    <Link to="/trousers" onClick={() => setShopMenuOpen(false)}>{t("nav.trousers")}</Link>
+                    <Link to="/skirts" onClick={() => setShopMenuOpen(false)}>{t("nav.skirts")}</Link>
                     <Link to="/outlet" onClick={() => setShopMenuOpen(false)}>{t("nav.outlet")}</Link>
                     <Link to="/" hash="story" onClick={() => setShopMenuOpen(false)}>{t("nav.ourStory")}</Link>
                   </div>
@@ -79,6 +81,8 @@ export function SiteHeader() {
         <Link to="/new-collection" onClick={() => setMenuOpen(false)}>{t("nav.newCollection")}</Link>
         <Link to="/bestsellers" onClick={() => setMenuOpen(false)}>{t("nav.bestsellers")}</Link>
         <Link to="/party-dresses" onClick={() => setMenuOpen(false)}>{t("nav.partyDresses")}</Link>
+        <Link to="/trousers" onClick={() => setMenuOpen(false)}>{t("nav.trousers")}</Link>
+        <Link to="/skirts" onClick={() => setMenuOpen(false)}>{t("nav.skirts")}</Link>
         <Link to="/outlet" onClick={() => setMenuOpen(false)}>{t("nav.outlet")}</Link>
         <Link to="/lookbook" onClick={() => setMenuOpen(false)}>{t("nav.lookbook")}</Link>
         {collections.length === 0 ? (

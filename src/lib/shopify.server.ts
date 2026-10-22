@@ -300,7 +300,7 @@ async function fetchCart(cartId: string): Promise<ShopifyCart | undefined> {
 export type ShopifyCollection = { handle: string; title: string; productHandles: string[] };
 
 /** Shop sections that are driven by a Shopify collection of the same handle (filled in Shopify admin). */
-export const SECTION_HANDLES = ["new-collection", "bestsellers", "party-dresses", "outlet"] as const;
+export const SECTION_HANDLES = ["new-collection", "bestsellers", "party-dresses", "outlet", "trousers", "skirts"] as const;
 
 const CARD_FIELDS = `
   handle

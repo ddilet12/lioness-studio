@@ -22,7 +22,9 @@ import { Route as PartyDressesRouteImport } from './routes/party-dresses'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ReturnsExchangesRouteImport } from './routes/returns-exchanges'
 import { Route as SizeGuideRouteImport } from './routes/size-guide'
+import { Route as SkirtsRouteImport } from './routes/skirts'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
+import { Route as TrousersRouteImport } from './routes/trousers'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -90,9 +92,19 @@ const SizeGuideRoute = SizeGuideRouteImport.update({
   path: '/size-guide',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SkirtsRoute = SkirtsRouteImport.update({
+  id: '/skirts',
+  path: '/skirts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
   id: '/terms-of-service',
   path: '/terms-of-service',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrousersRoute = TrousersRouteImport.update({
+  id: '/trousers',
+  path: '/trousers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductSlugRoute = ProductSlugRouteImport.update({
@@ -115,7 +127,9 @@ export interface FileRoutesByFullPath {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/returns-exchanges': typeof ReturnsExchangesRoute
   '/size-guide': typeof SizeGuideRoute
+  '/skirts': typeof SkirtsRoute
   '/terms-of-service': typeof TermsOfServiceRoute
+  '/trousers': typeof TrousersRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesByTo {
@@ -132,7 +146,9 @@ export interface FileRoutesByTo {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/returns-exchanges': typeof ReturnsExchangesRoute
   '/size-guide': typeof SizeGuideRoute
+  '/skirts': typeof SkirtsRoute
   '/terms-of-service': typeof TermsOfServiceRoute
+  '/trousers': typeof TrousersRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesById {
@@ -150,7 +166,9 @@ export interface FileRoutesById {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/returns-exchanges': typeof ReturnsExchangesRoute
   '/size-guide': typeof SizeGuideRoute
+  '/skirts': typeof SkirtsRoute
   '/terms-of-service': typeof TermsOfServiceRoute
+  '/trousers': typeof TrousersRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRouteTypes {
@@ -169,7 +187,9 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/returns-exchanges'
     | '/size-guide'
+    | '/skirts'
     | '/terms-of-service'
+    | '/trousers'
     | '/product/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -186,7 +206,9 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/returns-exchanges'
     | '/size-guide'
+    | '/skirts'
     | '/terms-of-service'
+    | '/trousers'
     | '/product/$slug'
   id:
     | '__root__'
@@ -203,7 +225,9 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/returns-exchanges'
     | '/size-guide'
+    | '/skirts'
     | '/terms-of-service'
+    | '/trousers'
     | '/product/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -221,7 +245,9 @@ export interface RootRouteChildren {
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ReturnsExchangesRoute: typeof ReturnsExchangesRoute
   SizeGuideRoute: typeof SizeGuideRoute
+  SkirtsRoute: typeof SkirtsRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
+  TrousersRoute: typeof TrousersRoute
   ProductSlugRoute: typeof ProductSlugRoute
 }
 
@@ -318,11 +344,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SizeGuideRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/skirts': {
+      id: '/skirts'
+      path: '/skirts'
+      fullPath: '/skirts'
+      preLoaderRoute: typeof SkirtsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms-of-service': {
       id: '/terms-of-service'
       path: '/terms-of-service'
       fullPath: '/terms-of-service'
       preLoaderRoute: typeof TermsOfServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trousers': {
+      id: '/trousers'
+      path: '/trousers'
+      fullPath: '/trousers'
+      preLoaderRoute: typeof TrousersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/product/$slug': {
@@ -349,7 +389,9 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ReturnsExchangesRoute: ReturnsExchangesRoute,
   SizeGuideRoute: SizeGuideRoute,
+  SkirtsRoute: SkirtsRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
+  TrousersRoute: TrousersRoute,
   ProductSlugRoute: ProductSlugRoute,
 }
 export const routeTree = rootRouteImport
