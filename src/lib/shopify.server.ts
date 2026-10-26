@@ -343,7 +343,9 @@ async function fetchCollections(): Promise<ShopifyCollection[]> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .filter((node: any) => node.handle !== "frontpage" && !SECTION_HANDLES.includes(node.handle))
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .map((node: any) => ({ handle: node.handle, title: node.title, productHandles: node.products.nodes.map((p: any) => p.handle) }));
+    .map((node: any) => ({ handle: node.handle, title: node.title, productHandles: node.products.nodes.map((p: any) => p.handle) }))
+    // A collection nobody has filled yet would lead to an empty list, so it stays out of the filters and menu.
+    .filter((collection: ShopifyCollection) => collection.productHandles.length > 0);
 }
 
 export const getCollections = createServerFn({ method: "GET" }).handler(async () => fetchCollections());
