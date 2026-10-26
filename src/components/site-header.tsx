@@ -46,10 +46,7 @@ export function SiteHeader() {
                     <Link to="/new-collection" onClick={() => setShopMenuOpen(false)}>{t("nav.newCollection")}</Link>
                     <Link to="/bestsellers" onClick={() => setShopMenuOpen(false)}>{t("nav.bestsellers")}</Link>
                     <Link to="/party-dresses" onClick={() => setShopMenuOpen(false)}>{t("nav.partyDresses")}</Link>
-                    <Link to="/trousers" onClick={() => setShopMenuOpen(false)}>{t("nav.trousers")}</Link>
-                    <Link to="/skirts" onClick={() => setShopMenuOpen(false)}>{t("nav.skirts")}</Link>
                     <Link to="/outlet" onClick={() => setShopMenuOpen(false)}>{t("nav.outlet")}</Link>
-                    <Link to="/" hash="story" onClick={() => setShopMenuOpen(false)}>{t("nav.ourStory")}</Link>
                   </div>
                   <Link to="/" hash="collection" className="mega-menu__feature" onClick={() => setShopMenuOpen(false)}>
                     <img src={runwayImage} alt={t("nav.featureCollectionAlt")} width={640} height={800} />
@@ -59,7 +56,6 @@ export function SiteHeader() {
               )}
             </div>
             <Link to="/" hash="collection">{t("nav.blackAngel")}</Link>
-            <Link to="/" hash="story">{t("nav.ourStory")}</Link>
             <Link to="/lookbook">{t("nav.lookbook")}</Link>
           </div>
           <Link to="/" className="site-logo" aria-label={t("nav.home")}><img src={logoMark} alt="Lioness Dress" /></Link>
@@ -81,8 +77,6 @@ export function SiteHeader() {
         <Link to="/new-collection" onClick={() => setMenuOpen(false)}>{t("nav.newCollection")}</Link>
         <Link to="/bestsellers" onClick={() => setMenuOpen(false)}>{t("nav.bestsellers")}</Link>
         <Link to="/party-dresses" onClick={() => setMenuOpen(false)}>{t("nav.partyDresses")}</Link>
-        <Link to="/trousers" onClick={() => setMenuOpen(false)}>{t("nav.trousers")}</Link>
-        <Link to="/skirts" onClick={() => setMenuOpen(false)}>{t("nav.skirts")}</Link>
         <Link to="/outlet" onClick={() => setMenuOpen(false)}>{t("nav.outlet")}</Link>
         <Link to="/lookbook" onClick={() => setMenuOpen(false)}>{t("nav.lookbook")}</Link>
         {collections.length === 0 ? (
@@ -97,7 +91,6 @@ export function SiteHeader() {
             </div>}
           </div>
         )}
-        <Link to="/" hash="story" onClick={() => setMenuOpen(false)}>{t("nav.ourStory")}</Link>
         <Button variant="editorialDark" size="plain" onClick={() => { setMenuOpen(false); setSearchOpen(true); }}>{t("nav.search")}</Button>
         <Button variant="editorialDark" size="plain" onClick={() => { setMenuOpen(false); setWishlistOpen(true); }}>{t("nav.wishlist")}{wishlist.length > 0 && <span className="nav-count">{wishlist.length}</span>}</Button>
         <Button variant="editorialDark" size="plain" onClick={() => { setMenuOpen(false); setBagOpen(true); }}>{t("nav.bag")}{itemCount > 0 && <span className="nav-count">{itemCount}</span>}</Button>
