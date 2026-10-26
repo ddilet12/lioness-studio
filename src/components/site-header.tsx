@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
 import { getCollections, getProducts, type ShopifyCollection, type ShopifyProduct } from "@/lib/shopify.server";
 import { useI18n } from "@/lib/i18n";
+import { scrollToBlock } from "@/lib/scroll";
 import runwayImage from "@/assets/lioness-story.jpg";
 import logoMark from "@/assets/logo-mark.svg";
 
@@ -18,6 +19,7 @@ export function SiteHeader() {
   const [searchableProducts, setSearchableProducts] = useState<ShopifyProduct[]>([]);
   const { itemCount, setBagOpen, wishlist, setWishlistOpen, searchOpen, setSearchOpen } = useShop();
   const { t } = useI18n();
+  const toCollection = scrollToBlock("collection");
   const home = path === "/";
   const matches = query.trim()
     ? searchableProducts.filter((product) => product.name.toLowerCase().includes(query.toLowerCase()))
@@ -38,25 +40,26 @@ export function SiteHeader() {
         <nav className="site-header__nav" aria-label={t("nav.primary")}>
           <div className="site-header__left">
             <div className="shop-menu" onMouseEnter={() => setShopMenuOpen(true)} onMouseLeave={() => setShopMenuOpen(false)}>
-              <Link to="/" hash="collection">{t("nav.shop")}</Link>
+              <Link to="/" hash="collection" onClick={toCollection}>{t("nav.shop")}</Link>
               {shopMenuOpen && (
                 <div className="mega-menu" role="menu">
                   <div className="mega-menu__links">
-                    <Link to="/" hash="collection" onClick={() => setShopMenuOpen(false)}>{t("nav.allDresses")}</Link>
+                    <Link to="/" hash="collection" onClick={(event) => { setShopMenuOpen(false); toCollection(event); }}>{t("nav.allDresses")}</Link>
                     <Link to="/new-collection" onClick={() => setShopMenuOpen(false)}>{t("nav.newCollection")}</Link>
                     <Link to="/bestsellers" onClick={() => setShopMenuOpen(false)}>{t("nav.bestsellers")}</Link>
                     <Link to="/party-dresses" onClick={() => setShopMenuOpen(false)}>{t("nav.partyDresses")}</Link>
                     <Link to="/outlet" onClick={() => setShopMenuOpen(false)}>{t("nav.outlet")}</Link>
                   </div>
-                  <Link to="/" hash="collection" className="mega-menu__feature" onClick={() => setShopMenuOpen(false)}>
+                  <Link to="/" hash="collection" className="mega-menu__feature" onClick={(event) => { setShopMenuOpen(false); toCollection(event); }}>
                     <img src={runwayImage} alt={t("nav.featureCollectionAlt")} width={640} height={800} />
                     <span>{t("nav.featureCollection")}</span>
                   </Link>
                 </div>
               )}
             </div>
-            <Link to="/" hash="collection">{t("nav.blackAngel")}</Link>
+            <Link to="/" hash="collection" onClick={toCollection}>{t("nav.blackAngel")}</Link>
             <Link to="/lookbook">{t("nav.lookbook")}</Link>
+            <Link to="/news">{t("nav.news")}</Link>
           </div>
           <Link to="/" className="site-logo" aria-label={t("nav.home")}><img src={logoMark} alt="Lioness Dress" /></Link>
           <div className="site-header__right">
@@ -73,21 +76,22 @@ export function SiteHeader() {
       {menuOpen && <div className="menu-panel" role="dialog" aria-label={t("nav.menu")}>
         <Button variant="editorialDark" size="iconSlim" className="menu-panel__close" onClick={() => setMenuOpen(false)} aria-label={t("nav.closeMenu")}><X /></Button>
         <Link to="/" className="menu-panel__logo" onClick={() => setMenuOpen(false)}><img src={logoMark} alt="Lioness Dress" /></Link>
-        <Link to="/" hash="collection" onClick={() => setMenuOpen(false)}>{t("nav.shop")}</Link>
+        <Link to="/" hash="collection" onClick={(event) => { setMenuOpen(false); toCollection(event); }}>{t("nav.shop")}</Link>
         <Link to="/new-collection" onClick={() => setMenuOpen(false)}>{t("nav.newCollection")}</Link>
         <Link to="/bestsellers" onClick={() => setMenuOpen(false)}>{t("nav.bestsellers")}</Link>
         <Link to="/party-dresses" onClick={() => setMenuOpen(false)}>{t("nav.partyDresses")}</Link>
         <Link to="/outlet" onClick={() => setMenuOpen(false)}>{t("nav.outlet")}</Link>
         <Link to="/lookbook" onClick={() => setMenuOpen(false)}>{t("nav.lookbook")}</Link>
+        <Link to="/news" onClick={() => setMenuOpen(false)}>{t("nav.news")}</Link>
         {collections.length === 0 ? (
-          <Link to="/" hash="collection" onClick={() => setMenuOpen(false)}>{t("nav.blackAngel")}</Link>
+          <Link to="/" hash="collection" onClick={(event) => { setMenuOpen(false); toCollection(event); }}>{t("nav.blackAngel")}</Link>
         ) : (
           <div className="menu-panel__fold">
             <button type="button" className="menu-panel__fold-toggle" aria-expanded={collectionsOpen} onClick={() => setCollectionsOpen((open) => !open)}>
               {t("nav.blackAngel")} <ChevronDown className={collectionsOpen ? "is-open" : ""} />
             </button>
             {collectionsOpen && <div className="menu-panel__fold-list">
-              {collections.map((collection) => <Link key={collection.handle} to="/" search={{ collection: collection.handle }} hash="collection" onClick={() => setMenuOpen(false)}>{collection.title}</Link>)}
+              {collections.map((collection) => <Link key={collection.handle} to="/" search={{ collection: collection.handle }} hash="collection" onClick={(event) => { setMenuOpen(false); toCollection(event); }}>{collection.title}</Link>)}
             </div>}
           </div>
         )}

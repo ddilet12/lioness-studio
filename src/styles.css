@@ -118,12 +118,12 @@ button:not(:disabled):not(.product-card__quick-add):active {
 .section-pad { padding-left: clamp(24px, 4vw, 64px); padding-right: clamp(24px, 4vw, 64px); }
 .manifesto { min-height: 430px; padding-top: 72px; padding-bottom: 76px; background: var(--background); }
 .manifesto__grid { display: grid; grid-template-columns: 1.15fr .85fr; align-items: end; max-width: 1200px; margin-top: 38px; }
-.manifesto h2 { margin: 0; font: 400 clamp(58px, 7.4vw, 112px)/.78 var(--font-serif); letter-spacing: 0; }
-.manifesto h2 span { color: var(--red); display: inline-block; transform: translateX(36%); }
+.manifesto h2 { margin: 0; font: 400 clamp(48px, 6.4vw, 100px)/.9 var(--font-serif); letter-spacing: 0; }
+.manifesto h2 span { color: var(--red); display: inline-block; transform: translateX(8%); }
 /* Russian words are longer than the English headline: scale the display type so it stays inside the layout. */
-html[lang="ru"] .manifesto h2 { font-size: clamp(46px, 5.6vw, 88px); }
-html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
-.manifesto__grid > p { margin: 0 0 6px; font: 400 17px/1.18 var(--font-serif); }
+html[lang="ru"] .manifesto h2 { font-size: clamp(48px, 6.4vw, 100px); }
+html[lang="ru"] .manifesto h2 span { transform: translateX(8%); }
+.manifesto__grid > p { margin: 0 0 6px; max-width: 420px; font: 400 17px/1.4 var(--font-serif); }
 .mobile-only { display: none; }
 
 .collection { background: var(--card); padding-top: 88px; padding-bottom: 102px; }
@@ -295,10 +295,10 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(14%); }
   .hero__meta { left: 20px; right: 20px; bottom: 18px; gap: 13px; }
   .manifesto { min-height: 450px; padding-top: 58px; }
   .manifesto__grid { grid-template-columns: 1fr; gap: 45px; margin-top: 35px; }
-  .manifesto h2 { font-size: 62px; line-height: .8; }
-  .manifesto h2 span { transform: translateX(22%); }
-  html[lang="ru"] .manifesto h2 { font-size: 46px; }
-  html[lang="ru"] .manifesto h2 span { transform: translateX(10%); }
+  .manifesto h2 { font-size: 52px; line-height: .95; }
+  .manifesto h2 span { transform: translateX(0); }
+  html[lang="ru"] .manifesto h2 { font-size: 52px; }
+  html[lang="ru"] .manifesto h2 span { transform: translateX(0); }
   .manifesto__grid > p { justify-self: end; font-size: 16px; }
   .mobile-only { display: inline; }
   .collection { padding-top: 70px; padding-bottom: 80px; }

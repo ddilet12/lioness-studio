@@ -8,6 +8,7 @@ import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { useShop } from "@/components/shop-context";
 import { lines, useI18n } from "@/lib/i18n";
+import { scrollToBlock } from "@/lib/scroll";
 import { formatPrice } from "@/lib/products";
 import { getCollections, getProducts } from "@/lib/shopify.server";
 
@@ -64,14 +65,14 @@ function Index() {
       <div className="hero__image-wrap">
         <picture>
           <source media="(min-width: 701px)" srcSet={heroWide} width={1280} height={720} />
-          <img className="hero__image" src={heroTall} alt="Woman in a black dress under an LD umbrella in a Paris garden" width={853} height={1280} />
+          <img className="hero__image" src={heroTall} alt="Woman in a black dress under an LD umbrella in front of a Paris palace" width={600} height={720} />
         </picture>
       </div>
       <div className="hero__shade" />
       <div className="hero__copy">
         <p className="eyebrow">{t("hero.eyebrow")}</p>
         <h1 className="sr-only">LIONESS DRESS</h1>
-        <Link to="/" hash="collection" className="text-link text-link--light">{t("hero.cta")} <span>→</span></Link>
+        <Link to="/" hash="collection" className="text-link text-link--light" onClick={scrollToBlock("collection")}>{t("hero.cta")} <span>→</span></Link>
       </div>
       <div className="hero__meta"><span>{t("hero.meta")}</span><i /><span>01 / 03</span></div>
     </section>
@@ -86,11 +87,11 @@ function Index() {
 
     <section id="collection" className="collection section-pad">
       <div className="collection__head">
-        <div><p className="eyebrow">{t("collection.eyebrow")}</p><h2>{t("collection.title")}</h2></div>
-        <div className="filters" aria-label={t("collection.filterLabel")}>
-          {(["ALL", "BLACK", "RED"] as const).map((value) => <button key={value} className={!activeCollection && filter === value ? "active" : ""} onClick={() => setFilter(value)}>{filterLabels[value]}</button>)}
+        <div><p className="eyebrow">{t("collection.eyebrow")}</p></div>
+        {collections.length > 0 && <div className="filters" aria-label={t("collection.filterLabel")}>
+          <button className={!activeCollection ? "active" : ""} onClick={() => setFilter("ALL")}>{filterLabels.ALL}</button>
           {collections.map((c) => <button key={c.handle} className={activeCollection?.handle === c.handle ? "active" : ""} onClick={() => navigate({ search: { collection: c.handle }, hash: "collection", resetScroll: false })}>{c.title}</button>)}
-        </div>
+        </div>}
       </div>
       <div className="product-grid">
         {visibleProducts.map((product) => <ProductCard key={product.slug} product={product} />)}

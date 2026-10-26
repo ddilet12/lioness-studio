@@ -20,7 +20,7 @@ const WhatsAppIcon = () => (
 // Social icons. Pinterest is shown only once its url is filled in: a link without a url is not rendered.
 const SOCIALS: { id: string; label: string; url: string | null; icon: () => ReactNode }[] = [
   { id: "instagram", label: "Instagram", url: "https://www.instagram.com/lioness.dress", icon: () => <Instagram /> },
-  { id: "pinterest", label: "Pinterest", url: null, icon: PinterestIcon },
+  { id: "pinterest", label: "Pinterest", url: "https://pin.it/EaaDiUFBD", icon: PinterestIcon },
   { id: "whatsapp", label: "WhatsApp", url: "https://wa.me/77789654642", icon: WhatsAppIcon },
 ];
 
@@ -50,12 +50,13 @@ export function SiteFooter() {
         <Link to="/returns-exchanges">{t("footer.returns")}</Link>
         <Link to="/size-guide">{t("footer.sizeGuide")}</Link>
         <Link to="/loyalty-program">{t("footer.loyalty")}</Link>
+        <Link to="/payment">{t("footer.payment")}</Link>
       </div>
 
       <div>
         <h3>{t("footer.brand")}</h3>
         <Link to="/about-us">{t("footer.about")}</Link>
-        <Link to="/lookbook">{t("nav.lookbook")}</Link>
+        <Link to="/lookbook">{t("footer.lookbook")}</Link>
         <Link to="/partners">{t("footer.partners")}</Link>      </div>
 
       <div>
