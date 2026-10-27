@@ -421,3 +421,5 @@ a.contact-card:hover { border-color: var(--foreground); }
 .news-item { display: block; width: 100%; padding: 0; border: 1px solid var(--border); background: var(--card); cursor: zoom-in; }
 .news-item img { display: block; width: 100%; height: auto; }
 .content-page__body:has(.news-list) { max-width: 760px; }
+.content-page__body a.contact-card, .content-page__body .contact-card > a { border-bottom: 0; text-decoration: none; }
+.content-page__body .contact-card small { text-decoration: none; }
