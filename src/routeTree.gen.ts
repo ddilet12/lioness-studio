@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutUsRouteImport } from './routes/about-us'
 import { Route as BestsellersRouteImport } from './routes/bestsellers'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DeliveryRouteImport } from './routes/delivery'
 import { Route as LookbookRouteImport } from './routes/lookbook'
 import { Route as LoyaltyProgramRouteImport } from './routes/loyalty-program'
@@ -42,6 +43,11 @@ const AboutUsRoute = AboutUsRouteImport.update({
 const BestsellersRoute = BestsellersRouteImport.update({
   id: '/bestsellers',
   path: '/bestsellers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DeliveryRoute = DeliveryRouteImport.update({
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
   '/bestsellers': typeof BestsellersRoute
+  '/contact': typeof ContactRoute
   '/delivery': typeof DeliveryRoute
   '/lookbook': typeof LookbookRoute
   '/loyalty-program': typeof LoyaltyProgramRoute
@@ -150,6 +157,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
   '/bestsellers': typeof BestsellersRoute
+  '/contact': typeof ContactRoute
   '/delivery': typeof DeliveryRoute
   '/lookbook': typeof LookbookRoute
   '/loyalty-program': typeof LoyaltyProgramRoute
@@ -172,6 +180,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
   '/bestsellers': typeof BestsellersRoute
+  '/contact': typeof ContactRoute
   '/delivery': typeof DeliveryRoute
   '/lookbook': typeof LookbookRoute
   '/loyalty-program': typeof LoyaltyProgramRoute
@@ -195,6 +204,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about-us'
     | '/bestsellers'
+    | '/contact'
     | '/delivery'
     | '/lookbook'
     | '/loyalty-program'
@@ -216,6 +226,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about-us'
     | '/bestsellers'
+    | '/contact'
     | '/delivery'
     | '/lookbook'
     | '/loyalty-program'
@@ -237,6 +248,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about-us'
     | '/bestsellers'
+    | '/contact'
     | '/delivery'
     | '/lookbook'
     | '/loyalty-program'
@@ -259,6 +271,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutUsRoute: typeof AboutUsRoute
   BestsellersRoute: typeof BestsellersRoute
+  ContactRoute: typeof ContactRoute
   DeliveryRoute: typeof DeliveryRoute
   LookbookRoute: typeof LookbookRoute
   LoyaltyProgramRoute: typeof LoyaltyProgramRoute
@@ -298,6 +311,13 @@ declare module '@tanstack/react-router' {
       path: '/bestsellers'
       fullPath: '/bestsellers'
       preLoaderRoute: typeof BestsellersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/delivery': {
@@ -419,6 +439,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutUsRoute: AboutUsRoute,
   BestsellersRoute: BestsellersRoute,
+  ContactRoute: ContactRoute,
   DeliveryRoute: DeliveryRoute,
   LookbookRoute: LookbookRoute,
   LoyaltyProgramRoute: LoyaltyProgramRoute,

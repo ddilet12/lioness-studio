@@ -45,7 +45,7 @@ export function SiteFooter() {
 
       <div>
         <h3>{t("footer.care")}</h3>
-        <a href="mailto:info@lionessdress.com">{t("footer.contact")}</a>
+        <Link to="/contact">{t("footer.contact")}</Link>
         <Link to="/delivery">{t("footer.delivery")}</Link>
         <Link to="/returns-exchanges">{t("footer.returns")}</Link>
         <Link to="/size-guide">{t("footer.sizeGuide")}</Link>

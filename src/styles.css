@@ -399,3 +399,25 @@ html[lang="ru"] .manifesto h2 span { transform: translateX(8%); }
 }
 
 .hero__copy h1.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* Contact page */
+.contact-list { display: grid; gap: 12px; max-width: 560px; }
+.contact-card, .contact-card > a { display: flex; align-items: center; gap: 16px; }
+.contact-card { padding: 18px 20px; border: 1px solid var(--border); background: var(--card); transition: border-color .2s ease, background .2s ease; }
+a.contact-card:hover, .contact-card > a:hover { opacity: .75; }
+a.contact-card:hover { border-color: var(--foreground); }
+.contact-card svg { width: 20px; height: 20px; flex: none; }
+.contact-card strong { display: block; font: 500 14px/1.3 var(--font-sans, inherit); letter-spacing: .04em; }
+.contact-card small { display: block; margin-top: 2px; font-size: 13px; opacity: .65; }
+.contact-card--split { justify-content: space-between; flex-wrap: wrap; }
+.contact-card--split > a { flex: 1 1 220px; min-height: 44px; }
+.contact-card--split button { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border: 1px solid var(--border); background: transparent; font-size: 12px; letter-spacing: .04em; cursor: pointer; }
+.contact-card--split button svg { width: 15px; height: 15px; }
+.contact-card--split button:hover { border-color: var(--foreground); }
+@media (max-width: 700px) { .contact-card { padding: 16px; } a.contact-card { min-height: 64px; } }
+
+/* News page */
+.news-list { display: grid; gap: 28px; max-width: 720px; margin-top: 8px; }
+.news-item { display: block; width: 100%; padding: 0; border: 1px solid var(--border); background: var(--card); cursor: zoom-in; }
+.news-item img { display: block; width: 100%; height: auto; }
+.content-page__body:has(.news-list) { max-width: 760px; }
